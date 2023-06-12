@@ -1,8 +1,8 @@
 import React from "react";
 import './Header.scss'
 
-import header_logo from '../../../assets/images/Freelancer/Freelancer_logo.svg'
-import header_logo2 from '../../../assets/images/header/logo2.svg'
+import header_logo from 'src/assets/images/Freelancer/Freelancer_logo.svg'
+import header_logo2 from 'src/assets/images/header/logo2.svg'
 import Dropdown from "./components/Dropdown";
 import LangDrop from "./components/LangDrop";
 import { useSelector } from "react-redux";
@@ -43,8 +43,8 @@ const Header = () => {
 						</li>
 						<span className="header_container_list_span"></span>
 					</ul>
-					<Dropdown/>
-					<LangDrop/>
+					<Dropdown />
+					<LangDrop />
 				</div>
 			</div>
 		</header>

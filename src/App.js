@@ -1,18 +1,22 @@
 import { useSelector } from "react-redux";
 import { Route, Routes, Navigate } from "react-router-dom";
-import PageBackground from './pages/non-auth/Background'
-import HomeContentSwitcher from "./pages/non-auth/HomeContentSwitcher";
-import Talents from './pages/non-auth/pages/talents/Talents';
-import Jobs from './pages/non-auth/pages/jobs/Jobs';
-import Aboutus from './pages/non-auth/pages/about-us/Aboutus';
-import Contactus from './pages/non-auth/pages/contact-us/Contactus';
+import WelcomeBackground from './pages/welcome/background/WelcomeBackground'
+import HomeContentSwitcher from "./pages/welcome/components/home/HomeContentSwitcher";
+import Talents from './pages/welcome/components/talents/Talents';
+import Jobs from './pages/welcome/components/jobs/Jobs';
+import Aboutus from './pages/welcome/components/about-us/Aboutus';
+import Contactus from './pages/welcome/components/contact-us/Contactus';
+import Login from "./pages/sign/login/Login";
+import Signup from "./pages/sign/signup/Signup";
+import SignBackground from "./pages/sign/background/SignBackground";
+import { useTranslation } from "react-i18next";
 
 
 function App() {
 
   // const auth = useSelector(state => state.login.loggedIn);
   const lang = useSelector(state => state.language.language);
-
+  const { i18n } = useTranslation();
   // const freelancerOrCompony = useSelector(state => state.login.freelancerOrCompony);
   // const loginOnSuccess = useSelector(state => state.login.loginOnSuccess);
   // const contactsIsSuccess = useSelector(state => state.companyRegister.contactsIsSuccess);
@@ -28,22 +32,40 @@ function App() {
   //     ? "Company"
   //     : (freelanceOrCompany = Object.values(decode).includes("Freelancer") ? "Freelancer" : "None");
   // }
-
+  const handleLanguage = (lg) => {
+    console.log(lg);
+    i18n.changeLanguage(lg);
+  };
   return (
-    <div>
+    <>
+      <div style={{ position: 'fixed', zIndex: 999 }}>
+        {
+          ["uz", "en", "ru"].map((lg, index) => (
+            <button
+              style={{ padding: '5px 15px' }}
+              key={lg + index}
+              onClick={() => handleLanguage(lg)}
+            >
+              {lg}
+            </button>
+          ))
+        }
+      </div>
       <Routes>
-        <Route path={`${lang}/`} element={<PageBackground />}>
+        <Route path={`${lang}/welcome`} element={<WelcomeBackground />}>
           <Route path="home" element={<HomeContentSwitcher />} />
           <Route path="talents" element={<Talents />} />
           <Route path="jobs" element={<Jobs />} />
           <Route path="about-us" element={<Aboutus />} />
           <Route path="contact-us" element={<Contactus />} />
         </Route>
-        {/* <Route path={`${lang}/login`} element={<Login />} />
-        <Route path={`${lang}/sign-up`} element={<Signup />} />*/}
-        <Route path="*" element={<Navigate to={`/${lang}/home`} />} />
+        <Route path={`${lang}`} element={<SignBackground />}>
+          <Route path="login" element={<Login />} />
+          <Route path="sign-up" element={<Signup />} />
+          <Route path="*" element={<Navigate to={`/${lang}/welcome/home`} />} />
+        </Route>
       </Routes>
-    </div>
+    </>
   );
 }
 

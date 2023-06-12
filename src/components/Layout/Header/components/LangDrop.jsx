@@ -1,8 +1,8 @@
 import React from 'react';
 import './LangDrop.scss'
-import arrow_down from '../../../../assets/images/header/down_arrow.svg'
+import arrow_down from 'src/assets/images/header/down_arrow.svg'
 import { useDispatch, useSelector } from 'react-redux';
-import { languageChange } from '../../../../reduxToolkit/languageSlice/LanguageSlice';
+import { languageChange } from 'src/reduxToolkit/languageSlice/LanguageSlice';
 import i18next from 'i18next';
 const LangDrop = () => {
 

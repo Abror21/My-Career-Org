@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { AsyncPaginate } from "react-select-async-paginate";
 import get from "lodash/get";
 import isEqual from "lodash/isEqual";
-import { queryBuilder } from "../../services";
+import { queryBuilder } from "src/services";
 // import { api } from "services";
 
 // const load = async(search, prevOptions, { page }, url, filterParams, params, loadOptionsKey) => {

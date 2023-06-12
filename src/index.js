@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -10,6 +9,7 @@ import "./assets/styles/ui.scss";
 import "./assets/styles/header.scss";
 import "./assets/styles/footer.scss";
 import "./assets/styles/fonts.css";
+import './services/i18next'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -16,7 +16,7 @@ $successColor: rgba(145, 199, 20, 1);
 	padding: 20px;
 	pointer-events: none;
 
-	& > div:not(:last-child) {
+	&>div:not(:last-child) {
 		margin-bottom: 10px;
 	}
 
@@ -44,7 +44,7 @@ $successColor: rgba(145, 199, 20, 1);
 			height: 15px;
 			content: "";
 			cursor: pointer;
-			// background-image: url("../../assets/images/icons/close-white.svg");
+			// background-image: url("src/assets/images/icons/close-white.svg");
 			background-repeat: no-repeat;
 			background-size: contain;
 			background-position: center;
@@ -64,22 +64,22 @@ $successColor: rgba(145, 199, 20, 1);
 		}
 
 		&--info {
-				// background-image: url("../../assets/images/icons/alert-danger.svg");
+			// background-image: url("src/assets/images/icons/alert-danger.svg");
 			background-color: $infoColor;
 		}
 
 		&--danger {
-			// background-image: url("../../assets/images/icons/alert-danger.svg");
+			// background-image: url("src/assets/images/icons/alert-danger.svg");
 			background-color: $dangerColor;
 		}
 
 		&--warning {
-			// background-image: url("../../assets/images/icons/alert-danger.svg");
+			// background-image: url("src/assets/images/icons/alert-danger.svg");
 			background-color: $warningColor;
 		}
 
 		&--success {
-			// background-image: url("../../assets/images/icons/alert-check.svg");
+			// background-image: url("src/assets/images/icons/alert-check.svg");
 			background-color: $successColor;
 		}
 	}

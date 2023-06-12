@@ -1,11 +1,11 @@
-@import "../../../assets//styles/ui.scss";
+@import "src/assets//styles/ui.scss";
 
 .header {
 	padding: 50px 0;
 	// background-image: ;
 	position: relative;
 	z-index: 2;
-	
+
 
 
 	&_wrapper {
@@ -15,6 +15,7 @@
 		gap: 30px;
 
 	}
+
 	&_container {
 		box-sizing: border-box;
 		position: relative;
@@ -84,6 +85,7 @@
 			align-items: center;
 			gap: 30px;
 		}
+
 		&_container {
 			&_list {
 				position: relative;
@@ -139,6 +141,7 @@
 			align-items: center;
 			gap: 30px;
 		}
+
 		&_container {
 
 			&_bg_img {

@@ -68,6 +68,7 @@
 
 .profile-bar__banner {
 	position: relative;
+
 	.edit-icon {
 		border: 1px solid #ececec;
 		width: 35px;
@@ -75,7 +76,7 @@
 		content: "";
 		background-color: #ffffff;
 		border-radius: 100px;
-		// background-image: url("../../assets/images/icons/edit.svg");
+		// background-image: url("src/assets/images/icons/edit.svg");
 		background-position: center;
 		background-repeat: no-repeat;
 		position: absolute;

@@ -1,15 +1,15 @@
 import React from "react";
 import classes from "./Round.module.scss";
-import innerImg from "../../assets/images/round/91.png";
-import innerImg2 from "../../assets/images/round/90.png";
-import innerImg3 from "../../assets/images/round/87.png";
-import innerImg4 from "../../assets/images/round/76.png";
-import innerImg5 from "../../assets/images/round/88.png";
-import innerImg6 from "../../assets/images/round/89.png";
-import innerImg7 from "../../assets/images/round/912.png";
-import innerImg8 from "../../assets/images/round/92.png";
-import innerImg9 from "../../assets/images/round/93.png";
-import innerImg10 from "../../assets/images/round/94.png";
+import innerImg from "src/assets/images/round/91.png";
+import innerImg2 from "src/assets/images/round/90.png";
+import innerImg3 from "src/assets/images/round/87.png";
+import innerImg4 from "src/assets/images/round/76.png";
+import innerImg5 from "src/assets/images/round/88.png";
+import innerImg6 from "src/assets/images/round/89.png";
+import innerImg7 from "src/assets/images/round/912.png";
+import innerImg8 from "src/assets/images/round/92.png";
+import innerImg9 from "src/assets/images/round/93.png";
+import innerImg10 from "src/assets/images/round/94.png";
 
 function Round() {
 	return (
