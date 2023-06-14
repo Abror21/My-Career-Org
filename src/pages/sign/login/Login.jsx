@@ -56,15 +56,23 @@ const Login = () => {
 		passwordInputTouch();
 
 		if (emailIsValid && passwordIsValid) {
+			const user = {
+				email,
+				password
+			}
 			fetch(LOGIN_USER, {
 				method: 'POST',
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({email: 'test@gmail.com', password: 'paroll'})
+				body: JSON.stringify(user)
 			})
-			.then(res => res.json())
-			.then(data => console.log(data))
+				.then(res => {
+					console.log(res);
+					return res.json()
+				})
+				.then(data => console.log(data))
+			// .catch(err => console.log(err))
 		}
 	};
 

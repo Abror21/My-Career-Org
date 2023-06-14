@@ -7,6 +7,7 @@ import store from './reduxToolkit/store';
 import { ToastContainer } from 'react-toastify';
 
 import "./assets/styles/ui.scss";
+import "./assets/styles/header.scss";
 import "./assets/styles/fonts.css";
 import './services/i18next';
 import 'react-toastify/dist/ReactToastify.css';
