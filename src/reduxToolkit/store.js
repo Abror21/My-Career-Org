@@ -10,6 +10,7 @@ import jobs from "./jobsSlice/JobsSlice";
 import project from "./resumeSlice/projectSlice";
 import frilancerCards from "./frilanserCardSlice/frilanserCardSlice";
 
+
 const store = configureStore({
 	reducer: {
 		login,

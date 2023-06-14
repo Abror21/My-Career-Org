@@ -1,4 +1,5 @@
 import { useReducer } from "react";
+import { CHECK_EMAIL } from "src/api/URLS";
 
 const initialState = { value: '', touched: false, isExist: false, timer: null };
 
@@ -30,27 +31,22 @@ export const useInput = (inputValidation = () => { }) => {
     if (getRequest) {
       clearTimeout(state.timer);
       const newTimer = setTimeout(() => {
-        fetch('' + e.target.value)
+        fetch(`${CHECK_EMAIL}=${e.target.value}`)
           .then(res => {
-            if (!res.ok) {
-              dispatch({ type: 'NOTEXIST' })
-              return;
-            }
-            return res.json()
-          })
-          .then(data => {
-            if (data && data.id) {
+            console.log(res);
+            if (res.ok) {
               dispatch({ type: 'EXIST' })
-            } else {
-              dispatch({ type: 'NOTEXIST' })
+              return;
+            }else{
+              dispatch({type: 'NOTEXIST'})
             }
+            
           })
       }, 800)
       dispatch({ type: 'SETTIMER', value: newTimer })
     }
-
   }
-  const inputBlur = e => {
+  const inputBlur = () => {
     dispatch({ type: "BLUR" });
   }
   const inputTouch = () => {
@@ -69,8 +65,8 @@ export const useInput = (inputValidation = () => { }) => {
     inputTouch,
     inputReset,
     value: state.value,
-    isExist: state.isExist,
     inputIsValid,
     inputIsError,
+    isExist: state.isExist,
   }
 }

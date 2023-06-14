@@ -51,12 +51,9 @@
 		border-radius: 12px;
 
 		&__content {
-			input, textarea{
-				margin-bottom: 5px;
-			}
 			display: flex;
 			flex-direction: column;
-			gap: 20px;
+			gap: 25px;
 		}
 
 		&__title {
@@ -73,20 +70,6 @@
 			font-size: 17px;
 			line-height: 21px;
 			color: #808080;
-		}
-
-		input,
-		textarea {
-			display: block;
-			width: 100%;
-			padding: 15px 20px;
-			font-weight: 500;
-			font-size: 20px;
-			line-height: 24px;
-			color: #808080;
-			background: #ffffff;
-			border: 1px solid #cdcdcd;
-			border-radius: 8px;
 		}
 
 		.textMessage {

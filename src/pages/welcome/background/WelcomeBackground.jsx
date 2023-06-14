@@ -4,6 +4,7 @@ import logo from "src/assets/images/text.png";
 import { useSelector } from "react-redux";
 import backgroundImg from "src/assets/images/home-header-bg.png";
 import { useTranslation } from 'react-i18next';
+import Round from 'src/components/Round/Round';
 
 function WelcomeBackground() {
 	const lang = useSelector(state => state.language.language);

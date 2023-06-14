@@ -1,9 +1,22 @@
 import InputMask from 'react-input-mask';
+import classes from './index.module.css'
 
-const Input = ({ mask, type, label, placeholder, inputIsError, value, inputChange, inputBlur, errorMessage, isExist }) => {
+const Input = ({
+        mask,
+        type,
+        label,
+        placeholder,
+        inputIsError,
+        value,
+        inputChange,
+        inputBlur,
+        errorMessage,
+        autoComplete,
+        isExist
+    }) => {
     
     return (
-        <div className="form-group">
+        <div className={classes.input}>
             <label className={`${inputIsError || isExist ? 'text-danger' : ''}`}>{label}</label>
             <InputMask
                 mask={mask}
@@ -16,9 +29,10 @@ const Input = ({ mask, type, label, placeholder, inputIsError, value, inputChang
                 onBlur={inputBlur}
                 placeholder={placeholder}
                 valueIsNumericString={true}
+                autoComplete={autoComplete}
             />
             {inputIsError && <p style={{ color: 'red' }}>{errorMessage}</p>}
-            {isExist && <p style={{ color: 'red' }}>Username already exists.</p>}
+            {isExist && <p style={{ color: 'red' }}>Email already exists.</p>}
         </div>
     )
 }

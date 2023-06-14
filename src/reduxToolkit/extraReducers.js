@@ -22,23 +22,24 @@ import {
 	POSITIONS,
 	POSITIONSUPLOAD,
 	PROJECT,
-	REGISTER,
 	REGISTER_COMPANY,
 	RESUMEFINISH,
 	RESUMESELECT,
 	SKILLS,
-	CLAIMS,
 	COMPANY_OWNER_CREATE,
 	ADD_COMPANY,
 	ADD_LOCATION_COMPANY,
-	ADD_CONTACTS_COMPANY
+	ADD_CONTACTS_COMPANY,
+	REGISTER_USER
 } from "../api/URLS";
+
+
 
 /////////////////////////////////////REGISTER POST///////////////////////
 export const registerRequest = createAsyncThunk("token/register", async payload => {
 	return axios({
 		method: "POST",
-		url: REGISTER,
+		url: REGISTER_USER,
 		data: payload,
 		headers: {
 			"Content-Type": "application/json-patch+json"

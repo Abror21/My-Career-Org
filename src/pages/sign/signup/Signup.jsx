@@ -1,260 +1,195 @@
 import { useState } from "react";
 import "./Signup.scss";
-import sign_logo from "../../../assets/images/Sign/sign_logo.svg";
-// import login_circle from '../../../assets/images/Sign/login_circle.png'
-import login_ellipse from "../../../assets/images/Sign/Ellipse-6.png";
-import apple from "../../../assets/images/Sign/apple.svg";
-import google from "../../../assets/images/Sign/google.svg";
-import github from "../../../assets/images/Sign/github.svg";
-import facebook from "../../../assets/images/Sign/facebook.svg";
-// import Checkemal from "../component/Checkemail";
-// import Carusel from "../component/Carusel";
+import apple from "src/assets/images/Sign/apple.svg";
+import google from "src/assets/images/Sign/google.svg";
+import github from "src/assets/images/Sign/github.svg";
+import facebook from "src/assets/images/Sign/facebook.svg";
 import { useSelector } from "react-redux";
 import { Eye, EyeOff } from 'tabler-icons-react';
-// import { registerRequest } from "reduxToolkit/extraReducers";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import Input from "src/components/Input";
+import BlueButton from "src/components/blue-button";
+import { useInput } from "src/hooks";
+import { REGISTER_USER } from "src/api/URLS";
+import { toast } from "react-toastify";
+import ScaleLoader from "react-spinners/ScaleLoader";
+import CheckEmail from "./CheckEmail";
+
 const Signup = () => {
-
-	const { t } = useTranslation();
-
-	const [passwordEye, setPasswordEye] = useState('password')
-	const [passwordEye1, setPasswordEye1] = useState('password')
-
-	const PasswordFunc = () => {
-		setPasswordEye(passwordEye === 'password' ? 'text' : 'password')
-	}
-
-	const PasswordFunc1 = () => {
-		setPasswordEye1(passwordEye1 === 'password' ? 'text' : 'password')
-	}
-
-	const [data, setData] = useState({
-		email: "",
-		password: "",
-		confirmPassword: "",
-	})
 	
-	const lang = useSelector(state => state.language.language)
-	const { checkEmail, bodyErrors } = useSelector(state => state.login)
-	const dispatch = useDispatch()
+	const { t } = useTranslation();
+	const lang = useSelector(state => state.language.language);
 
-	const handlerSubmit = (e) => {
-		// e.preventDefault()
-		// dispatch(registerRequest(data))
-		// var dateObj = new Date();
-		// const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-		// var month = dateObj.getUTCMonth(); //months from 1-12
-		// var day = dateObj.getUTCDate();
-		// var year = dateObj.getUTCFullYear();
-		// localStorage.setItem('member_since', `${monthNames[month]} ${day}, ${year}`)
+	const [passwordEye, setPasswordEye] = useState('password');
+	const [passwordEye2, setPasswordEye2] = useState('password');
+
+	const passwordFunc = () => setPasswordEye(prev => prev === 'password' ? 'text' : 'password')
+	const passwordFunc2 = () => setPasswordEye2(prev => prev === 'password' ? 'text' : 'password')
+	const [loading, setLoading] = useState(false);
+	const [userEmail, setUserEmail] = useState('');
+	const [checkEmail, setCheckEmail] = useState(false);
+
+	const {
+		inputChange: emailInputChange,
+		inputBlur: emailInputBlur,
+		inputTouch: emailInputTouch,
+		inputReset: emailInputClear,
+		value: email,
+		inputIsValid: emailIsValid,
+		inputIsError: emailInputIsError,
+		isExist: emailIsExist
+	} = useInput(email => email.includes('@'))
+	const {
+		inputChange: passwordInputChange,
+		inputBlur: passwordInputBlur,
+		inputTouch: passwordInputTouch,
+		inputReset: passwordInputClear,
+		value: password,
+		inputIsValid: passwordIsValid,
+		inputIsError: passwordInputIsError
+	} = useInput(password => password.trim().length > 5)
+	const {
+		inputChange: password2InputChange,
+		inputBlur: password2InputBlur,
+		inputTouch: password2InputTouch,
+		inputReset: password2InputClear,
+		value: password2,
+		inputIsValid: password2IsValid,
+		inputIsError: password2InputIsError
+	} = useInput(password2 => { if (password2) return password2 === password })
+	
+	const handleSubmit = e => {
+		e.preventDefault();
+
+		emailInputTouch();
+		passwordInputTouch();
+		password2InputTouch();
+
+		if (emailIsValid && passwordIsValid && password2IsValid) {
+			const newUser = {
+				email,
+				password,
+				confirmPassword: password2
+			}
+			setUserEmail(email)
+			setLoading(true)
+			fetch(REGISTER_USER, {
+				method: 'POST',
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(newUser)
+			})
+				.then(res => {
+					setLoading(false)
+					if (res.ok) {
+						emailInputClear();
+						passwordInputClear();
+						password2InputClear();
+						toast.success('You are successfully registered.');
+						setCheckEmail(true);
+					} else {
+						throw new Error('Something went wrong.')
+					}
+					return res.json()
+				})
+				.then(data => console.log(data))
+				.catch(err => {
+					setLoading(false)
+					toast.error(err.message)
+					console.error(err.message)
+				})
+		}
 	}
+
 
 	return (
-		<form className="login_form" onSubmit={handlerSubmit}>
-			<h3 className="login_form_title">{t("signup")}</h3>
-			<p className="login_form_info">
-				Do you have an account? <Link to={`/${lang}/login`}><b>Log in</b></Link> now!
-			</p>
-
-			<input
-				required
-				className={`login_form_inp ${bodyErrors?.EmailError?.length ? "register-danger-input " : bodyErrors ? "register-success" : ""}`}
-				type="email"
-				placeholder="Email"
-				name="email"
-				value={data.email}
-				onChange={e => setData(prev => ({ ...prev, email: e.target.value }))}
-				autoComplete="off"
-			/>
+		<>
+			{checkEmail && <CheckEmail email={userEmail} />}
 			{
-				bodyErrors?.EmailError
-				&&
-				<p className="register-danger-text">{bodyErrors?.EmailError}</p>
-			}
+				!checkEmail && 
+				<div className="login_form">
+					<form onSubmit={handleSubmit}>
+						<h3 className="login_form_title">{t("signup")}</h3>
+						<p className="login_form_info">
+							Do you have an account? <Link to={`/${lang}/login`}><b>Log in</b></Link> now!
+						</p>
+						<div className="signup-content-wrapper">
+							<Input
+								type="email"
+								placeholder="Email"
+								inputIsError={emailInputIsError}
+								value={email}
+								inputChange={(v) => emailInputChange(v, true)}
+								inputBlur={emailInputBlur}
+								errorMessage="Invalid email."
+								autoComplete='off'
+								isExist={emailIsExist}
+							/>
 
-			<div style={{ 'position': "relative" }} >
-				<input
-					required
-					className={`login_form_inp login_form_inp2 ${bodyErrors?.PasswordError?.length ? "register-danger-input" : bodyErrors ? "register-success" : ""}`}
-					type={passwordEye1}
-					placeholder="Password"
-					name="password"
-					value={data.password}
-					onChange={e => setData(prev => ({ ...prev, password: e.target.value }))}
-					autoComplete="off"
-				/>
-				<span className="password_span" onClick={() => PasswordFunc1()} >
-					{
-						// passwordEye1 === 'password' ? <EyeOff /> : <Eye />
-					}
-				</span>
-			</div>
-			{
-				bodyErrors?.PasswordError
-				&&
-				bodyErrors?.PasswordError?.map((el, i) => (
-					<p className="register-danger-text" key={i + 1}>{i + 1}. {el}</p>
-				))
-			}
+							<div style={{ 'position': "relative" }} >
+								<Input
+									type={passwordEye}
+									placeholder="Password"
+									inputIsError={passwordInputIsError}
+									value={password}
+									inputChange={passwordInputChange}
+									inputBlur={passwordInputBlur}
+									errorMessage="Password must be at least 6 characters."
+									autoComplete="off"
+								/>
+								<span className="password_span" onClick={passwordFunc} >
+									{
+										passwordEye === 'password' ? <EyeOff /> : <Eye />
+									}
+								</span>
+							</div>
 
-			<div style={{ 'position': "relative" }} >
-				<input
-					required
-					className={`login_form_inp login_form_inp2 ${bodyErrors?.PasswordConfirmError?.length ? "register-danger-input" : bodyErrors ? "register-success" : ""}`}
-					type={passwordEye}
-					placeholder="Confirm password"
-					name="confirm_password"
-					value={data.confirmPassword}
-					onChange={e => setData(prev => ({ ...prev, confirmPassword: e.target.value }))}
-					autoComplete="off"
-				/>
-				<span className="password_span" onClick={() => PasswordFunc()} >
-					{
-						passwordEye === 'password' ? <EyeOff /> : <Eye />
-					}
-				</span>
-			</div>
-			{
-				bodyErrors?.PasswordConfirmError
-				&&
-				bodyErrors?.PasswordConfirmError?.map((el, i) => (
-					<p className="register-danger-text" key={i + 1}>{i + 1}. {el}</p>
-				))
-			}
+							<div style={{ 'position': "relative" }} >
+								<Input
+									type={passwordEye2}
+									placeholder="Confirm password"
+									inputIsError={password2InputIsError}
+									value={password2}
+									inputChange={password2InputChange}
+									inputBlur={password2InputBlur}
+									errorMessage="Please check password."
+									autoComplete="off"
+								/>
+								<span className="password_span" onClick={passwordFunc2} >
+									{
+										passwordEye2 === 'password' ? <EyeOff /> : <Eye />
+									}
+								</span>
+							</div>
 
-			<button className="login_form_btn" type="submit">Continue</button>
-
-			<div className="login_form_wrapper">
-				<p className="login_form_wrapper_info">Or continue with</p>
-
-				<div className="login_form_wrapper_socials">
-					<a href="/facebook.com">
-						<img className="login_form_wrapper_socials_icon" src={facebook} alt="social media icon facebook" />
-					</a>
-					<a href="/facebook.com">
-						<img className="login_form_wrapper_socials_icon" src={github} alt="social media icon github" />
-					</a>
-					<a href="/facebook.com">
-						<img className="login_form_wrapper_socials_icon" src={google} alt="social media google" />
-					</a>
-					<a href="/facebook.com">
-						<img className="login_form_wrapper_socials_icon" src={apple} alt="social media apple" />
-					</a>
+							<BlueButton
+								type="submit"
+								title={loading ? <ScaleLoader color={'white'} height={10} /> : "Continue"}
+							/>
+						</div>
+					</form>
+					<div className="login_form_wrapper">
+						<p className="login_form_wrapper_info">Or continue with</p>
+						<div className="login_form_wrapper_socials">
+							<a href="/facebook.com">
+								<img className="login_form_wrapper_socials_icon" src={facebook} alt="social media icon facebook" />
+							</a>
+							<a href="/facebook.com">
+								<img className="login_form_wrapper_socials_icon" src={github} alt="social media icon github" />
+							</a>
+							<a href="/facebook.com">
+								<img className="login_form_wrapper_socials_icon" src={google} alt="social media google" />
+							</a>
+							<a href="/facebook.com">
+								<img className="login_form_wrapper_socials_icon" src={apple} alt="social media apple" />
+							</a>
+						</div>
+					</div>
 				</div>
-			</div>
-		</form>
-		// <section className="login">
-		// 	<div className="login_container">
-		// 		{/* <Carusel /> */}
-		// 		<img className="login_bg_img" src={login_ellipse} alt="login background images" />
-		// 		<div className="login_container_wrapper">
-		// 			<img src={sign_logo} className="login_container_wrapper_logo" alt="" />
-		// 			{!checkEmail ? (
-		// 				<form className="login_form" onSubmit={handlerSubmit}>
-		// 					{/* <h3 className="login_form_title">{t("signup")}</h3> */}
-
-		// 					<p className="login_form_info">
-		// 						Do you have an account? <Link to={`/${lang}/login`}>Log in </Link>now!
-		// 					</p>
-
-
-		// 					<input
-		// 						required
-		// 						className={`login_form_inp ${bodyErrors?.EmailError?.length ? "register-danger-input " : bodyErrors ? "register-success" : ""}`}
-		// 						type="email"
-		// 						placeholder="Email"
-		// 						name="email"
-		// 						value={data.email}
-		// 						onChange={e => setData(prev => ({ ...prev, email: e.target.value }))}
-		// 						autoComplete="off"
-		// 					/>
-		// 					{
-		// 						bodyErrors?.EmailError
-		// 						&&
-		// 						<p className="register-danger-text">{bodyErrors?.EmailError}</p>
-		// 					}
-
-		// 					<div style={{ 'position': "relative" }} >
-		// 						<input
-		// 							required
-		// 							className={`login_form_inp login_form_inp2 ${bodyErrors?.PasswordError?.length ? "register-danger-input" : bodyErrors ? "register-success" : ""}`}
-		// 							type={passwordEye1}
-		// 							placeholder="Password"
-		// 							name="password"
-		// 							value={data.password}
-		// 							onChange={e => setData(prev => ({ ...prev, password: e.target.value }))}
-		// 							autoComplete="off"
-		// 						/>
-		// 						<span className="password_span" onClick={() => PasswordFunc1()} >
-		// 							{
-		// 								// passwordEye1 === 'password' ? <EyeOff /> : <Eye />
-		// 							}
-		// 						</span>
-		// 					</div>
-		// 					{
-		// 						bodyErrors?.PasswordError
-		// 						&&
-		// 						bodyErrors?.PasswordError?.map((el, i) => (
-		// 							<p className="register-danger-text" key={i + 1}>{i + 1}. {el}</p>
-		// 						))
-		// 					}
-
-		// 					<div style={{ 'position': "relative" }} >
-		// 						<input
-		// 							required
-		// 							className={`login_form_inp login_form_inp2 ${bodyErrors?.PasswordConfirmError?.length ? "register-danger-input" : bodyErrors ? "register-success" : ""}`}
-		// 							type={passwordEye}
-		// 							placeholder="Confirm password"
-		// 							name="confirm_password"
-		// 							value={data.confirmPassword}
-		// 							onChange={e => setData(prev => ({ ...prev, confirmPassword: e.target.value }))}
-		// 							autoComplete="off"
-		// 						/>
-		// 						<span className="password_span" onClick={() => PasswordFunc()} >
-		// 							{
-		// 								// passwordEye === 'password' ? <EyeOff /> : <Eye />
-		// 							}
-		// 						</span>
-		// 					</div>
-		// 					{
-		// 						bodyErrors?.PasswordConfirmError
-		// 						&&
-		// 						bodyErrors?.PasswordConfirmError?.map((el, i) => (
-		// 							<p className="register-danger-text" key={i + 1}>{i + 1}. {el}</p>
-		// 						))
-		// 					}
-
-		// 					<button className="login_form_btn" type="submit">Continue</button>
-
-		// 					<div className="login_form_wrapper">
-		// 						<p className="login_form_wrapper_info">Or continue with</p>
-
-		// 						<div className="login_form_wrapper_socials">
-		// 							<a href="/facebook.com">
-		// 								<img className="login_form_wrapper_socials_icon" src={facebook} alt="social media icon facebook" />
-		// 							</a>
-		// 							<a href="/facebook.com">
-		// 								<img className="login_form_wrapper_socials_icon" src={github} alt="social media icon github" />
-		// 							</a>
-		// 							<a href="/facebook.com">
-		// 								<img className="login_form_wrapper_socials_icon" src={google} alt="social media google" />
-		// 							</a>
-		// 							<a href="/facebook.com">
-		// 								<img className="login_form_wrapper_socials_icon" src={apple} alt="social media apple" />
-		// 							</a>
-		// 						</div>
-		// 					</div>
-		// 				</form>
-		// 			) : (
-		// 				<>
-		// 					<Checkemal />
-		// 				</>
-		// 			)}
-		// 		</div>
-		// 	</div>
-		// </section>
+			}
+		</>
 	);
 };
 

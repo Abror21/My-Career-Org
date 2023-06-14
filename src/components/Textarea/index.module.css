@@ -1,0 +1,28 @@
+.textarea textarea {
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    color: #808080;
+    background: #ffffff;
+    border: 1px solid #cdcdcd;
+    border-radius: 8px;
+}
+
+
+
+@media (max-width: 1750px) {
+    .textarea textarea {
+        margin-bottom: 15px;
+        padding: 10px 15px;
+        font-size: 17px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .textarea textarea {
+        font-size: 14px;
+    }
+}

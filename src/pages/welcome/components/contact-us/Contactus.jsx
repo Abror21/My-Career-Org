@@ -5,6 +5,7 @@ import Input from "src/components/Input";
 import { useInput } from "src/hooks";
 import Textarea from "src/components/Textarea";
 import { CONTACT_US } from "src/api/URLS";
+import { toast } from 'react-toastify';
 
 function Contactus() {
 
@@ -71,7 +72,7 @@ function Contactus() {
 						emailInputReset();
 						phoneInputReset();
 						textInputReset();
-						alert('Data sent successfully')
+						toast.success('Your message has been sent successfully.')
 					} else {
 						throw Error('Something went wrong')
 					}

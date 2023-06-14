@@ -1,8 +1,9 @@
+import classes from './index.module.css'
 
 const Textarea = ({ label, placeholder, inputIsError, value, inputChange, inputBlur, errorMessage }) => {
 
     return (
-        <div className="form-group">
+        <div className={classes.textarea}>
             <label className={`${inputIsError ? 'text-danger' : ''}`}>{label}</label>
             <textarea
                 style={{ borderColor: `${inputIsError ? 'red' : ''}` }}

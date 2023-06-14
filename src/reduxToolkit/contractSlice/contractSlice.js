@@ -10,8 +10,6 @@ const initialState = {
     dagavor: "",
 }
 
-
-
 const contractSlice = createSlice({
     name: "contractSlice",
     initialState,
@@ -44,4 +42,4 @@ const contractSlice = createSlice({
     },
 })
 
-export default contractSlice.reducer
+export default contractSlice.reducer;

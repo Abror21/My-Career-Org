@@ -1,7 +1,11 @@
-@import "../../../assets/styles/ui.scss";
-
+// @import "../../../assets/styles/ui.scss";
+.signup-content-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 15px;
+}
 .login {
-
     width: 100vw;
     height: 100vh;
     overflow: hidden;
@@ -60,7 +64,6 @@
         color: #808080;
         margin-top: 5px;
         margin-bottom: 25px;
-
     }
 
     & .login_form_inp {
@@ -80,24 +83,6 @@
     .login_form_inp2 {
         width: 100%;
         margin-top: 8px;
-    }
-
-    & .login_form_btn {
-        font-family: 'Montserrat';
-        align-self: flex-end;
-        font-style: normal;
-        font-weight: 500;
-        padding: 10px 20px;
-        margin: 15px 0;
-        max-width: 135px;
-        font-size: 16px;
-        line-height: 20px;
-        border: none;
-        color: #FFFFFF;
-        background: #1D71B8;
-        border-radius: 8px;
-        cursor: pointer;
-
     }
 
     & .login_form_wrapper {

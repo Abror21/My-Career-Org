@@ -11,7 +11,6 @@ import Signup from "./pages/sign/signup/Signup";
 import SignBackground from "./pages/sign/background/SignBackground";
 import { useTranslation } from "react-i18next";
 
-
 function App() {
 
   // const auth = useSelector(state => state.login.loggedIn);
@@ -33,7 +32,6 @@ function App() {
   //     : (freelanceOrCompany = Object.values(decode).includes("Freelancer") ? "Freelancer" : "None");
   // }
   const handleLanguage = (lg) => {
-    console.log(lg);
     i18n.changeLanguage(lg);
   };
   return (
@@ -52,7 +50,10 @@ function App() {
         }
       </div>
       <Routes>
-        <Route path={`${lang}/welcome`} element={<WelcomeBackground />}>
+        <Route path="/" element={<Navigate to={`/${lang}/home`} />} />
+        <Route path={`${lang}`} element={<Navigate to={`/${lang}/home`} />} />
+        <Route path={`${lang}/`} element={<Navigate to={`/${lang}/home`} />} />
+        <Route path={`${lang}/`} element={<WelcomeBackground />}>
           <Route path="home" element={<HomeContentSwitcher />} />
           <Route path="talents" element={<Talents />} />
           <Route path="jobs" element={<Jobs />} />
@@ -62,7 +63,7 @@ function App() {
         <Route path={`${lang}`} element={<SignBackground />}>
           <Route path="login" element={<Login />} />
           <Route path="sign-up" element={<Signup />} />
-          <Route path="*" element={<Navigate to={`/${lang}/welcome/home`} />} />
+          <Route path="*" element={<Navigate to={`/${lang}/home`} />} />
         </Route>
       </Routes>
     </>
