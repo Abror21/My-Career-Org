@@ -82,12 +82,11 @@ const Signup = () => {
 				body: JSON.stringify(newUser)
 			})
 				.then(res => {
-					setLoading(false)
 					if (res.ok) {
 						emailInputClear();
 						passwordInputClear();
 						password2InputClear();
-						toast.success('You are successfully registered.');
+						toast.success('You are successfully registered.', {position: toast.POSITION.TOP_LEFT});
 						setCheckEmail(true);
 					} else {
 						throw new Error('Something went wrong.')
@@ -96,10 +95,11 @@ const Signup = () => {
 				})
 				.then(data => console.log(data))
 				.catch(err => {
-					setLoading(false)
-					toast.error(err.message)
+					toast.error(err.message, {position: toast.POSITION.TOP_LEFT}
+						)
 					console.error(err.message)
 				})
+				.finally(() => setLoading(false))
 		}
 	}
 

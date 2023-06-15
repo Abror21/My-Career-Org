@@ -1,7 +1,4 @@
-.roundContainer {
-    & * {
-        box-sizing: border-box !important;
-    }
+
     .round1 {
         position: absolute;
         transition: 1s all;
@@ -31,7 +28,7 @@
     }
 
     .round4 {
-        position: absolute;
+        // position: absolute;
         transition: 1s all;
         margin-left: 8rem;
         right: 30%;
@@ -39,4 +36,3 @@
         z-index: -10;
         transform: scale(0.9);
     }
-}

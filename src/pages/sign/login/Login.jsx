@@ -1,35 +1,31 @@
 import React, { useState, useRef } from "react";
 import "./Login.scss";
-import sign_logo from "src/assets/images/Sign/sign_logo.svg";
-// import login_circle from 'src/assets/images/Sign/login_circle.png'
 import login_ellipse from "src/assets/images/Sign/Ellipse-6.png";
 import apple from "src/assets/images/Sign/apple.svg";
 import google from "src/assets/images/Sign/google.svg";
 import github from "src/assets/images/Sign/github.svg";
 import facebook from "src/assets/images/Sign/facebook.svg";
-// import Company from "../component/Company";
-// import Carusel from "../component/Carusel";
 import { useDispatch, useSelector } from "react-redux";
 import { logInRequest } from "src/reduxToolkit/extraReducers";
 import { Eye, EyeOff } from 'tabler-icons-react';
 import { Link } from "react-router-dom";
+import ScaleLoader from "react-spinners/ScaleLoader";
+import { toast } from "react-toastify";
 import Input from "src/components/Input";
 import { useInput } from "src/hooks";
 import BlueButton from "src/components/blue-button";
 import { LOGIN_USER } from "src/api/URLS";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 	const lang = useSelector(state => state.language.language)
 	const [passwordEye, setPasswordEye] = useState('password');
+	const [loading, setLoading] = useState(false);
+	const navigate = useNavigate()
 
 	const passwordFunc = () => {
 		setPasswordEye(prev => prev === 'password' ? 'text' : 'password')
 	}
-
-	// const email = useRef("");
-	// const password = useRef("");
-	// const dispatch = useDispatch();
-	// const { loginResponseError, loggedIn } = useSelector(state => state.login);
 
 	const {
 		inputChange: emailInputChange,
@@ -54,12 +50,12 @@ const Login = () => {
 		e.preventDefault();
 		emailInputTouch();
 		passwordInputTouch();
-
 		if (emailIsValid && passwordIsValid) {
 			const user = {
 				email,
 				password
 			}
+			setLoading(true)
 			fetch(LOGIN_USER, {
 				method: 'POST',
 				headers: {
@@ -68,15 +64,29 @@ const Login = () => {
 				body: JSON.stringify(user)
 			})
 				.then(res => {
-					console.log(res);
+					if (res.ok) {
+						emailInputClear();
+						passwordInputClear();
+					}
 					return res.json()
 				})
-				.then(data => console.log(data))
-			// .catch(err => console.log(err))
+				.then(data => {
+					if (data.message) {
+						toast.error(data.message, { position: toast.POSITION.TOP_LEFT })
+					}
+					console.log(data.token);
+					localStorage.setItem('user-token', data.token);
+					if (data?.token) {
+						navigate(`/${lang}/freelancer-or-company`);
+					}
+				})
+				.catch(err => {
+					toast.error(err.message, { position: toast.POSITION.TOP_LEFT })
+				})
+				.finally(() => setLoading(false))
 		}
 	};
 
-	// const auth_path = location.pathname.split("/")[1];
 	return (
 		<div className="login_form">
 			<form onSubmit={handleSubmit}>
@@ -110,7 +120,10 @@ const Login = () => {
 							{passwordEye === 'password' ? <EyeOff /> : <Eye />}
 						</span>
 					</div>
-					<BlueButton type="submit" title="Continue" />
+					<BlueButton
+						type="submit"
+						title={loading ? <ScaleLoader color={'white'} height={10} /> : "Continue"}
+					/>
 				</div>
 			</form>
 			<div className="login_form_wrapper">

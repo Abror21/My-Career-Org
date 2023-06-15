@@ -1,0 +1,24 @@
+.wrapper{
+    height: 100vh;
+    background-color: aqua;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+    position: relative;
+}
+.back{
+    position: absolute;
+    padding: 10px 30px;
+    font-size: 20px;
+    top: 30px;
+    right: 30px;
+}
+.wrapper .freelancer,
+.wrapper .company{
+    width: 300px;
+    padding: 30px;
+    background-color: cadetblue;
+    cursor: pointer;
+}
