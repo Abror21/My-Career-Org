@@ -123,7 +123,7 @@
 	margin-top: -10px;
 }
 
-@media only screen and (max-width: 1456px) {
+@media (max-width: 1456px) {
 	.power {
 		margin-top: 10px;
 		max-width: 470px;
@@ -195,13 +195,13 @@
 	}
 }
 
-@media only screen and (max-height: 600px) {
+@media (max-height: 600px) {
 	.careerBox {
 		padding-top: 60px;
 	}
 }
 
-@media only screen and (max-height: 560px) {
+@media (max-height: 560px) {
 	.careerBox {
 		padding-top: 40px;
 	}

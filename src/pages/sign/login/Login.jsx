@@ -6,7 +6,7 @@ import google from "src/assets/images/Sign/google.svg";
 import github from "src/assets/images/Sign/github.svg";
 import facebook from "src/assets/images/Sign/facebook.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { logInRequest } from "src/reduxToolkit/extraReducers";
+import { logInRequest } from "src/store/extraReducers";
 import { Eye, EyeOff } from 'tabler-icons-react';
 import { Link } from "react-router-dom";
 import ScaleLoader from "react-spinners/ScaleLoader";
@@ -74,7 +74,6 @@ const Login = () => {
 					if (data.message) {
 						toast.error(data.message, { position: toast.POSITION.TOP_LEFT })
 					}
-					console.log(data.token);
 					localStorage.setItem('user-token', data.token);
 					if (data?.token) {
 						navigate(`/${lang}/freelancer-or-company`);

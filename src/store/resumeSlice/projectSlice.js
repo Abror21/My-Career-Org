@@ -1,5 +1,5 @@
 // const { createSlice } = require("@reduxjs/toolkit");
-// const { projectPost } = require("reduxToolkit/extraReducers");
+// const { projectPost } = require("store/extraReducers");
 import { createSlice } from '@reduxjs/toolkit'
 import { projectPost } from '../extraReducers'
 

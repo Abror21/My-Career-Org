@@ -1,5 +1,5 @@
 // const { createSlice } = require("@reduxjs/toolkit");
-// const { getAllJobs } = require("reduxToolkit/extraReducers");
+// const { getAllJobs } = require("store/extraReducers");
 import { createSlice } from '@reduxjs/toolkit'
 import { getAllJobs } from '../extraReducers'
 

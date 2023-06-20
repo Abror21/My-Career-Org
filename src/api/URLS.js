@@ -6,6 +6,7 @@ export const REGISTER_USER = `${BASE_URL}/api/auth/register`;
 export const CHECK_EMAIL = `${BASE_URL}/api/auth/CheckEmail?email`;
 export const LOGIN_USER = `${BASE_URL}/api/auth/login`;
 export const JOBS = `${BASE_URL}/api/job`;
+export const COUNTRIES_LIST = `${BASE_URL}/api/country`;
 
 
 
@@ -14,7 +15,6 @@ export const SKILLS = `${BASE_URL}/api/skills`;
 export const PHOTO = `${BASE_URL}/api/freelancer`;
 export const GET_FREELANCER = `${BASE_URL}/api/Freelancer/Freenalcer/Get`;
 export const GET_ALL_FREELANCER = `${BASE_URL}/api/Freelancer`;
-export const COUNTRYLIST = `${BASE_URL}/api/country/`;
 export const COUNTRY_LIST_UPLOAD = `${BASE_URL}/api/Freelancer/Adress`;
 export const POSITIONS = `${BASE_URL}/api/GetInformation/Positions`;
 export const POSITIONSUPLOAD = `${BASE_URL}/api/Freelancer/Position`;

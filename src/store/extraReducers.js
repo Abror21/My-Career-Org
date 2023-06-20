@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import {
 	CONTACTSUPLOAD,
-	COUNTRYLIST,
+	COUNTRIES_LIST,
 	COUNTRY_LIST_UPLOAD,
 	CREATECONTRACT,
 	DAGAVOR,
@@ -207,12 +207,12 @@ export const photoUpload = createAsyncThunk("token/photoUpload", async payload =
 });
 
 ///////////////////////////COUNTRYLIST GET///////////////////
-export const getCountryList = createAsyncThunk("get/countryList", async payload => {
-	return await axios.get(COUNTRYLIST).then(res => res.data);
+export const getCountryList = createAsyncThunk("get/countryList", async () => {
+	return await axios.get(COUNTRIES_LIST).then(res => res.data);
 });
 
 export const getRegionsList = createAsyncThunk("get/regionsList", async payload => {
-	return await axios.get(COUNTRYLIST + payload).then(res => res.data);
+	return await axios.get(COUNTRIES_LIST + payload).then(res => res.data);
 });
 
 ///////////////////////////COUNTRYUPLOAD POST///////////////////

@@ -1,11 +1,11 @@
-// import Photo from "../cards/Photo.jsx";
-// import Yourself from "../cards/Yourself";
-// import Language from "../cards/Language";
-// import Country from "../cards/Country";
-// import SocialMedia from "../cards/SocialMedia";
-// import SelectResume from "../cards/SelectResume";
-// import Educations from "../cards/Educations/Educations/Educations";
-// import WorkExperience from "../cards/WorkExperience/WorkExperience/WorkExperience";
+import Photo from "./components/photo/Photo.jsx";
+import Yourself from "./components/yourself/Yourself.jsx";
+import Language from "./components/language/Language.jsx";
+import Country from "./components/country/Country.jsx";
+import SocialMedia from "./components/social-media/SocialMedia.jsx";
+import SelectResume from "./components/select-resume/SelectResume.jsx";
+import Educations from "./components/Educations/Educations/Educations";
+import WorkExperience from "./components/WorkExperience/WorkExperience/WorkExperience";
 
 export let dot = [
     { id: 1, label: "Personal information" },

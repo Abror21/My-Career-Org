@@ -15,13 +15,13 @@ const FreelanceOrCompany = () => {
       <button className={classes.back} onClick={() => navigate(-1)}>&larr;</button>
       <div
         className={classes.freelancer}
-        onClick={() => navigate(`/${lang}/freelancer`)}
+        onClick={() => navigate(`/${lang}/freelancer-resume`)}
       >
         <h1>Freelancer</h1>
-      </div>
+      </div>  
       <div
         className={classes.company}
-        onClick={() => navigate(`/${lang}/company`)}
+        onClick={() => navigate(`/${lang}/company-resume`)}
       >
         <h1>Company</h1>
       </div>

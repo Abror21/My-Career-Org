@@ -45,7 +45,7 @@ const initialState = {
 	status: "idle",
 	positionGetLoading: false,
 	userID: null,
-	freelancerId:0,
+	freelancerId: 0,
 	testData: []
 };
 
@@ -62,23 +62,24 @@ const resumeSlice = createSlice({
 	},
 	extraReducers: builder => {
 		builder.addCase(photoUpload.pending, (state, action) => {
+			console.log('chaqirildi');
 			state.loading = true;
 		});
-		builder.addCase(photoUpload.fulfilled, (state, action) => {});
+		builder.addCase(photoUpload.fulfilled, (state, action) => { });
 		builder.addCase(photoUpload.rejected, (state, action) => {
 			state.loading = false;
 			state.error = action.error.message;
 		});
 		/////////post Freelancer//////
-		builder.addCase(Freelancerpost.pending, (state)=>{
+		builder.addCase(Freelancerpost.pending, (state) => {
 			state.loading = true
 		})
-		builder.addCase(Freelancerpost.fulfilled, (state, action)=>{
+		builder.addCase(Freelancerpost.fulfilled, (state, action) => {
 			state.loading = false
 			state.freelancerId = action.payload.id
 			console.log(action.payload)
 		})
-		builder.addCase(Freelancerpost.rejected, (state, action)=>{
+		builder.addCase(Freelancerpost.rejected, (state, action) => {
 			state.error = action.error.message
 		})
 		//CoutryList reducer
@@ -91,7 +92,6 @@ const resumeSlice = createSlice({
 		//Regions List
 		builder.addCase(getCountryList.rejected, (state, action) => {
 			state.loading = false;
-			console.log("erorr");
 			state.error = action.error.message;
 		});
 
@@ -106,7 +106,7 @@ const resumeSlice = createSlice({
 			state.error = action.error.message;
 		});
 		//CoutryList Upload reducer
-		builder.addCase(countryUpload.fulfilled, (state, action) => {});
+		builder.addCase(countryUpload.fulfilled, (state, action) => { });
 
 		//Positions List reducer
 		builder.addCase(positions.pending, (state, action) => {
@@ -156,7 +156,7 @@ const resumeSlice = createSlice({
 		builder.addCase(positionsUpload.pending, (state, action) => {
 			state.loading = true;
 		});
-		builder.addCase(positionsUpload.fulfilled, (state, { payload }) => {});
+		builder.addCase(positionsUpload.fulfilled, (state, { payload }) => { });
 		builder.addCase(positionsUpload.rejected, (state, action) => {
 			state.loading = false;
 			state.error = action.error.message;

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { addUser, companyLocation, yourCompany } from "./companyRegisterActions"
 import { registerCompany } from "../extraReducers"
-// import { addCompanyContacts, addCompanyInformation, addCompanyLocation, createCompanyUserPost } from "reduxToolkit/extraReducers"
+// import { addCompanyContacts, addCompanyInformation, addCompanyLocation, createCompanyUserPost } from "store/extraReducers"
 
 
 const initialState = {

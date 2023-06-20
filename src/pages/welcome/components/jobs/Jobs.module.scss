@@ -15,7 +15,7 @@
 }
 
 
-@media only screen and (max-width: 1756px) {
+@media (max-width: 1756px) {
 	.jobs {
 		padding-top: 10px;
 
@@ -25,7 +25,7 @@
 	}
 }
 
-@media only screen and (max-width: 1456px) {
+@media (max-width: 1456px) {
 	.jobs {
 		padding-top: 20px;
 
@@ -35,7 +35,7 @@
 	}
 }
 
-@media only screen and (max-width: 1356px) {
+@media (max-width: 1356px) {
 	.jobs {
 		.jobs__container {
 			height: 446px;
@@ -43,7 +43,7 @@
 	}
 }
 
-@media only screen and (max-height: 816px) {
+@media (max-height: 816px) {
 	.jobs {
 		.jobs__container {
 			padding: 30px 20px 0 30px;

@@ -10,7 +10,7 @@ import facebook from "../../../assets/images/Sign/facebook.svg";
 // import Company from "../component/Company";
 // import Carusel from "../component/Carusel";
 import { useDispatch, useSelector } from "react-redux";
-import { logInRequest } from "../../../reduxToolkit/extraReducers.js";
+import { logInRequest } from "../../../store/extraReducers.js";
 // import { Eye, EyeOff } from 'tabler-icons-react';
 import { Link, Outlet } from "react-router-dom";
 import Carusel from "../carousel/Carusel";

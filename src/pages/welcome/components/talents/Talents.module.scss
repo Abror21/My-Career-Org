@@ -15,7 +15,7 @@
 	}
 }
 
-@media only screen and (max-width: 1756px) {
+@media (max-width: 1756px) {
 	.talents {
 		padding-top: 10px;
 
@@ -25,7 +25,7 @@
 	}
 }
 
-@media only screen and (max-width: 1456px) {
+@media (max-width: 1456px) {
 	.talents {
 		padding-top: 20px;
 
@@ -35,7 +35,7 @@
 	}
 }
 
-@media only screen and (max-width: 1356px) {
+@media (max-width: 1356px) {
 	.talents {
 		.talents__container {
 			height: 446px;
@@ -43,7 +43,7 @@
 	}
 }
 
-@media only screen and (max-height: 816px) {
+@media (max-height: 816px) {
 	.talents__container {
 		margin: 0 auto;
 		padding: 30px 20px 0 30px !important;

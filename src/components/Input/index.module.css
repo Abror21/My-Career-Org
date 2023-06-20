@@ -10,7 +10,16 @@
     border: 1px solid #cdcdcd;
     border-radius: 8px;
 }
-
+.label{
+    display: inline-block;
+    margin-bottom: 5px;
+}
+.error{
+    color: red;
+}
+.error-border{
+    border-color: red;
+}
 @media (max-width: 1750px) {
     .input input {
         margin-bottom: 15px;

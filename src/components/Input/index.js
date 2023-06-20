@@ -17,13 +17,16 @@ const Input = ({
     
     return (
         <div className={classes.input}>
-            <label className={`${inputIsError || isExist ? 'text-danger' : ''}`}>{label}</label>
+            <label
+                style={{display: label ? '' : 'none'}}
+                className={`${classes.label} ${inputIsError || isExist ? classes.error : ''}`}
+            >{label}</label>
             <InputMask
                 mask={mask}
                 maskChar={null}
                 style={{borderColor: `${inputIsError || isExist ? 'red' : ''}`}}
                 type={type}
-                className={`${inputIsError ? 'border-danger' : ''}`}
+                className={`${inputIsError ? classes['error-border'] : ''}`}
                 value={value}
                 onChange={inputChange}
                 onBlur={inputBlur}
