@@ -63,11 +63,11 @@ function Country() {
 				street
 			}
 			dispatch(addFreelancerAddress(freelancerAddress))
+			dispatch(activeDoteAction([
+				{ id: 3, label: "About yourself and skills" },
+				{ id: 3, type: "yourself" }
+			]));
 		}
-		dispatch(activeDoteAction([
-			{ id: 3, label: "About yourself and skills" },
-			{ id: 3, type: "yourself" }
-		]));
 	};
 	const removePage = event => {
 		event.preventDefault();

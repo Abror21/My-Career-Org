@@ -34,8 +34,6 @@ function Yourself() {
 		DateOfBirthString: ""
 	})
 
-	// console.log(skil)
-
 	useEffect(() => {
 		dispatch(getPositionsSkillsWithId(skil));
 		dispatch(hobbies())
@@ -68,16 +66,15 @@ function Yourself() {
 			])
 		);
 	};
-	const PositionChange = pos => {
+	const positionChange = pos => {
+		console.log(pos.label);
 		setSkil(pos.id);
 		setData({ ...data, position: pos.id })
-		console.log(pos);
 	};
 	const Xobbys = hobbiesList.map(item => ({
 		value: item.content,
 		label: item.content
 	}))
-	// console.log(skillsData)	
 	const options = skillsData.map(item => ({
 		value: item.content,
 		label: item.content
@@ -114,7 +111,7 @@ function Yourself() {
 							required
 							classNamePrefix="mySelect"
 							options={positionList.map(el => ({ id: el.id, label: el.name }))}
-							onChange={PositionChange}
+							onChange={positionChange}
 							placeholder="Positions*"
 						/>
 					</div>
