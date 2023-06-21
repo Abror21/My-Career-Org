@@ -8,7 +8,12 @@ const initialState = {
     phone: '',
     country: '',
     region: '',
-    street: ''
+    street: '',
+    position: '',
+    birthDate: '',
+    skills: [],
+    hobbies: [],
+    describeYourself: ''
 };
 
 const freelancerResume = createSlice({
@@ -26,9 +31,21 @@ const freelancerResume = createSlice({
             state.country = action.payload.country;
             state.region = action.payload.region;
             state.street = action.payload.street;
+        },
+        addAboutFreelancer: (state, action) => {
+            state.position = action.payload.position;
+            state.birthDate = action.payload.birthDate;
+            state.skills = action.payload.skills;
+            state.hobbies = action.payload.hobbies;
+            state.describeYourself = action.payload.description;
         }
     }
 });
 
-export const { addFreelancerInfo, addFreelancerAddress } = freelancerResume.actions;
+export const {
+    addFreelancerInfo,
+    addFreelancerAddress,
+    addAboutFreelancer
+} = freelancerResume.actions;
+
 export default freelancerResume.reducer;

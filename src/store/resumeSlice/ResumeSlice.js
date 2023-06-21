@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
 	contactUpload,
-	getCountryList,
 	countryUpload,
 	educationDelete,
 	educationEdit,
@@ -18,7 +17,6 @@ import {
 	positions,
 	positionsUpload,
 	resumeSelect,
-	getRegionsList,
 	getPositionsSkillsWithId,
 	Freelancerpost
 } from "../extraReducers";

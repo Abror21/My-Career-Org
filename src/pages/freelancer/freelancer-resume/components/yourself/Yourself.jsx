@@ -11,50 +11,31 @@ import { yourSelfStep } from 'src/store/frilanserCardSlice/frilanserCardSlice'
 import { languages, getPositionsSkillsWithId, hobbies } from "src/store/extraReducers";
 import { useEffect } from "react";
 import { getHobbies, getSkills } from "src/store/frilanserCardSlice/frilanserCardSlice";
+import OutlinedButton from "src/components/outlined-button";
+import { addAboutFreelancer } from "src/store/freelancer-resume/freelancerResume";
 
 function Yourself() {
 	const dispatch = useDispatch();
+
+	const [position, setPosition] = useState('');
+	const [birthDate, setBirthDate] = useState('');
+	const [skills, setSkills] = useState([]);
+	const [hobbies, setHobbies] = useState([]);
+	const [description, setDescription] = useState('');
+	const [positionIsError, setPositionIsError] = useState(false);
+	const [birthDateIsError, setBirthDateIsError] = useState(false);
+	const [skillsIsError, setSkillsIsError] = useState(false);
+	const [hobbiesIsError, setHobbiesIsError] = useState(false);
+
 	const { positionGetLoading, positionList, hobbiesList, loading, skillsData, HobbysGetLoading } = useSelector(state => state.resume);
-	const [skil, setSkil] = useState("1");
-	const [hobbiesorg, setHobbiesorg] = useState([]);
-	const [orgSkills, setOrgSkills] = useState("");
-	const [downSkills, setDownSkills] = useState([]);
-	const [dateValue, setDateValue] = useState("");
-	const [datas, setDatas] = useState({
-		description: "",
-		positionId: null,
-		freelancerHobbies: [],
-		freelancerSkills: [],
-		newHobbies: [],
-		newSkills: []
-	});
-	const [data, setData] = useState({
-		bio: "",
-		position: '',
-		DateOfBirthString: ""
-	})
 
-	useEffect(() => {
-		dispatch(getPositionsSkillsWithId(skil));
-		dispatch(hobbies())
-
-	}, [skil]);
+	// useEffect(() => {
+	// 	dispatch(getPositionsSkillsWithId(skil));
+	// 	dispatch(hobbies())
+	// }, [skil]);
 
 	if (positionGetLoading && loading) {
 		return <b>Loading...</b>;
-	}
-	const handleSubmit = event => {
-		dispatch(languages());
-		dispatch(getSkills(downSkills));
-		dispatch(getHobbies(hobbiesorg))
-		dispatch(yourSelfStep(data))
-		event.preventDefault();
-		dispatch(
-			activeDoteAction([
-				{ id: 4, label: "Language" },
-				{ id: 4, type: "lenguage" }
-			])
-		)
 	}
 
 	const prevPage = event => {
@@ -66,11 +47,10 @@ function Yourself() {
 			])
 		);
 	};
-	const positionChange = pos => {
-		console.log(pos.label);
-		setSkil(pos.id);
-		setData({ ...data, position: pos.id })
-	};
+	// const positionChange = p => {
+	// 	setPosition(p.label)
+	// 	// setData({ ...data, position: pos.id })
+	// };
 	const Xobbys = hobbiesList.map(item => ({
 		value: item.content,
 		label: item.content
@@ -79,73 +59,94 @@ function Yourself() {
 		value: item.content,
 		label: item.content
 	}));
-	const changeSkill = ({ value, type }) => {
-		if (type === "skills") {
-			setDatas(prev => ({
-				...prev,
-				freelancerSkills: value.filter(el => !isNaN(el * 1)).map(el => el * 1),
-				newSkills: value.filter(el => isNaN(el * 1))
-			}));
-		} else {
-			setDatas(prev => ({
-				...prev,
-				freelancerHobbies: value.filter(el => !isNaN(el * 1)).map(el => el * 1),
-				newHobbies: value.filter(el => isNaN(el * 1))
-			}));
+
+	const handleSubmit = e => {
+		e.preventDefault();
+
+		setPositionIsError(false);
+		setBirthDateIsError(false);
+		setSkillsIsError(false);
+		setHobbiesIsError(false);
+		if (!position) {
+			setPositionIsError(true);
 		}
-		if (type === "hobbies") {
-			setHobbiesorg(value);
+		if (!birthDate) {
+			setBirthDateIsError(true);
 		}
-	};
-	const handleSelectChange = skill => {
-		setDownSkills(skill);
-	};
+		if (!skills.length) {
+			setSkillsIsError(true)
+		}
+		if (!hobbies.length) {
+			setHobbiesIsError(true)
+		}
+		if (position && birthDate && skills.length && hobbies.length) {
+			const about = { position, birthDate, skills, hobbies, description }
+			dispatch(addAboutFreelancer(about))
+			dispatch(
+				activeDoteAction([
+					{ id: 4, label: "Language" },
+					{ id: 4, type: "lenguage" }
+				])
+			)
+		}
+	}
+
 	return (
 		<div className="yourselfCard">
 			<h2 className="yourselfCard_title">Write little about yourself</h2>
 			<form method="post" className="yourselfCard_form" onSubmit={handleSubmit}>
 				<div className="yourselfCard_form_wrapper">
 					<div className="yourselfCard_form_wrapper_top">
-						<label className="yourselfCard_label">Select your Positions*</label>
+						<label
+							className="yourselfCard_label"
+							style={{ color: (positionIsError && !position) ? 'red' : '' }}
+						>Select your Positions*</label>
 						<Select
-							required
-							classNamePrefix="mySelect"
+							className={`${(positionIsError && !position) ? 'error' : ''}`}
 							options={positionList.map(el => ({ id: el.id, label: el.name }))}
-							onChange={positionChange}
+							onChange={e => setPosition(e.label)}
 							placeholder="Positions*"
 						/>
 					</div>
 
 					<div className="yourselfCard_form_wrapper_bottom">
-						<label className="yourselfCard_label">Date of birth*</label>
+						<label
+							className="yourselfCard_label"
+							style={{ color: (birthDateIsError && !birthDate) ? 'red' : '' }}
+						>Date of birth*</label>
 						<input
+							className={`${(birthDateIsError && !birthDate) ? 'error' : ''}`}
 							type="date"
-							required
 							placeholder="DD/MM/YYYY"
-							data-date-format=" YYYY:MMMM:DD "
-							onChange={e => setData({ ...data, DateOfBirthString: e.target.value.split("-").join(":") })}
+							data-date-format="YYYY:MMMM:DD "
+							onChange={e => setBirthDate(e.target.value.split("-").join(":"))}
 						/>
 					</div>
 				</div>
 				<div>
-					<label className="yourselfCard_label">Write down your skills*</label>
+					<label
+						className="yourselfCard_label"
+						style={{ color: (skillsIsError && !skills.length) ? 'red' : '' }}
+					>Write down your skills*</label>
 					<MultiSelect
+						className={`${(skillsIsError && !skills.length) ? 'error' : ''}`}
 						data={options}
-						onChange={handleSelectChange}
+						onChange={skill => setSkills(skill)}
 						searchable
 						creatable
 						getCreateLabel={query => `+ Create ${query}`}
 						onCreate={query => {
 							const item = { value: query, label: query };
-							setOrgSkills(current => [...current, item]);
 							return item;
 						}}
 					/>
-
-					<label className="yourselfCard_label">Hobbies*</label>
 					<br />
+					<label
+						className="yourselfCard_label"
+						style={{ color: (hobbiesIsError && !hobbies.length) ? 'red' : '' }}
+					>Hobbies*</label>
 					<MultiSelect
-						className="yourself_select"
+						className={`yourself_select ${(hobbiesIsError && !hobbies.length) ? 'error' : ''}`}
 						required
 						data={Xobbys}
 						placeholder="Select hobbie or create a new"
@@ -155,23 +156,23 @@ function Yourself() {
 						getCreateLabel={query => `+ Create ${query}`}
 						onCreate={query => {
 							const item = { value: query, label: query.toLowerCase() };
-							setHobbiesorg(current => [...current, item]);
 							return item;
 						}}
-						onChange={value => changeSkill({ value, type: "hobbies" })}
+						onChange={hobby => setHobbies(hobby)}
 					/>
 
 					<input
 						className="yourselfCard_textarea"
 						type="text"
 						placeholder="Describe yourself to buyers"
-						onChange={event => setData(prev => ({ ...prev, bio: event.target.value }))}></input>
+						onChange={e => setDescription(e.target.value)}
+					/>
 				</div>
 				<div className="yourselfCard_btn">
 					<button className="backButton" type="button" onClick={prevPage}>
 						Back
 					</button>
-					<button className="nextButton">Next</button>
+					<OutlinedButton type="submit" title="Next" />
 				</div>
 			</form>
 		</div>
