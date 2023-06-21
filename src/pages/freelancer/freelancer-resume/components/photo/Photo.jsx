@@ -11,7 +11,7 @@ import { useInput } from "src/hooks";
 import OutlinedButton from "src/components/outlined-button";
 import changeIcon from 'src/assets/images/Resume/change.png'
 import photoIcon from 'src/assets/images/Resume/image.svg'
-import { addData } from "src/store/freelancer-resume/freelancerResume";
+import { addFreelancerInfo } from "src/store/freelancer-resume/freelancerResume";
 
 function Photo() {
 	const inputRef = useRef();
@@ -83,8 +83,8 @@ function Photo() {
 
 		if (nameIsValid && surnameIsValid && emailIsValid && phoneIsValid) {
 			dispatch(activeDoteAction([{ id: 2, label: "Address" }, { id: 2, type: "country" }]));
-			const data = {image,name,surname,email,phone}
-			dispatch(addData(data));
+			const data = { image, name, surname, email, phone }
+			dispatch(addFreelancerInfo(data));
 		}
 	};
 

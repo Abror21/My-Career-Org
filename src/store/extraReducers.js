@@ -30,7 +30,8 @@ import {
 	ADD_COMPANY,
 	ADD_LOCATION_COMPANY,
 	ADD_CONTACTS_COMPANY,
-	REGISTER_USER
+	REGISTER_USER,
+	REGIONS_LIST
 } from "../api/URLS";
 
 
@@ -207,13 +208,13 @@ export const photoUpload = createAsyncThunk("token/photoUpload", async payload =
 });
 
 ///////////////////////////COUNTRYLIST GET///////////////////
-export const getCountryList = createAsyncThunk("get/countryList", async () => {
-	return await axios.get(COUNTRIES_LIST).then(res => res.data);
-});
+// export const getCountryList = createAsyncThunk("get/countryList", async () => {
+// 	return await axios.get(COUNTRIES_LIST).then(res => res.data);
+// });
 
-export const getRegionsList = createAsyncThunk("get/regionsList", async payload => {
-	return await axios.get(COUNTRIES_LIST + payload).then(res => res.data);
-});
+// export const getRegionsList = createAsyncThunk("get/regionsList", async payload => {
+// 	return await axios.get(REGIONS_LIST + payload).then(res => res.data);
+// });
 
 ///////////////////////////COUNTRYUPLOAD POST///////////////////
 export const countryUpload = createAsyncThunk("token/countryUpload", async payload => {

@@ -7,6 +7,7 @@ export const CHECK_EMAIL = `${BASE_URL}/api/auth/CheckEmail?email`;
 export const LOGIN_USER = `${BASE_URL}/api/auth/login`;
 export const JOBS = `${BASE_URL}/api/job`;
 export const COUNTRIES_LIST = `${BASE_URL}/api/country`;
+export const REGIONS_LIST = `${BASE_URL}/api/region/GetByCountry`;
 
 
 

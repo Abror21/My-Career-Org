@@ -5,45 +5,69 @@ import { useDispatch, useSelector } from "react-redux";
 import { secondStep } from "src/store/frilanserCardSlice/frilanserCardSlice";
 import { activeDoteAction } from "src/store/resumeControlsSlice/resumeControls";
 import { countryUpload, hobbies, positions, getFreelancer, getCountryList, getRegionsList } from "src/store/extraReducers";
+import { COUNTRIES_LIST, REGIONS_LIST } from "src/api/URLS";
+import { addFreelancerAddress } from "src/store/freelancer-resume/freelancerResume";
+import './Country.css';
 
 function Country() {
+	const [countriesList, setCountriesList] = useState([]);
+	const [regionsList, setRegionsList] = useState([]);
+	const [countryId, setCountryId] = useState(null);
+	const [country, setCountry] = useState('');
+	const [region, setRegion] = useState('');
+	const [street, setStreet] = useState('');
+	const [countryIsError, setCountryIsError] = useState(false);
+	const [regionIsError, setRegionIsError] = useState(false);
+
 	const dispatch = useDispatch();
-	const street = useRef("");
 	const name = useSelector(state => state.freelancerResume.name);
 
-	const [userChoice, setUserChoice] = useState([0]);
-	const [userChoice2, setUserChoice2] = useState(0);
-	const countryList = useSelector(state => state.resume.countryList);
-
 	useEffect(() => {
-		dispatch(getCountryList())
+		fetch(COUNTRIES_LIST)
+			.then(res => res.json())
+			.then(data => setCountriesList(data))
 	}, [])
+	useEffect(() => {
+		if (countryId) {
+			fetch(`${REGIONS_LIST}?countryId=${countryId}`)
+				.then(res => res.json())
+				.then(data => setRegionsList(data))
+		}
+	}, [countryId])
 
-	const regionsList = useSelector(state => state.resume.regionsList);
+
 	let options = [];
 
 	let optionsRegion = [];
-	for (let i = 0; i < countryList?.length; i++) {
-		options.push({ value: [countryList[i].id, countryList.indexOf(countryList[i])], label: countryList[i].name });
+	for (let i = 0; i < countriesList?.length; i++) {
+		options.push({ value: [countriesList[i].id, countriesList.indexOf(countriesList[i])], label: countriesList[i].name });
 	}
-	for (let i = 0; i < regionsList.length; i++) {
+	for (let i = 0; i < regionsList?.length; i++) {
 		optionsRegion.push({ value: [regionsList[i].id, regionsList.indexOf(regionsList[i])], label: regionsList[i].name });
 	}
-	const [data, setData] = useState({
-		countryId: 1,
-		country: 2,
-		street: ""
-	})
 
-	const handleSubmit = event => {
-		dispatch(secondStep(data));
-		dispatch(
-			activeDoteAction([
-				{ id: 3, label: "About yourself and skills" },
-				{ id: 3, type: "yourself" }
-			])
-		);
-		event.preventDefault();
+	const handleSubmit = e => {
+		e.preventDefault();
+		setCountryIsError(false);
+		setRegionIsError(false);
+		if (!country) {
+			setCountryIsError(true);
+		}
+		if (!region) {
+			setRegionIsError(true);
+		}
+		if (country && region) {
+			const freelancerAddress = {
+				country,
+				region,
+				street
+			}
+			dispatch(addFreelancerAddress(freelancerAddress))
+		}
+		dispatch(activeDoteAction([
+			{ id: 3, label: "About yourself and skills" },
+			{ id: 3, type: "yourself" }
+		]));
 	};
 	const removePage = event => {
 		event.preventDefault();
@@ -54,6 +78,14 @@ function Country() {
 			])
 		);
 	};
+
+	const countryHandleChange = (e) => {
+		setCountryId(e.value[0])
+		setCountry(e.label);
+	}
+	const regionHandleChange = (e) => {
+		setRegion(e.label);
+	}
 
 	return (
 		<div className="countryCard">
@@ -67,18 +99,24 @@ function Country() {
 						<h5 className="country__subtitle">Living address</h5>
 						<div className="country__wrapper">
 							<div className="country__info">
-								<Select classNamePrefix="mySelect" options={options} placeholder="Country*" onChange={choice => setUserChoice(choice.value)} />
+								<Select
+									className={`${(countryIsError && !country) ? 'error' : ''}`}
+									classNamePrefix=""
+									options={options}
+									placeholder="Country*"
+									onChange={countryHandleChange}
+								/>
 							</div>
 							<div className="country__info">
 								<Select
-									classNamePrefix="mySelect"
+									className={`${(regionIsError && !region) ? 'error' : ''}`}
 									options={optionsRegion}
 									placeholder="Region*"
-									onChange={choice => setUserChoice2(choice.value)}
+									onChange={regionHandleChange}
 								/>
 							</div>
 						</div>
-						<input onChange={e => setData(e.target.value)} className="country__inputStreet" type="text" placeholder="Street, apartment" />
+						<input onChange={e => setStreet(e.target.value)} className="country__inputStreet" type="text" placeholder="Street, apartment" />
 					</div>
 					<div className="country__button">
 						<button className="country__back" type="button" onClick={removePage}>

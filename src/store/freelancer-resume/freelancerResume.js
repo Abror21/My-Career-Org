@@ -5,22 +5,30 @@ const initialState = {
     name: '',
     surname: '',
     email: '',
-    phone: ''
+    phone: '',
+    country: '',
+    region: '',
+    street: ''
 };
 
 const freelancerResume = createSlice({
     name: 'freelancer-resume',
     initialState,
     reducers: {
-        addData: (state, action) => {
+        addFreelancerInfo: (state, action) => {
             state.image = action.payload.image;
             state.name = action.payload.name;
             state.surname = action.payload.surname;
             state.email = action.payload.email;
             state.phone = action.payload.phone;
+        },
+        addFreelancerAddress: (state, action) => {
+            state.country = action.payload.country;
+            state.region = action.payload.region;
+            state.street = action.payload.street;
         }
     }
 });
 
-export const { addData } = freelancerResume.actions;
+export const { addFreelancerInfo, addFreelancerAddress } = freelancerResume.actions;
 export default freelancerResume.reducer;

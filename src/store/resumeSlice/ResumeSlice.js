@@ -19,9 +19,7 @@ import {
 	positionsUpload,
 	resumeSelect,
 	getRegionsList,
-	getLanguages,
 	getPositionsSkillsWithId,
-	postFreelancerInfo,
 	Freelancerpost
 } from "../extraReducers";
 
@@ -29,8 +27,8 @@ const initialState = {
 	loading: false,
 	error: "",
 	data: [],
-	regionsList: [],
-	countryList: [],
+	// regionsList: [],
+	// countryList: [],
 	positionList: [{ name: "Web Designer", id: 0 }, { name: "FrontEnd", id: 1 }, { name: "Backend", id: 2 }],
 	hobbiesList: [],
 	HobbysGetLoading: null,
@@ -83,28 +81,28 @@ const resumeSlice = createSlice({
 			state.error = action.error.message
 		})
 		//CoutryList reducer
-		builder.addCase(getCountryList.pending, (state, action) => {
-			state.loading = true;
-		});
-		builder.addCase(getCountryList.fulfilled, (state, action) => {
-			state.countryList = action.payload;
-		});
-		//Regions List
-		builder.addCase(getCountryList.rejected, (state, action) => {
-			state.loading = false;
-			state.error = action.error.message;
-		});
+		// builder.addCase(getCountryList.pending, (state, action) => {
+		// 	state.loading = true;
+		// });
+		// builder.addCase(getCountryList.fulfilled, (state, action) => {
+		// 	state.countryList = action.payload;
+		// });
+		// //Regions List
+		// builder.addCase(getCountryList.rejected, (state, action) => {
+		// 	state.loading = false;
+		// 	state.error = action.error.message;
+		// });
 
-		builder.addCase(getRegionsList.pending, (state, action) => {
-			state.loading = true;
-		});
-		builder.addCase(getRegionsList.fulfilled, (state, action) => {
-			state.regionsList = action.payload.regions;
-		});
-		builder.addCase(getRegionsList.rejected, (state, action) => {
-			state.loading = false;
-			state.error = action.error.message;
-		});
+		// builder.addCase(getRegionsList.pending, (state, action) => {
+		// 	state.loading = true;
+		// });
+		// builder.addCase(getRegionsList.fulfilled, (state, action) => {
+		// 	state.regionsList = action.payload;
+		// });
+		// builder.addCase(getRegionsList.rejected, (state, action) => {
+		// 	state.loading = false;
+		// 	state.error = action.error.message;
+		// });
 		//CoutryList Upload reducer
 		builder.addCase(countryUpload.fulfilled, (state, action) => { });
 
@@ -125,12 +123,10 @@ const resumeSlice = createSlice({
 		///////////////////////getPositionsSkillsWithId//////////////////////
 		builder.addCase(getPositionsSkillsWithId.pending, (state, action) => {
 			// state.loading = true;
-
 		});
 		builder.addCase(getPositionsSkillsWithId.fulfilled, (state, action) => {
 			state.skillsData = action.payload;
 			state.loading = false;
-
 		});
 		builder.addCase(getPositionsSkillsWithId.rejected, (state, action) => {
 			state.error = action.error.message;
