@@ -1,7 +1,7 @@
-
 .languageCard_btn {
 	width: 100%;
-	display: flex;align-items: center;
+	display: flex;
+	align-items: center;
 	justify-content: flex-end;
 	gap: 20px;
 }
@@ -33,22 +33,23 @@
 
 .nextButton {
 	border: 1px solid #1d71b8 !important;
+
 	&:hover {
 		transition: 0.3s;
 		background-color: #1d71b8 !important;
-		cursor:pointer;
+		cursor: pointer;
 		color: white;
 	}
 }
 
 .backButton {
-		border: 1px solid white !important;
+	border: 1px solid white !important;
 
-		&:hover {
-			transition: 0.3s;
-			cursor: pointer;
-			border: 1px solid #1d71b8 !important;
-		}
+	&:hover {
+		transition: 0.3s;
+		cursor: pointer;
+		border: 1px solid #1d71b8 !important;
+	}
 }
 
 .addLanguage {
@@ -93,9 +94,10 @@
 	border-radius: 8px;
 	border: 1px solid #cdcdcd;
 	margin-top: 1rem;
-	// text-align: center;
+	cursor: pointer;
 	padding: 11px 15px;
-	img{
+
+	img {
 		margin-top: 4px;
 	}
 }
@@ -107,7 +109,7 @@
 	box-sizing: border-box;
 }
 
-@media(max-width:1400px){
+@media(max-width:1400px) {
 	.addLanguage {
 		// padding: 15px 0;
 		font-size: 17px;
@@ -123,5 +125,5 @@
 }
 
 .css-13cymwt-control {
-	width:100px !important ;
+	width: 100px !important;
 }

@@ -13,7 +13,8 @@ const initialState = {
     birthDate: '',
     skills: [],
     hobbies: [],
-    describeYourself: ''
+    describeYourself: '',
+    languages: []
 };
 
 const freelancerResume = createSlice({
@@ -38,6 +39,9 @@ const freelancerResume = createSlice({
             state.skills = action.payload.skills;
             state.hobbies = action.payload.hobbies;
             state.describeYourself = action.payload.description;
+        },
+        addFreelancerLanguages: (state, action) => {
+            state.languages = action.payload;
         }
     }
 });
@@ -45,7 +49,8 @@ const freelancerResume = createSlice({
 export const {
     addFreelancerInfo,
     addFreelancerAddress,
-    addAboutFreelancer
+    addAboutFreelancer,
+    addFreelancerLanguages
 } = freelancerResume.actions;
 
 export default freelancerResume.reducer;

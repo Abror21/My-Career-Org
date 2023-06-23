@@ -8,6 +8,7 @@ import { countryUpload, hobbies, positions, getFreelancer, getCountryList, getRe
 import { COUNTRIES_LIST, REGIONS_LIST } from "src/api/URLS";
 import { addFreelancerAddress } from "src/store/freelancer-resume/freelancerResume";
 import './Country.css';
+import { toast } from "react-toastify";
 
 function Country() {
 	const [countriesList, setCountriesList] = useState([]);
@@ -62,6 +63,7 @@ function Country() {
 				region,
 				street
 			}
+			toast.success('Success', { position: toast.POSITION.TOP_LEFT })
 			dispatch(addFreelancerAddress(freelancerAddress))
 			dispatch(activeDoteAction([
 				{ id: 3, label: "About yourself and skills" },

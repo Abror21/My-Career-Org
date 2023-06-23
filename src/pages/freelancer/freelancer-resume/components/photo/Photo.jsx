@@ -12,6 +12,7 @@ import OutlinedButton from "src/components/outlined-button";
 import changeIcon from 'src/assets/images/Resume/change.png'
 import photoIcon from 'src/assets/images/Resume/image.svg'
 import { addFreelancerInfo } from "src/store/freelancer-resume/freelancerResume";
+import { toast } from "react-toastify";
 
 function Photo() {
 	const inputRef = useRef();
@@ -82,9 +83,10 @@ function Photo() {
 		phoneInputTouch();
 
 		if (nameIsValid && surnameIsValid && emailIsValid && phoneIsValid) {
-			dispatch(activeDoteAction([{ id: 2, label: "Address" }, { id: 2, type: "country" }]));
+			toast.success('Success', { position: toast.POSITION.TOP_LEFT })
 			const data = { image, name, surname, email, phone }
 			dispatch(addFreelancerInfo(data));
+			dispatch(activeDoteAction([{ id: 2, label: "Address" }, { id: 2, type: "country" }]));
 		}
 	};
 

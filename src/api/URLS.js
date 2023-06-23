@@ -8,6 +8,7 @@ export const LOGIN_USER = `${BASE_URL}/api/auth/login`;
 export const JOBS = `${BASE_URL}/api/job`;
 export const COUNTRIES_LIST = `${BASE_URL}/api/country`;
 export const REGIONS_LIST = `${BASE_URL}/api/region/GetByCountry`;
+export const LANGUAGES = `${BASE_URL}/api/language`;
 
 
 
@@ -21,7 +22,6 @@ export const POSITIONS = `${BASE_URL}/api/GetInformation/Positions`;
 export const POSITIONSUPLOAD = `${BASE_URL}/api/Freelancer/Position`;
 export const HOBBIES = `${BASE_URL}/api/hobby`;
 export const POSITION_POST = `${BASE_URL}/api/Freelancer/Position`;
-export const LANGUAGES = `${BASE_URL}/api/language`;
 export const AVIABLE_PUT = `${BASE_URL}/api/Portfolio/Available`;
 export const EXPERIENCE = `${BASE_URL}/api/experience`;
 export const EXPERIENCEDELETE = `${BASE_URL}/api/experience`;

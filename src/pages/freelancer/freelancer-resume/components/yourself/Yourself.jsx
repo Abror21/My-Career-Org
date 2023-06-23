@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { getHobbies, getSkills } from "src/store/frilanserCardSlice/frilanserCardSlice";
 import OutlinedButton from "src/components/outlined-button";
 import { addAboutFreelancer } from "src/store/freelancer-resume/freelancerResume";
+import { toast } from "react-toastify";
 
 function Yourself() {
 	const dispatch = useDispatch();
@@ -81,6 +82,7 @@ function Yourself() {
 		}
 		if (position && birthDate && skills.length && hobbies.length) {
 			const about = { position, birthDate, skills, hobbies, description }
+			toast.success('Success', { position: toast.POSITION.TOP_LEFT })
 			dispatch(addAboutFreelancer(about))
 			dispatch(
 				activeDoteAction([
