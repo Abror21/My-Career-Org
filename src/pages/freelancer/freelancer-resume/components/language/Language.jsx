@@ -15,9 +15,6 @@ import { Lego } from "tabler-icons-react";
 function Language() {
 	const dispatch = useDispatch();
 	const languageList = useSelector(state => state.resume.languageList);
-	// const [data,setData] = useState({LanguageId: null, lavel:"",})
-	// const [userLang, setUserLang] = useState([]);
-	const [userLevel, setUserLevel] = useState([]);
 	const [userLanguages, setUserLanguages] = useState([]);
 
 	let level = [
