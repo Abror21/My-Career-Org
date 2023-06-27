@@ -1,7 +1,7 @@
 .input input {
     display: block;
     width: 100%;
-    padding: 12px 17px;
+    padding: 15px 17px;
     font-weight: 500;
     font-size: 20px;
     line-height: 24px;
@@ -10,16 +10,20 @@
     border: 1px solid #cdcdcd;
     border-radius: 8px;
 }
-.label{
+
+.label {
     display: inline-block;
     margin-bottom: 5px;
 }
-.error{
+
+.error {
     color: red;
 }
-.error-border{
+
+.error-border {
     border-color: red;
 }
+
 @media (max-width: 1750px) {
     .input input {
         margin-bottom: 15px;

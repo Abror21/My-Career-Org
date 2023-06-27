@@ -110,7 +110,6 @@ function Yourself() {
 							placeholder="Positions*"
 						/>
 					</div>
-
 					<div className="yourselfCard_form_wrapper_bottom">
 						<label
 							className="yourselfCard_label"

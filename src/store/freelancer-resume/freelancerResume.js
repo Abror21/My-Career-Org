@@ -16,6 +16,7 @@ const initialState = {
     describeYourself: '',
     languages: [],
     freelancerExperience: [],
+    freelancerEducation: [],
 };
 
 const freelancerResume = createSlice({
@@ -57,7 +58,22 @@ const freelancerResume = createSlice({
         },
         removeFreelancerExperience: (state, action) => {
             state.freelancerExperience = state.freelancerExperience.filter(exp => exp.id !== action.payload)
-        }
+        },
+        addFreelancerEducation: (state, action) => {
+            const idx = state.freelancerEducation.findIndex(edu => edu.id === action.payload.id);
+            if (idx >= 0) {
+                let currentEl = state.freelancerEducation[idx];
+                currentEl = { ...action.payload }
+                state.freelancerEducation[idx] = currentEl;
+                state.freelancerEducation = [...state.freelancerEducation];
+            } else {
+                state.freelancerEducation = [...state.freelancerEducation, action.payload];
+            }
+        },
+        removeFreelancerEducation: (state, action) => {
+            state.freelancerEducation = state.freelancerEducation.filter(edu => edu.id !== action.payload)
+        },
+
     }
 });
 
@@ -67,7 +83,9 @@ export const {
     addAboutFreelancer,
     addFreelancerLanguages,
     addFreelancerExperience,
-    removeFreelancerExperience
+    removeFreelancerExperience,
+    addFreelancerEducation,
+    removeFreelancerEducation
 } = freelancerResume.actions;
 
 export default freelancerResume.reducer;

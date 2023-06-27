@@ -115,44 +115,6 @@
 		gap: 20px;
 	}
 
-	&__next {
-		cursor: pointer;
-		border: 1px solid #1d71b8 !important;
-		border: none;
-		border-radius: 8px;
-		font-weight: 500;
-		font-size: 20px;
-		line-height: 24px;
-		color: #323232;
-		background: #ffffff;
-		padding: 1rem 2rem;
-
-		&:hover {
-			background-color: #1d71b8;
-			color: white;
-			transition: 0.3s;
-		}
-	}
-
-	&__back {
-		border: none;
-		border-radius: 8px;
-		font-weight: 500;
-		font-size: 20px;
-		line-height: 24px;
-		color: #323232;
-		background: #ffffff;
-		padding: 1rem 2rem;
-		margin-right: 20px;
-		border: 1px solid white;
-
-		&:hover {
-			cursor: pointer;
-			border: 1px solid #1d71b8;
-			transition: 0.3s;
-		}
-	}
-
 	&__wrapper {
 		margin-bottom: 30px;
 	}
@@ -171,6 +133,7 @@
 		width: 100%;
 		padding: 15px 20px;
 		transition: all .3s linear;
+		cursor: pointer;
 	}
 
 	&__buttonAdd:hover {
@@ -178,6 +141,15 @@
 		background: #1d71b8;
 		transition: all .3s linear;
 	}
+}
+
+.experience__box__hovering path {
+	stroke: #333;
+	transition: 0.3s;
+}
+
+.experience__box__hoveringT path {
+	stroke: #333;
 }
 
 @media(max-width:1500px) {

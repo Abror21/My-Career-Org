@@ -41,7 +41,6 @@ function WorkExperience() {
 
 		dispatch(activeDoteAction([{ id: 6, label: "Educations" }, { id: 6, type: "education" }]));
 	};
-	console.log(experienceList);
 
 	return (
 		<>
@@ -58,7 +57,6 @@ function WorkExperience() {
 						<div className="experience__box">
 							{
 								experienceList.map(el => {
-									console.log(el);
 									return <div className="experience__content" key={el.id}>
 										<div className="experience__texts">
 											<span className="experience__subtitle">{el.companyName}</span>
@@ -109,7 +107,6 @@ function WorkExperience() {
 					</div>
 				</div>
 			</div>
-
 			{isModalActive && <MyWork removeModal={setModalActive} data={dataToEdit} />}
 		</>
 	);
