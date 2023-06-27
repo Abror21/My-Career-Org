@@ -1,4 +1,4 @@
-*{
+* {
 	outline: none;
 }
 
@@ -29,6 +29,12 @@
 		overflow: hidden;
 	}
 
+	&__form {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
+
 	&__modal_clouce {
 		position: absolute;
 		right: 5px;
@@ -54,22 +60,10 @@
 		font-size: 30px;
 		line-height: 37px;
 		color: #323232;
-		margin-bottom: 30px;
-	}
-
-	&__input {
-		font-family: "Montserrat", sans-serif;
-		font-weight: 500;
-		font-size: 20px;
-		line-height: 24px;
-		color: #808080;
-		padding: 15px 20px;
-		width: 94%;
-		margin-bottom: 20px;
+		margin-bottom: 10px;
 	}
 
 	&__checkbox {
-		margin-bottom: 30px;
 		display: flex;
 		align-items: center;
 	}
@@ -93,14 +87,7 @@
 	&__wrapper {
 		display: flex;
 		align-items: center;
-		margin-bottom: 30px;
 		gap: 30px;
-	}
-
-	&__wrapperDate {
-		display: flex;
-		flex-direction: column;
-		width: 100%;
 	}
 
 	&__label {
@@ -122,10 +109,6 @@
 		border: 1px solid #cdcdcd;
 		border-radius: 8px;
 		width: 88%;
-	}
-
-	&__descriptionWrapper {
-		margin-bottom: 30px;
 	}
 
 	&__description {
@@ -190,7 +173,7 @@
 	}
 }
 
-@media(max-width:1550px){
+@media(max-width:1550px) {
 	.mywork {
 
 		&__inner {
@@ -200,21 +183,10 @@
 		&__text {
 			font-size: 25px;
 			line-height: 25px;
-			margin-bottom: 15px;
-		}
-
-		&__input {
-			display: inline-block;
-			font-size: 17px;
-			line-height: 24px;
-			padding: 10px 20px;
-			width: 100%;
-			margin-bottom: 10px;
-			box-sizing: border-box;
+			margin-bottom: 0;
 		}
 
 		&__checkbox {
-			margin-bottom: 10px;
 			display: flex;
 			align-items: center;
 		}
@@ -244,10 +216,6 @@
 			padding: 10px 20px;
 			width: 100%;
 			box-sizing: border-box;
-		}
-
-		&__descriptionWrapper {
-			margin-bottom: 10px;
 		}
 
 		&__description {

@@ -1,115 +1,163 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import "./style.scss";
 import { useDispatch } from "react-redux";
-import { experiencePost, experienceEdit } from "src/store/extraReducers";
-function MyWork({ removeModal, defaultData }) {
-    const { companyName, job, currentWorking, description, dateFrom, dateTo, type, id } = defaultData;
+import Input from "src/components/Input";
+import { useInput } from "src/hooks";
+import Textarea from "src/components/Textarea";
+import OutlinedButton from "src/components/outlined-button";
+import { addFreelancerExperience } from "src/store/freelancer-resume/freelancerResume";
+
+
+function MyWork({ removeModal, data }) {
 
     const dispatch = useDispatch();
-    const [selectedDateFrom, setSelectedDateFrom] = useState("2023-04-14");
-    const [selectedDateTo, setSelectedDateTo] = useState("2023-04-14");
-    const dateFromm = new Date(selectedDateFrom);
-    const dateToo = new Date(selectedDateTo);
-    const [data, setData] = useState({
-        companyName,
-        job,
-        dateFrom: dateFromm.toISOString(),
-        dateTo: dateToo.toISOString(),
-        description,
-        currentWorking
-    });
 
+    const [currentlyWorking, setCurrentlyWorking] = useState(data?.dateTo === null ? true : false);
 
-    const handleClick = e => {
-        e.preventDefault();
-        if (type === "add") {
-            dispatch(experiencePost(data));
-            removeModal(prev => ({ ...prev, experienceAdd: false }));
-        } else {
-            dispatch(experienceEdit({ data, id }));
-            removeModal(false);
-        }
-    }
-
-    const changePage = e => {
-        e.preventDefault();
+    const changePage = () => {
         removeModal(false);
     };
 
+    const {
+        inputChange: nameInputChange,
+        inputBlur: nameInputBlur,
+        inputTouch: nameInputTouch,
+        value: companyName,
+        inputIsValid: nameIsValid,
+        inputIsError: nameIsError
+    } = useInput(value => value?.trim().length > 0);
+    const {
+        inputChange: jobInputChange,
+        inputBlur: jobInputBlur,
+        inputTouch: jobInputTouch,
+        value: jobName,
+        inputIsValid: jobIsValid,
+        inputIsError: jobIsError
+    } = useInput(value => value?.trim().length > 0);
+    const {
+        inputChange: dateFromInputChange,
+        inputBlur: dateFromInputBlur,
+        inputTouch: dateFromInputTouch,
+        value: dateFromValue,
+        inputIsValid: dateFromIsValid,
+        inputIsError: dateFromIsError
+    } = useInput(value => value?.trim().length > 9);
+    const {
+        inputChange: dateToInputChange,
+        inputBlur: dateToInputBlur,
+        inputTouch: dateToInputTouch,
+        value: dateToValue,
+        inputIsValid: dateToIsValid,
+        inputIsError: dateToIsError
+    } = useInput(value => value?.trim().length > 9);
+    const {
+        inputChange: textareaInputChange,
+        inputBlur: textareaInputBlur,
+        inputTouch: textareaInputTouch,
+        value: textareaValue,
+        inputIsValid: textareaIsValid,
+        inputIsError: textareaIsError
+    } = useInput(value => value?.trim().length > 10);
+
+    useEffect(() => {
+        if (data) {
+            nameInputChange(data.companyName);
+            jobInputChange(data.jobName);
+            dateFromInputChange(data.dateFrom)
+            dateToInputChange(data.dateTo)
+            textareaInputChange(data.description)
+        }
+    }, [])
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        nameInputTouch();
+        jobInputTouch();
+        dateFromInputTouch();
+        dateToInputTouch();
+        textareaInputTouch();
+
+        const checkWorking = currentlyWorking || dateToIsValid;
+
+        if (nameIsValid && jobIsValid && dateFromIsValid && checkWorking && textareaIsValid) {
+            let isStillWorking = currentlyWorking ? null : dateToValue;
+            const experience = {
+                id: data ? data.id : Date.now(),
+                companyName,
+                jobName,
+                dateFrom: dateFromValue,
+                dateTo: isStillWorking,
+                description: textareaValue
+            }
+            dispatch(addFreelancerExperience(experience));
+            removeModal(false);
+        }
+    }
     return (
         <div className="mywork">
             <div className="mywork__inner">
-                <form onSubmit={handleClick}>
+                <form className="mywork__form" onSubmit={handleSubmit}>
                     <h2 className="mywork__text">Work experience</h2>
-                    <div className="mywork__content">
-                        <input
-                            className="mywork__input"
-                            type="text"
-                            placeholder="Company name"
-                            value={data.companyName}
-                            onChange={e => setData(prev => ({ ...prev, companyName: e.target.value }))}
-                        />
-                    </div>
-
-                    <div className="mywork__content">
-                        <input
-                            className="mywork__input"
-                            type="text"
-                            placeholder="Job"
-                            value={data.job}
-                            onChange={e => setData(prev => ({ ...prev, job: e.target.value }))}
-                        />
-                    </div>
-
+                    <Input
+                        type="text"
+                        placeholder="Company name"
+                        inputIsError={nameIsError}
+                        value={companyName}
+                        inputChange={nameInputChange}
+                        inputBlur={nameInputBlur}
+                        errorMessage="Please enter company name"
+                    />
+                    <Input
+                        type="text"
+                        placeholder="Job"
+                        inputIsError={jobIsError}
+                        value={jobName}
+                        inputChange={jobInputChange}
+                        inputBlur={jobInputBlur}
+                        errorMessage="Please enter job name"
+                    />
                     <div className="mywork__checkbox">
                         <input
                             className="mywork__inputCheckbox"
                             type="checkbox"
                             id="checkbox"
-                            checked={data.currentWorking}
-                            onChange={() => setData(prev => ({ ...prev, currentWorking: !prev.currentWorking }))}
+                            checked={currentlyWorking}
+                            onChange={() => setCurrentlyWorking(prev => !prev)}
                         />
                         <label className="mywork__labelCheckbox" htmlFor="checkbox">
                             I am currently working in this role
                         </label>
                     </div>
-
                     <div className="mywork__wrapper">
-                        <div className="mywork__wrapperDate">
-                            <label className="mywork__label" htmlFor="data">
-                                Date from
-                            </label>
-                            <input value={data.dateFrom} className="mywork__inputDate" onChange={e => setSelectedDateFrom(e.target.value)} type="date" id="data" />
-                        </div>
-
-                        <div className="mywork__wrapperDate">
-                            <label className="mywork__label" htmlFor="time">
-                                To
-                            </label>
-                            {data.currentWorking ? (
-                                <input value={data.dateTo} disabled={true} className="mywork__inputDate" type="date" id="time" onChange={e => setSelectedDateTo(e.target.value)} />
-                            ) : (
-                                <input disabled={false} className="mywork__inputDate" type="date" id="time" />
-                            )}
-                        </div>
+                        <Input
+                            type="date"
+                            label="Date from"
+                            inputIsError={dateFromIsError}
+                            value={dateFromValue}
+                            inputChange={dateFromInputChange}
+                            inputBlur={dateFromInputBlur}
+                        />
+                        <Input
+                            type="date"
+                            label="To"
+                            inputIsError={currentlyWorking ? '' : dateToIsError}
+                            value={dateToValue}
+                            disabled={currentlyWorking}
+                            inputChange={dateToInputChange}
+                            inputBlur={dateToInputBlur}
+                        />
                     </div>
-
-                    <div className="mywork__descriptionWrapper">
-                        <textarea
-                            className="mywork__description"
-                            type="text"
-                            placeholder="Description"
-                            value={data.description}
-                            onChange={e => setData(prev => ({ ...prev, description: e.target.value }))}></textarea>
-                    </div>
-
+                    <Textarea
+                        placeholder="Description"
+                        inputIsError={textareaIsError}
+                        value={textareaValue}
+                        inputChange={textareaInputChange}
+                        inputBlur={textareaInputBlur}
+                        errorMessage="Please describe yourself."
+                    />
                     <div className="mywork__button">
-                        <button type="button" className="mywork__back" onClick={changePage}>
-                            Cancel
-                        </button>
-                        <button type="submit" className="mywork__next">
-                            Save
-                        </button>
+                        <button type="button" className="mywork__back" onClick={changePage}>Cancel</button>
+                        <OutlinedButton type="submit" title="Save" />
                     </div>
                 </form>
             </div>

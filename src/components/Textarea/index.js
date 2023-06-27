@@ -9,7 +9,7 @@ const Textarea = ({ label, placeholder, inputIsError, value, inputChange, inputB
                 style={{ borderColor: `${inputIsError ? 'red' : ''}` }}
                 className={`${inputIsError ? 'border-danger' : ''}`}
                 value={value}
-                onChange={inputChange}
+                onChange={e => inputChange(e.target.value)}
                 onBlur={inputBlur}
                 placeholder={placeholder}
                 rows="4"

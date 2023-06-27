@@ -10,7 +10,7 @@ import {
 	EDUCATION,
 	EDUCATIONDELETE,
 	EXPERIENCE,
-	EXPERIENCEDELETE,
+	// EXPERIENCEDELETE,
 	FREELANCER,
 	GET_FREELANCER,
 	HOBBIES,
@@ -347,19 +347,19 @@ export const experienceGet = createAsyncThunk("post/exsperienceGet", async paylo
 });
 
 ////////////////////////////EXPERIENCE GET//////////
-export const experienceDelete = createAsyncThunk("post/exsperienceDelete", async payload => {
-	const token = localStorage.getItem("token");
-	return axios({
-		method: "DELETE",
-		url: EXPERIENCEDELETE + "/" + payload,
-		headers: {
-			"Content-Type": `application/json`,
-			Authorization: `bearer ${token}`
-		}
-	}).then(response => {
-		return response.data;
-	});
-});
+// export const experienceDelete = createAsyncThunk("post/exsperienceDelete", async payload => {
+// 	const token = localStorage.getItem("token");
+// 	return axios({
+// 		method: "DELETE",
+// 		url: EXPERIENCEDELETE + "/" + payload,
+// 		headers: {
+// 			"Content-Type": `application/json`,
+// 			Authorization: `bearer ${token}`
+// 		}
+// 	}).then(response => {
+// 		return response.data;
+// 	});
+// });
 
 ///////////////////////////EDUCATION POST//////////
 export const educationPost = createAsyncThunk("freelancer/educationPost", async payload => {

@@ -49,27 +49,27 @@ function Country() {
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		setCountryIsError(false);
-		setRegionIsError(false);
-		if (!country) {
-			setCountryIsError(true);
-		}
-		if (!region) {
-			setRegionIsError(true);
-		}
-		if (country && region) {
-			const freelancerAddress = {
-				country,
-				region,
-				street
-			}
-			toast.success('Success', { position: toast.POSITION.TOP_LEFT })
-			dispatch(addFreelancerAddress(freelancerAddress))
-			dispatch(activeDoteAction([
-				{ id: 3, label: "About yourself and skills" },
-				{ id: 3, type: "yourself" }
-			]));
-		}
+		// setCountryIsError(false);
+		// setRegionIsError(false);
+		// if (!country) {
+		// 	setCountryIsError(true);
+		// }
+		// if (!region) {
+		// 	setRegionIsError(true);
+		// }
+		// if (country && region) {
+		// 	const freelancerAddress = {
+		// 		country,
+		// 		region,
+		// 		street
+		// 	}
+		// 	toast.success('Success', { position: toast.POSITION.TOP_LEFT })
+		// 	dispatch(addFreelancerAddress(freelancerAddress))
+		dispatch(activeDoteAction([
+			{ id: 3, label: "About yourself and skills" },
+			{ id: 3, type: "yourself" }
+		]));
+		// }
 	};
 	const removePage = event => {
 		event.preventDefault();

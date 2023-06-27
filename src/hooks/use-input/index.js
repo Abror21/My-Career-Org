@@ -25,22 +25,22 @@ const reducer = (state, action) => {
 export const useInput = (inputValidation = () => { }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const inputChange = (e, getRequest = false) => {
-    dispatch({ type: "VALUE", value: e.target.value });
+  const inputChange = (value, getRequest = false) => {
+    dispatch({ type: "VALUE", value });
 
     if (getRequest) {
       clearTimeout(state.timer);
       const newTimer = setTimeout(() => {
-        fetch(`${CHECK_EMAIL}=${e.target.value}`)
+        fetch(`${CHECK_EMAIL}=${value}`)
           .then(res => {
             console.log(res);
             if (res.ok) {
               dispatch({ type: 'EXIST' })
               return;
-            }else{
-              dispatch({type: 'NOTEXIST'})
+            } else {
+              dispatch({ type: 'NOTEXIST' })
             }
-            
+
           })
       }, 800)
       dispatch({ type: 'SETTIMER', value: newTimer })

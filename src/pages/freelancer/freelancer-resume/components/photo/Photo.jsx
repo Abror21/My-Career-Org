@@ -1,11 +1,9 @@
 import { useRef, useState } from "react";
-import { useEffect } from "react";
 import "./Photo.scss";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { activeDoteAction } from "src/store/resumeControlsSlice/resumeControls";
 import { getCountryList } from "src/store/extraReducers";
 import { firstStep, socialStep } from "src/store/frilanserCardSlice/frilanserCardSlice";
-import InputMask from "react-input-mask";
 import Input from "src/components/Input";
 import { useInput } from "src/hooks";
 import OutlinedButton from "src/components/outlined-button";
@@ -41,7 +39,6 @@ function Photo() {
 		inputChange: nameInputChange,
 		inputBlur: nameInputBlur,
 		inputTouch: nameInputTouch,
-		inputReset: nameInputClear,
 		value: name,
 		inputIsValid: nameIsValid,
 		inputIsError: nameInputIsError,
@@ -50,7 +47,6 @@ function Photo() {
 		inputChange: surnameInputChange,
 		inputBlur: surnameInputBlur,
 		inputTouch: surnameInputTouch,
-		inputReset: surnameInputClear,
 		value: surname,
 		inputIsValid: surnameIsValid,
 		inputIsError: surnameInputIsError,
@@ -59,7 +55,6 @@ function Photo() {
 		inputChange: emailInputChange,
 		inputBlur: emailInputBlur,
 		inputTouch: emailInputTouch,
-		inputReset: emailInputClear,
 		value: email,
 		inputIsValid: emailIsValid,
 		inputIsError: emailInputIsError,
@@ -68,7 +63,6 @@ function Photo() {
 		inputChange: phoneInputChange,
 		inputBlur: phoneInputBlur,
 		inputTouch: phoneInputTouch,
-		inputReset: phoneInputClear,
 		value: phone,
 		inputIsValid: phoneIsValid,
 		inputIsError: phoneInputIsError,
@@ -82,18 +76,18 @@ function Photo() {
 		emailInputTouch();
 		phoneInputTouch();
 
-		if (nameIsValid && surnameIsValid && emailIsValid && phoneIsValid) {
-			toast.success('Success', { position: toast.POSITION.TOP_LEFT })
-			const data = { image, name, surname, email, phone }
-			dispatch(addFreelancerInfo(data));
-			dispatch(activeDoteAction([{ id: 2, label: "Address" }, { id: 2, type: "country" }]));
-		}
+		// if (nameIsValid && surnameIsValid && emailIsValid && phoneIsValid) {
+		// 	toast.success('Success', { position: toast.POSITION.TOP_LEFT })
+		// 	const data = { image, name, surname, email, phone }
+		// 	dispatch(addFreelancerInfo(data));
+		dispatch(activeDoteAction([{ id: 2, label: "Address" }, { id: 2, type: "country" }]));
+		// }
 	};
 
 	return (
 		<div className="photoCard">
 			<div className="avatar-wrapper">
-				<img className="profile-pic" src={image} />
+				<img className="profile-pic" src={image} alt="" />
 				<div className="upload-button" onClick={handleClick}>
 					{image && <img src={changeIcon} alt="" />}
 					{!image && <img src={photoIcon} alt="" />}
@@ -123,7 +117,7 @@ function Photo() {
 						inputBlur={surnameInputBlur}
 					/>
 					<Input
-						type="text"
+						type="email"
 						label="Email*"
 						placeholder="Your Email"
 						inputIsError={emailInputIsError}

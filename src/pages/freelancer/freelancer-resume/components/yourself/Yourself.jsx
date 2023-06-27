@@ -64,33 +64,33 @@ function Yourself() {
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		setPositionIsError(false);
-		setBirthDateIsError(false);
-		setSkillsIsError(false);
-		setHobbiesIsError(false);
-		if (!position) {
-			setPositionIsError(true);
-		}
-		if (!birthDate) {
-			setBirthDateIsError(true);
-		}
-		if (!skills.length) {
-			setSkillsIsError(true)
-		}
-		if (!hobbies.length) {
-			setHobbiesIsError(true)
-		}
-		if (position && birthDate && skills.length && hobbies.length) {
-			const about = { position, birthDate, skills, hobbies, description }
-			toast.success('Success', { position: toast.POSITION.TOP_LEFT })
-			dispatch(addAboutFreelancer(about))
-			dispatch(
-				activeDoteAction([
-					{ id: 4, label: "Language" },
-					{ id: 4, type: "lenguage" }
-				])
-			)
-		}
+		// setPositionIsError(false);
+		// setBirthDateIsError(false);
+		// setSkillsIsError(false);
+		// setHobbiesIsError(false);
+		// if (!position) {
+		// 	setPositionIsError(true);
+		// }
+		// if (!birthDate) {
+		// 	setBirthDateIsError(true);
+		// }
+		// if (!skills.length) {
+		// 	setSkillsIsError(true)
+		// }
+		// if (!hobbies.length) {
+		// 	setHobbiesIsError(true)
+		// }
+		// if (position && birthDate && skills.length && hobbies.length) {
+		// 	const about = { position, birthDate, skills, hobbies, description }
+		// 	toast.success('Success', { position: toast.POSITION.TOP_LEFT })
+		// 	dispatch(addAboutFreelancer(about))
+		dispatch(
+			activeDoteAction([
+				{ id: 4, label: "Language" },
+				{ id: 4, type: "lenguage" }
+			])
+		)
+		// }
 	}
 
 	return (

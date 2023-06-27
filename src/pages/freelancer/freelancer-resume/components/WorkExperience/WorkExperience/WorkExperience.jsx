@@ -1,71 +1,48 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./style.scss";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
 import { activeDoteAction } from "src/store/resumeControlsSlice/resumeControls";
-import { experienceDelete, experienceGet } from "src/store/extraReducers";
-// import { ReactComponent as Trash } from "src/assets/images/icons/trash.svg";
-// import { ReactComponent as Edit } from "src/assets/images/icons/edit.svg";
-// import { Edit } from "@refinedev/mantine";
+import { ReactComponent as Trash } from "src/assets/icons/trash.svg";
+import { ReactComponent as Edit } from "src/assets/icons/edit.svg";
 import MyWork from "../MyWork/MyWork";
-
-const defaultInputData = {
-	companyName: "",
-	job: "",
-	currentWorking: false,
-	description: "",
-	dateFrom: "",
-	dateTo: ""
-};
+import { removeFreelancerExperience } from "src/store/freelancer-resume/freelancerResume";
 
 function WorkExperience() {
-	const [isMoadalActive, setMoadalActive] = useState({ experienceAdd: false, experienceEdit: false });
-	const [editData, setEditData] = useState({});
-	const { userID, experiencePostIsSuccess, loading, experienceList } = useSelector(state => state.resume);
+	const [isModalActive, setModalActive] = useState(false);
+	const [dataToEdit, setDataToEdit] = useState(null);
+	const experienceList = useSelector(state => state.freelancerResume.freelancerExperience);
+
+	const { userID, experiencePostIsSuccess, loading } = useSelector(state => state.resume);
 	const dispatch = useDispatch();
 	const id = useParams();
 
-	useEffect(
-		() => {
-			dispatch(experienceGet());
-		},
-		[experiencePostIsSuccess]
-	);
-	const handleSubmit = e => {
-		e.preventDefault();
-		dispatch(activeDoteAction([{ id: 6, label: "Educations" }, { id: 6, type: "education" }]));
+	const handleEditExperience = el => {
+		setDataToEdit(el)
+		setModalActive(true);
 	};
-
-	const editExperience = value => {
-		console.log(value);
-		setEditData(value.data);
-		setMoadalActive(prev => ({ ...prev, experienceEdit: value.modal }));
-	};
-
-	const deletExperience = id => {
-		dispatch(experienceDelete(id));
-	};
+	const handleAddExperience = () => {
+		setDataToEdit(null)
+		setModalActive(true)
+	}
 
 	const changePage = e => {
 		e.preventDefault();
 		dispatch(activeDoteAction([{ id: 4, label: "Language" }, { id: 4, type: "lenguage" }]));
 	};
-	const [trashHover, setTrashHover] = useState(false);
-	const [editHover, setEditHover] = useState(false);
-
-	const TrashFunc = int => {
-		setTrashHover(int);
-	};
-
-	const EditFunc = int => {
-		setEditHover(int);
-	};
 
 	if (loading) {
 		return <b>Loading...</b>;
 	}
+
+	const handleSubmit = e => {
+		e.preventDefault();
+
+		dispatch(activeDoteAction([{ id: 6, label: "Educations" }, { id: 6, type: "education" }]));
+	};
+	console.log(experienceList);
+
 	return (
 		<>
 			<div className="experience">
@@ -79,41 +56,44 @@ function WorkExperience() {
 						</p>
 
 						<div className="experience__box">
-							{experienceList.map((el, int) => (
-								<div className="experience__content" key={el.id}>
-									<div className="experience__texts">
-										<span className="experience__subtitle">{el.companyName}</span>
-										<span className="experience__span">{el.job}</span>
+							{
+								experienceList.map(el => {
+									console.log(el);
+									return <div className="experience__content" key={el.id}>
+										<div className="experience__texts">
+											<span className="experience__subtitle">{el.companyName}</span>
+											<span className="experience__span">{el.job}</span>
+										</div>
+										<div className="experience__icons">
+											<span
+												className="experience__icon--create"
+												onClick={() => handleEditExperience(el)}
+											>
+												<Edit
+													name="create-outline"
+													className={`${"experience__box__hovering"}`}
+												/>
+											</span>
+											<span
+												className="experience__icon--delete"
+												onClick={() => dispatch(removeFreelancerExperience(el.id))}
+											>
+												<Trash
+													name="trash-outline"
+													className={`${"experience__box__hoveringT"}`}
+												/>
+											</span>
+										</div>
 									</div>
-
-									<div className="experience__icons">
-										<span className="experience__icon--create" onClick={() => editExperience({ data: el, modal: true })}>
-											{/* <Edit
-												name="create-outline"
-												className={`${editHover === int ? "experience__box__hovering" : null}`}
-												onClick={() => EditFunc(int)}
-											// onMouseOut={() => EditFunc(false)}
-											/> */}
-										</span>
-
-										<span className="experience__icon--delete" onClick={() => dispatch(experienceDelete(el.id))}>
-											{/* <Trash
-												name="trash-outline"
-												className={`${trashHover === int ? "experience__box__hoveringT" : null}`}
-												onClick={() => TrashFunc(int)}
-											// onMouseOut={() => TrashFunc(false)}
-											/> */}
-										</span>
-									</div>
-								</div>
-							))}
+								})
+							}
 						</div>
 
 						<div className="experience__wrapper">
 							<button
 								style={{ cursor: "pointer" }}
 								className="experience__buttonAdd"
-								onClick={() => setMoadalActive(prev => ({ ...prev, experienceAdd: true }))}>
+								onClick={handleAddExperience}>
 								+ Add new
 							</button>
 						</div>
@@ -130,9 +110,7 @@ function WorkExperience() {
 				</div>
 			</div>
 
-			{isMoadalActive.experienceAdd && <MyWork removeModal={setMoadalActive} defaultData={{ ...defaultInputData, type: "add" }} />}
-
-			{isMoadalActive.experienceEdit && <MyWork removeModal={setMoadalActive} defaultData={{ ...editData, type: "edit" }} />}
+			{isModalActive && <MyWork removeModal={setModalActive} data={dataToEdit} />}
 		</>
 	);
 }
