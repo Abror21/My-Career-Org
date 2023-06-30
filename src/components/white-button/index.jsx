@@ -1,8 +1,8 @@
 import classes from './index.module.css';
 
-const WhiteButton = ({ type, title, onChange }) => {
+const WhiteButton = ({ type, title, style, onChange }) => {
     return (
-        <button className={classes.button} type={type} onClick={onChange}>{title}</button>
+        <button className={classes.button} type={type} style={style} onClick={onChange}>{title}</button>
     )
 }
 

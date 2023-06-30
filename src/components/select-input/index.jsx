@@ -1,13 +1,14 @@
 import classes from './index.module.css';
 import Select from 'react-select';
 
-const SelectInput = ({ placeholder, options, selectIsError, errorMessage, selectChange, selectBlur }) => {
+const SelectInput = ({ placeholder, options, value, selectIsError, errorMessage, selectChange, selectBlur }) => {
     return (
         <div>
             <Select
                 className={classes['select-input']}
                 placeholder={placeholder}
                 options={options}
+                value={value ? undefined : null}
                 onChange={selectChange}
                 onBlur={selectBlur}
                 styles={{

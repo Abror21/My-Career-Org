@@ -2,7 +2,6 @@
 // import downIcon from "src/assets/images/Resume/down.png";
 import "./Yourself.scss";
 import { useDispatch, useSelector } from "react-redux";
-import Select from "react-select";
 import { useState } from "react";
 import "../styles.scss";
 import { MultiSelect } from "@mantine/core";
@@ -14,26 +13,36 @@ import { getHobbies, getSkills } from "src/store/frilanserCardSlice/frilanserCar
 import OutlinedButton from "src/components/outlined-button";
 import { addAboutFreelancer } from "src/store/freelancer-resume/freelancerResume";
 import { toast } from "react-toastify";
+import SelectInput from "src/components/select-input";
+import { useInput } from "src/hooks";
+import Textarea from "src/components/Textarea";
+import WhiteButton from "src/components/white-button";
 
 function Yourself() {
 	const dispatch = useDispatch();
 
-	const [position, setPosition] = useState('');
 	const [birthDate, setBirthDate] = useState('');
 	const [skills, setSkills] = useState([]);
 	const [hobbies, setHobbies] = useState([]);
-	const [description, setDescription] = useState('');
-	const [positionIsError, setPositionIsError] = useState(false);
 	const [birthDateIsError, setBirthDateIsError] = useState(false);
 	const [skillsIsError, setSkillsIsError] = useState(false);
 	const [hobbiesIsError, setHobbiesIsError] = useState(false);
 
 	const { positionGetLoading, positionList, hobbiesList, loading, skillsData, HobbysGetLoading } = useSelector(state => state.resume);
 
-	// useEffect(() => {
-	// 	dispatch(getPositionsSkillsWithId(skil));
-	// 	dispatch(hobbies())
-	// }, [skil]);
+
+	const {
+		inputChange: positionInputChange,
+		inputBlur: positionInputBlur,
+		inputTouch: positionInputTouch,
+		value: position,
+		inputIsValid: positionIsValid,
+		inputIsError: positionIsError,
+	} = useInput(value => value.trim().length > 0);
+	const {
+		inputChange: descriptionInputChange,
+		value: description,
+	} = useInput();
 
 	if (positionGetLoading && loading) {
 		return <b>Loading...</b>;
@@ -48,10 +57,7 @@ function Yourself() {
 			])
 		);
 	};
-	// const positionChange = p => {
-	// 	setPosition(p.label)
-	// 	// setData({ ...data, position: pos.id })
-	// };
+
 	const Xobbys = hobbiesList.map(item => ({
 		value: item.content,
 		label: item.content
@@ -64,32 +70,28 @@ function Yourself() {
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		// setPositionIsError(false);
-		// setBirthDateIsError(false);
-		// setSkillsIsError(false);
-		// setHobbiesIsError(false);
-		// if (!position) {
-		// 	setPositionIsError(true);
-		// }
-		// if (!birthDate) {
-		// 	setBirthDateIsError(true);
-		// }
-		// if (!skills.length) {
-		// 	setSkillsIsError(true)
-		// }
-		// if (!hobbies.length) {
-		// 	setHobbiesIsError(true)
-		// }
-		// if (position && birthDate && skills.length && hobbies.length) {
-		// 	const about = { position, birthDate, skills, hobbies, description }
-		// 	toast.success('Success', { position: toast.POSITION.TOP_LEFT })
-		// 	dispatch(addAboutFreelancer(about))
-		dispatch(
-			activeDoteAction([
-				{ id: 4, label: "Language" },
-				{ id: 4, type: "lenguage" }
-			])
-		)
+		positionInputTouch();
+		setBirthDateIsError(false);
+		setSkillsIsError(false);
+		setHobbiesIsError(false);
+		if (!birthDate) {
+			setBirthDateIsError(true);
+		}
+		if (!skills.length) {
+			setSkillsIsError(true)
+		}
+		if (!hobbies.length) {
+			setHobbiesIsError(true)
+		}
+		// if (positionIsValid && birthDate && skills.length && hobbies.length) {
+		// const about = { position, birthDate, skills, hobbies, description }
+
+		// toast.success('Success', { position: toast.POSITION.TOP_LEFT })
+		// dispatch(addAboutFreelancer(about))
+		dispatch(activeDoteAction([
+			{ id: 4, label: "Language" },
+			{ id: 4, type: "lenguage" }
+		]))
 		// }
 	}
 
@@ -102,12 +104,14 @@ function Yourself() {
 						<label
 							className="yourselfCard_label"
 							style={{ color: (positionIsError && !position) ? 'red' : '' }}
-						>Select your Positions*</label>
-						<Select
-							className={`${(positionIsError && !position) ? 'error' : ''}`}
+						>Select your Position*</label>
+						<SelectInput
+							value={position}
+							placeholder="Position*"
 							options={positionList.map(el => ({ id: el.id, label: el.name }))}
-							onChange={e => setPosition(e.label)}
-							placeholder="Positions*"
+							selectIsError={positionIsError}
+							selectChange={e => positionInputChange(e.label)}
+							selectBlur={positionInputBlur}
 						/>
 					</div>
 					<div className="yourselfCard_form_wrapper_bottom">
@@ -132,6 +136,7 @@ function Yourself() {
 					<MultiSelect
 						className={`${(skillsIsError && !skills.length) ? 'error' : ''}`}
 						data={options}
+						placeholder="Select skill or create a new"
 						onChange={skill => setSkills(skill)}
 						searchable
 						creatable
@@ -161,18 +166,18 @@ function Yourself() {
 						}}
 						onChange={hobby => setHobbies(hobby)}
 					/>
-
-					<input
-						className="yourselfCard_textarea"
-						type="text"
+					<Textarea
 						placeholder="Describe yourself to buyers"
-						onChange={e => setDescription(e.target.value)}
+						value={description}
+						inputChange={descriptionInputChange}
 					/>
 				</div>
 				<div className="yourselfCard_btn">
-					<button className="backButton" type="button" onClick={prevPage}>
-						Back
-					</button>
+					<WhiteButton
+						type="button"
+						title="Back"
+						onChange={prevPage}
+					/>
 					<OutlinedButton type="submit" title="Next" />
 				</div>
 			</form>

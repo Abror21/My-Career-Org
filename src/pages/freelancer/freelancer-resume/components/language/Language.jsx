@@ -126,6 +126,7 @@ function Language() {
 										placeholder="Level*"
 										onChange={e => changeLevel(lang.id, e.value)}
 									/>
+
 									{
 										!singleLang && (
 											<div className={classes.cancelLang} onClick={() => removeLang(lang.id)}>

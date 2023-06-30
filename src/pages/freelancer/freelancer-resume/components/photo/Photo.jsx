@@ -135,7 +135,7 @@ function Photo() {
 						inputBlur={phoneInputBlur}
 					/>
 				</div>
-				<OutlinedButton type="submit" title="Next" />
+				<OutlinedButton type="submit" title="Next" style={{ marginLeft: 'auto' }} />
 			</form>
 		</div>
 	);
