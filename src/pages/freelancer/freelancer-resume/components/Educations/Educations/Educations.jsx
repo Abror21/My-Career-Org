@@ -41,7 +41,7 @@ function Educations() {
 		return <b>Loading...</b>;
 	}
 
-	const TypeOptions = [{ value: "online", label: "online", id: 1 }, { value: "offline", label: "offline", id: 2 }];
+	const typeOptions = [{ value: "online", label: "online", id: 1 }, { value: "offline", label: "offline", id: 2 }];
 	const option = [
 		{ value: "Primary", label: "Primary", id: 1 },
 		{ value: "Lower", label: "Lower", id: 2 },
@@ -50,14 +50,6 @@ function Educations() {
 		{ value: "Master", label: "Master", id: 5 },
 		{ value: "Dortorate", label: "Dortorate", id: 6 },
 	];
-
-	function updateToTypeOption(type) {
-		if (type === 1) {
-			return "online";
-		} else if (type === 2) {
-			return "offline";
-		}
-	}
 
 	return (
 		<>
@@ -124,14 +116,7 @@ function Educations() {
 				</div>
 			</div>
 			{
-				showModal && (
-					<AddEducations
-						typeOptions={TypeOptions}
-						option={option}
-						removeModal={setShowModal}
-						data={dataToEdit}
-					/>
-				)
+				showModal && <AddEducations typeOptions={typeOptions} option={option} removeModal={setShowModal} data={dataToEdit} />
 			}
 		</>
 	);

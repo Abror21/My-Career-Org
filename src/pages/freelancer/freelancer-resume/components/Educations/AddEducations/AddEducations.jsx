@@ -119,6 +119,7 @@ function AddEducations({ data, removeModal, typeOptions, option }) {
 					<SelectInput
 						placeholder="Select degree"
 						options={option}
+						value={degree}
 						selectIsError={degreeIsError}
 						errorMessage="Please select degree"
 						selectChange={e => degreeInputChange(e.value)}
@@ -127,6 +128,7 @@ function AddEducations({ data, removeModal, typeOptions, option }) {
 					<SelectInput
 						placeholder="Type of study"
 						options={typeOptions}
+						value={typeOfStudy}
 						selectIsError={typeIsError}
 						errorMessage="Please select type"
 						selectChange={e => typeInputChange(e.value)}
