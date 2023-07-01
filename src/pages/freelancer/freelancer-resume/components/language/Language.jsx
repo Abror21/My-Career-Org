@@ -72,36 +72,35 @@ function Language() {
 	const handleSubmit = event => {
 		event.preventDefault();
 
-		if (userLanguages.length < 1) {
-			toast.error('Please add at least one language.');
-			return
-		}
-		let error = false;
-		const newList = [];
-		userLanguages.forEach(lang => {
-			if (lang.language && lang.level) {
-				newList.push(lang)
-			} else {
-				toast.error('Field should not be empty.');
-				error = true
-				return
-			}
-		});
-		if (error) { return }
-		if (newList.length > 0) {
-			toast.success('Success', { position: toast.POSITION.TOP_LEFT })
-			dispatch(addFreelancerLanguages(newList));
-			dispatch(
-				activeDoteAction([
-					{ id: 5, label: "Experience" },
-					{ id: 5, type: "workexperience" }
-				])
-			);
-		} else {
-			toast.error("Something went wrong.")
-		}
+		// if (userLanguages.length < 1) {
+		// 	toast.error('Please add at least one language.');
+		// 	return
+		// }
+		// let error = false;
+		// const newList = [];
+		// userLanguages.forEach(lang => {
+		// 	if (lang.language && lang.level) {
+		// 		newList.push(lang)
+		// 	} else {
+		// 		toast.error('Field should not be empty.');
+		// 		error = true
+		// 		return
+		// 	}
+		// });
+		// if (error) { return }
+		// if (newList.length > 0) {
+		// 	toast.success('Success', { position: toast.POSITION.TOP_LEFT })
+		// 	dispatch(addFreelancerLanguages(newList));
+		dispatch(
+			activeDoteAction([
+				{ id: 5, label: "Experience" },
+				{ id: 5, type: "workexperience" }
+			])
+		);
+		// } else {
+		// 	toast.error("Something went wrong.")
+		// }
 	}
-
 
 	return (
 		<div className={classes.languageCard}>
@@ -151,7 +150,7 @@ function Language() {
 					<WhiteButton type="button" title="Back" onChange={prevPage} />
 					<OutlinedButton type="submit" title="Next" />
 				</div>
-			</form >
+			</form>
 		</div >
 	);
 }

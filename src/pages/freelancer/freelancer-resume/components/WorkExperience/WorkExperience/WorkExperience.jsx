@@ -8,6 +8,8 @@ import { ReactComponent as Trash } from "src/assets/icons/trash.svg";
 import { ReactComponent as Edit } from "src/assets/icons/edit.svg";
 import MyWork from "../MyWork/MyWork";
 import { removeFreelancerExperience } from "src/store/freelancer-resume/freelancerResume";
+import WhiteButton from "src/components/white-button";
+import OutlinedButton from "src/components/outlined-button";
 
 function WorkExperience() {
 	const [isModalActive, setModalActive] = useState(false);
@@ -97,12 +99,12 @@ function WorkExperience() {
 						</div>
 
 						<div className="experience__button">
-							<button className="experience__back" type="button" onClick={changePage}>
-								Back
-							</button>
-							<button className="experience__next" type="submit" onClick={handleSubmit}>
-								Next
-							</button>
+							<WhiteButton
+								type="button"
+								title="Back"
+								onChange={changePage}
+							/>
+							<OutlinedButton type="button" title="Next" onClick={handleSubmit} />
 						</div>
 					</div>
 				</div>
