@@ -1,6 +1,6 @@
 .button {
-    display: block;
-    width: 114px;
+    display: inline-block;
+    width: max-content;
     padding: 1rem 2rem;
     border: 1px solid #1d71b8;
     border-radius: 8px;
@@ -10,7 +10,6 @@
     line-height: 24px;
     color: #323232;
     background: #ffffff;
-
     cursor: pointer;
     transition: 0.3s;
 }
