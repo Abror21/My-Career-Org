@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import classes from "./Language.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import Select from "react-select";
 import "../styles.scss";
 import cancel from "src/assets/images/Resume/cancel.png";
 import { languageUpload, languages } from "src/store/extraReducers";
@@ -10,6 +9,9 @@ import { activeDoteAction } from "src/store/resumeControlsSlice/resumeControls";
 import { addFreelancerLanguages } from "src/store/freelancer-resume/freelancerResume";
 import { toast } from "react-toastify";
 import { Lego } from "tabler-icons-react";
+import SelectInput from "src/components/select-input";
+import WhiteButton from "src/components/white-button";
+import OutlinedButton from "src/components/outlined-button";
 
 
 function Language() {
@@ -70,34 +72,34 @@ function Language() {
 	const handleSubmit = event => {
 		event.preventDefault();
 
-		// if (userLanguages.length < 1) {
-		// 	toast.error('Please add at least one language.');
-		// 	return
-		// }
-		// let error = false;
-		// const newList = [];
-		// userLanguages.forEach(lang => {
-		// 	if (lang.language && lang.level) {
-		// 		newList.push(lang)
-		// 	} else {
-		// 		toast.error('Field should not be empty.');
-		// 		error = true
-		// 		return
-		// 	}
-		// });
-		// if (error) { return }
-		// if (newList.length > 0) {
-		// 	toast.success('Success', { position: toast.POSITION.TOP_LEFT })
-		// 	dispatch(addFreelancerLanguages(newList));
-		dispatch(
-			activeDoteAction([
-				{ id: 5, label: "Experience" },
-				{ id: 5, type: "workexperience" }
-			])
-		);
-		// } else {
-		// 	toast.error("Something went wrong.")
-		// }
+		if (userLanguages.length < 1) {
+			toast.error('Please add at least one language.');
+			return
+		}
+		let error = false;
+		const newList = [];
+		userLanguages.forEach(lang => {
+			if (lang.language && lang.level) {
+				newList.push(lang)
+			} else {
+				toast.error('Field should not be empty.');
+				error = true
+				return
+			}
+		});
+		if (error) { return }
+		if (newList.length > 0) {
+			toast.success('Success', { position: toast.POSITION.TOP_LEFT })
+			dispatch(addFreelancerLanguages(newList));
+			dispatch(
+				activeDoteAction([
+					{ id: 5, label: "Experience" },
+					{ id: 5, type: "workexperience" }
+				])
+			);
+		} else {
+			toast.error("Something went wrong.")
+		}
 	}
 
 
@@ -108,23 +110,23 @@ function Language() {
 				The more languages you know, <br /> the more foreign employers will contact you.
 			</p>
 			<form className={classes.languageForm} onSubmit={handleSubmit}>
-				<label htmlFor="laguages">Language*</label>
+				<p className={classes.languageForm__label}>Language*</p>
 				<div className={classes.select_box}>
 					{
 						userLanguages.map(lang => {
 							return (
 								<div key={lang.id} id={!singleLang ? "test" : null} className={`${classes.select} ${classes.active}`}>
-									<Select
-										className="languageSelect"
-										options={languageList?.map(el => ({ value: el.id, label: el.name }))}
+									<SelectInput
 										placeholder="Language*"
-										onChange={e => changeLanguage(lang.id, e.label)}
+										options={languageList?.map(el => ({ value: el.id, label: el.name }))}
+										value={true}
+										selectChange={e => changeLanguage(lang.id, e.label)}
 									/>
-									<Select
-										className="languageSelect"
-										options={level}
+									<SelectInput
 										placeholder="Level*"
-										onChange={e => changeLevel(lang.id, e.value)}
+										options={level}
+										value={true}
+										selectChange={e => changeLevel(lang.id, e.label)}
 									/>
 
 									{
@@ -141,16 +143,13 @@ function Language() {
 				</div>
 
 				<div
-					style={{ cursor: "pointer" }}
 					className={classes.addLanguage}
 					onClick={() => setUserLanguages(prev => [...prev, { id: Date.now() }])}>
 					+ Add Language
 				</div>
 				<div className={classes.languageCard_btn}>
-					<button className={classes.backButton} type="button" onClick={prevPage}>
-						Back
-					</button>
-					<button type="submit" className={classes.nextButton}>Next</button>
+					<WhiteButton type="button" title="Back" onChange={prevPage} />
+					<OutlinedButton type="submit" title="Next" />
 				</div>
 			</form >
 		</div >

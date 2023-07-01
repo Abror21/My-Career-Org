@@ -1,8 +1,9 @@
 .select-input {
     font-size: 20px;
+    width: 100%;
 }
 
-/* .select-input .css-13cymwt-control {
-    padding-left: 12px !important;
-    width: 200px !important;
-} */
+.select-input p {
+    margin: 0 !important;
+    color: red !important;
+}

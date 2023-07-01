@@ -3,9 +3,8 @@ import Select from 'react-select';
 
 const SelectInput = ({ placeholder, options, value, selectIsError, errorMessage, selectChange, selectBlur }) => {
     return (
-        <div>
+        <div className={classes['select-input']}>
             <Select
-                className={classes['select-input']}
                 placeholder={placeholder}
                 options={options}
                 value={value ? undefined : null}
@@ -14,6 +13,7 @@ const SelectInput = ({ placeholder, options, value, selectIsError, errorMessage,
                 styles={{
                     control: (baseStyles, state) => ({
                         ...baseStyles,
+                        width: '100%',
                         padding: '9px',
                         borderRadius: '8px',
                         borderColor: selectIsError ? 'red' : '#cdcdcd',
@@ -21,7 +21,7 @@ const SelectInput = ({ placeholder, options, value, selectIsError, errorMessage,
                     })
                 }}
             />
-            {selectIsError && <p style={{ color: 'red' }}>{errorMessage}</p>}
+            {selectIsError && <p>{errorMessage}</p>}
         </div>
     )
 }
