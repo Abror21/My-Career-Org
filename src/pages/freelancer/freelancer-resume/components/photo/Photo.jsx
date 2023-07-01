@@ -96,7 +96,7 @@ function Photo() {
 			</div>
 			<h3 className="title">Add your profile photo</h3>
 
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit} className="">
 				<div className="inputBox">
 					<Input
 						type="text"

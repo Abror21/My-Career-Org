@@ -114,6 +114,11 @@
 	display: block;
 }
 
+.photoCard form {
+	display: flex;
+	flex-direction: column;
+}
+
 .photoCard h3 {
 	font-family: "Montserrat";
 	font-style: normal;
