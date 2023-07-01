@@ -183,7 +183,7 @@ function AddEducations({ data, removeModal, typeOptions, option }) {
 							<WhiteButton
 								type="button"
 								title="Cancel"
-								onChange={() => removeModal(false)}
+								onClick={() => removeModal(false)}
 							/>
 							<OutlinedButton
 								type="submit"

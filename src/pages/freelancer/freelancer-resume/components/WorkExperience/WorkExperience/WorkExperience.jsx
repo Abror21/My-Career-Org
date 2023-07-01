@@ -99,7 +99,7 @@ function WorkExperience() {
 						</div>
 
 						<div className="experience__button">
-							<WhiteButton type="button" title="Back" onChange={changePage} />
+							<WhiteButton type="button" title="Back" onClick={changePage} />
 							<OutlinedButton type="button" title="Next" onClick={handleSubmit} />
 						</div>
 					</div>

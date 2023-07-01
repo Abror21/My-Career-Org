@@ -140,7 +140,7 @@ function Country() {
 						<WhiteButton
 							type="button"
 							title="Back"
-							onChange={removePage}
+							onClick={removePage}
 						/>
 						<OutlinedButton
 							type="submit"

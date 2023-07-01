@@ -176,7 +176,7 @@ function Yourself() {
 					<WhiteButton
 						type="button"
 						title="Back"
-						onChange={prevPage}
+						onClick={prevPage}
 					/>
 					<OutlinedButton type="submit" title="Next" />
 				</div>

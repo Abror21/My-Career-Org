@@ -3,7 +3,6 @@ import "./style.scss";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { activeDoteAction } from "src/store/resumeControlsSlice/resumeControls";
-import { educationDelete } from "src/store/extraReducers";
 import { useState } from "react";
 import { ReactComponent as Trash } from "src/assets/icons/trash.svg";
 import { ReactComponent as Edit } from "src/assets/icons/edit.svg";
@@ -109,7 +108,7 @@ function Educations() {
 						</div>
 
 						<div className="educations__button">
-							<WhiteButton type="button" title="Back" onChange={changePage} />
+							<WhiteButton type="button" title="Back" onClick={changePage} />
 							<OutlinedButton type="submit" title="Next" />
 						</div>
 					</form>

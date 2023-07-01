@@ -147,7 +147,7 @@ function Language() {
 					+ Add Language
 				</div>
 				<div className={classes.languageCard_btn}>
-					<WhiteButton type="button" title="Back" onChange={prevPage} />
+					<WhiteButton type="button" title="Back" onClick={prevPage} />
 					<OutlinedButton type="submit" title="Next" />
 				</div>
 			</form>

@@ -1,4 +1,6 @@
 .button {
+    display: block;
+    width: max-content;
     border: none;
     border-radius: 8px;
     font-weight: 500;
@@ -8,6 +10,7 @@
     background: #ffffff;
     padding: 1rem 2rem;
     border: 1px solid white;
+    cursor: pointer;
 }
 
 .button:hover {
