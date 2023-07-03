@@ -17,6 +17,7 @@ const initialState = {
     languages: [],
     freelancerExperience: [],
     freelancerEducation: [],
+    freelancerContact: {}
 };
 
 const freelancerResume = createSlice({
@@ -73,6 +74,9 @@ const freelancerResume = createSlice({
         removeFreelancerEducation: (state, action) => {
             state.freelancerEducation = state.freelancerEducation.filter(edu => edu.id !== action.payload)
         },
+        addFreelancerContact: (state, action) => {
+            state.freelancerContact = action.payload;
+        }
 
     }
 });
@@ -85,7 +89,8 @@ export const {
     addFreelancerExperience,
     removeFreelancerExperience,
     addFreelancerEducation,
-    removeFreelancerEducation
+    removeFreelancerEducation,
+    addFreelancerContact
 } = freelancerResume.actions;
 
 export default freelancerResume.reducer;

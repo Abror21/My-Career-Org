@@ -6,7 +6,7 @@ const initialState = {
 	skillsData: [],
 	hobbiesData: [],
 	error: null,
-	freelancerId:0,
+	freelancerId: 0,
 	freelancer: {
 		firstName: "",
 		lastName: "",
@@ -50,9 +50,6 @@ const freelancerSlice = createSlice({
 			state.freelancer.DateOfBirthString = action.payload.DateOfBirthString;
 			state.freelancer.bio = action.payload.bio;
 		},
-		socialStep: (state, action) => {
-			// state.freelancer.contacts = { ...action.payload };
-		},
 		getSkills: (state, action) => {
 			state.skillsData = action.payload;
 		},
@@ -75,5 +72,5 @@ const freelancerSlice = createSlice({
 	}
 });
 
-export const { firstStep, secondStep, yourSelfStep, socialStep, getSkills, getHobbies } = freelancerSlice.actions;
+export const { firstStep, secondStep, yourSelfStep, getSkills, getHobbies } = freelancerSlice.actions;
 export default freelancerSlice.reducer;

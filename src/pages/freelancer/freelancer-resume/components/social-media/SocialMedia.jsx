@@ -10,7 +10,9 @@ import githubIcon from "src/assets/images/Resume/githubIcon.png";
 import cancel from "src/assets/images/Resume/cancel.png";
 import { useDispatch } from "react-redux";
 import { activeDoteAction } from "src/store/resumeControlsSlice/resumeControls";
-import { socialStep } from "src/store/frilanserCardSlice/frilanserCardSlice";
+import OutlinedButton from "src/components/outlined-button";
+import WhiteButton from "src/components/white-button";
+import { addFreelancerContact } from "src/store/freelancer-resume/freelancerResume";
 
 function SocialMedia() {
 	const dispatch = useDispatch();
@@ -45,12 +47,11 @@ function SocialMedia() {
 		setSocials(filteredSocial);
 	};
 
-	const handleSubmitting = event => {
-		event.preventDefault();
-	};
-
 	const removeIput = (name, icon) => {
 		let filteredIcons = [];
+		const newData = data;
+		newData[name] = '';
+		setData({ ...newData });
 		for (let i = 0; i < icons.length; i++) {
 			if (icons[i].name !== name) {
 				filteredIcons.push(icons[i]);
@@ -59,14 +60,13 @@ function SocialMedia() {
 		setIcons(filteredIcons);
 		setSocials([...socials, { icon: icon, name: name }]);
 	};
-
-	const handleChangeInput = ({ label, value }) => {
+	const handleChangeInput = ({ value, label }) => {
 		setData(prev => ({ ...prev, [label]: value }));
 	};
 
 	const handleSubmit = event => {
 		event.preventDefault();
-		dispatch(socialStep(data));
+		dispatch(addFreelancerContact(data))
 		dispatch(activeDoteAction([{ id: 8, label: "Resume" }, { id: 8, type: "resume" }]));
 	};
 
@@ -83,11 +83,12 @@ function SocialMedia() {
 					<input
 						className={classes.website_input}
 						type="text"
-						placeholder="Provide a link to your website "
+						placeholder="Provide a link to your website"
 						value={data.website}
 						onChange={e => setData(prev => ({ ...prev, website: e.target.value }))}
 					/>
-					{icons &&
+					{
+						icons &&
 						icons.map(item => (
 							<div key={item.name} className={classes.socialInput}>
 								<div className={classes.socialInputIn}>
@@ -96,36 +97,35 @@ function SocialMedia() {
 										placeholder={`Provide a link to your ${item.name} account`}
 										value={data[item.name]}
 										onChange={e => handleChangeInput({ value: e.target.value, label: item.name })}
+										required
 									/>
 									<img className={classes.insideIconImage} src={item.icon} alt="Whats app icon" />
 								</div>
 								<button
+									type="button"
 									className={classes.cancelButton}
-									onClick={event => {
-										removeIput(item.name, item.icon);
-										handleSubmitting(event);
-									}}>
+									onClick={event => removeIput(item.name, item.icon)}
+								>
 									<img className={classes.cancelButton_img} src={cancel} alt="cancel icon" />
 								</button>
 							</div>
-						))}
+						))
+					}
 					<p>Choose in which of these social networks you have an account</p>
 					<div className={classes.socialContainers}>
-						{socials.map(item => (
-							<div key={item.name} style={{ cursor: "pointer" }} className={classes.socialCard} onClick={() => addInputContact(item.icon, item.name)}>
-								<img style={{ width: "40px" }} src={item.icon} alt={item.name} />
-								<h4 className={classes.cart_text}>{item.name}</h4>
-							</div>
-						))}
+						{
+							socials.map(item => {
+								return <div key={item.name} style={{ cursor: "pointer" }} className={classes.socialCard} onClick={() => addInputContact(item.icon, item.name)}>
+									<img style={{ width: "40px" }} src={item.icon} alt={item.name} />
+									<h4 className={classes.cart_text}>{item.name}</h4>
+								</div>
+							})
+						}
 					</div>
 				</div>
 				<div className={classes.button_group}>
-					<button className={classes.backButton} type="button" onClick={prevPgae}>
-						Back
-					</button>
-					<button type="submit" className={classes.nextButton}>
-						Next
-					</button>
+					<WhiteButton type="button" title="Back" onClick={prevPgae} />
+					<OutlinedButton type="submit" title="Next" />
 				</div>
 			</form>
 		</div>
