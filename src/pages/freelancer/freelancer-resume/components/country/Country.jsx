@@ -71,7 +71,7 @@ function Country() {
 		countryInputTouch();
 		regionInputTouch();
 		// if (countryIsValid && regionIsValid) {
-		// 	const freelancerAddress = { country, region, street };
+		const freelancerAddress = { country, region, street };
 		// 	toast.success('Success', { position: toast.POSITION.TOP_LEFT })
 		// 	dispatch(addFreelancerAddress(freelancerAddress))
 		dispatch(activeDoteAction([

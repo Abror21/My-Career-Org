@@ -14,7 +14,7 @@ import OutlinedButton from "src/components/outlined-button";
 function WorkExperience() {
 	const [isModalActive, setModalActive] = useState(false);
 	const [dataToEdit, setDataToEdit] = useState(null);
-	const experienceList = useSelector(state => state.freelancerResume.freelancerExperience);
+	const experienceList = useSelector(state => state.freelancerResume.experience);
 
 	const { userID, experiencePostIsSuccess, loading } = useSelector(state => state.resume);
 	const dispatch = useDispatch();
@@ -58,7 +58,7 @@ function WorkExperience() {
 
 						<div className="experience__box">
 							{
-								experienceList.map(el => {
+								experienceList?.map(el => {
 									return <div className="experience__content" key={el.id}>
 										<div className="experience__texts">
 											<span className="experience__subtitle">{el.companyName}</span>

@@ -16,7 +16,7 @@ function Educations() {
 	const [dataToEdit, setDataToEdit] = useState(null);
 	const dispatch = useDispatch();
 	const { loading } = useSelector(state => state.resume);
-	const freelancerEducations = useSelector(state => state.freelancerResume.freelancerEducation);
+	const educations = useSelector(state => state.freelancerResume.education);
 
 	const handleEditEducation = el => {
 		setDataToEdit(el)
@@ -63,7 +63,7 @@ function Educations() {
 						</p>
 						<div className="educations__box">
 							{
-								freelancerEducations.map(el => (
+								educations.map(el => (
 									<div className="educations__content" key={el.id}>
 										<div className="educations__texts">
 											<span className="educations__subtitle">{el.name}</span>

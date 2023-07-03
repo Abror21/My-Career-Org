@@ -13,12 +13,20 @@ const initialState = {
     birthDate: '',
     skills: [],
     hobbies: [],
-    describeYourself: '',
+    description: '',
     languages: [],
-    freelancerExperience: [],
-    freelancerEducation: [],
-    freelancerContact: {}
+    experience: [],
+    education: [],
+    contact: {}
 };
+
+// const test = () => {
+//     const data = new FormData();
+//     data.append()
+//     fetch(url, {
+
+//     })
+// }
 
 const freelancerResume = createSlice({
     name: 'freelancer-resume',
@@ -41,44 +49,46 @@ const freelancerResume = createSlice({
             state.birthDate = action.payload.birthDate;
             state.skills = action.payload.skills;
             state.hobbies = action.payload.hobbies;
-            state.describeYourself = action.payload.description;
+            state.description = action.payload.description;
         },
         addFreelancerLanguages: (state, action) => {
             state.languages = action.payload;
         },
         addFreelancerExperience: (state, action) => {
-            const idx = state.freelancerExperience.findIndex(exp => exp.id === action.payload.id);
+            const idx = state.experience.findIndex(exp => exp.id === action.payload.id);
             if (idx >= 0) {
-                let currentEl = state.freelancerExperience[idx];
+                let currentEl = state.experience[idx];
                 currentEl = { ...action.payload }
-                state.freelancerExperience[idx] = currentEl;
-                state.freelancerExperience = [...state.freelancerExperience];
+                state.experience[idx] = currentEl;
+                state.experience = [...state.experience];
             } else {
-                state.freelancerExperience = [...state.freelancerExperience, action.payload];
+                state.experience = [...state.experience, action.payload];
             }
         },
         removeFreelancerExperience: (state, action) => {
-            state.freelancerExperience = state.freelancerExperience.filter(exp => exp.id !== action.payload)
+            state.experience = state.experience.filter(exp => exp.id !== action.payload)
         },
         addFreelancerEducation: (state, action) => {
-            const idx = state.freelancerEducation.findIndex(edu => edu.id === action.payload.id);
+            const idx = state.education.findIndex(edu => edu.id === action.payload.id);
             if (idx >= 0) {
-                let currentEl = state.freelancerEducation[idx];
+                let currentEl = state.education[idx];
                 currentEl = { ...action.payload }
-                state.freelancerEducation[idx] = currentEl;
-                state.freelancerEducation = [...state.freelancerEducation];
+                state.education[idx] = currentEl;
+                state.education = [...state.education];
             } else {
-                state.freelancerEducation = [...state.freelancerEducation, action.payload];
+                state.education = [...state.education, action.payload];
             }
         },
         removeFreelancerEducation: (state, action) => {
-            state.freelancerEducation = state.freelancerEducation.filter(edu => edu.id !== action.payload)
+            state.education = state.education.filter(edu => edu.id !== action.payload)
         },
-        addFreelancerContact: (state, action) => {
-            state.freelancerContact = action.payload;
+        addContact: (state, action) => {
+            state.contact = action.payload;
         }
+    },
+    // extraReducers: (builder) => {
 
-    }
+    // },
 });
 
 export const {
@@ -90,7 +100,7 @@ export const {
     removeFreelancerExperience,
     addFreelancerEducation,
     removeFreelancerEducation,
-    addFreelancerContact
+    addContact
 } = freelancerResume.actions;
 
 export default freelancerResume.reducer;

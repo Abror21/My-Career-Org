@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { activeDoteAction } from "src/store/resumeControlsSlice/resumeControls";
 import OutlinedButton from "src/components/outlined-button";
 import WhiteButton from "src/components/white-button";
-import { addFreelancerContact } from "src/store/freelancer-resume/freelancerResume";
+import { addContact } from "src/store/freelancer-resume/freelancerResume";
 
 function SocialMedia() {
 	const dispatch = useDispatch();
@@ -66,7 +66,7 @@ function SocialMedia() {
 
 	const handleSubmit = event => {
 		event.preventDefault();
-		dispatch(addFreelancerContact(data))
+		dispatch(addContact(data))
 		dispatch(activeDoteAction([{ id: 8, label: "Resume" }, { id: 8, type: "resume" }]));
 	};
 

@@ -9,7 +9,7 @@
 
 .eachResume {
 	width: 100%;
-	display: flex;	
+	display: flex;
 	transition: all 0.2s linear;
 }
 
@@ -17,25 +17,6 @@
 	display: flex;
 	align-items: center;
 	gap: 20px;
-}
-
-.nextButton,
-.backButton {
-	border: none;
-	border-radius: 8px;
-	font-style: normal;
-	font-weight: 500;
-	font-size: 20px;
-	line-height: 24px;
-	color: #323232;
-	background: #ffffff;
-	padding: 1rem 2rem;
-	border: 1px solid white;
-	&:hover {
-		border: 1px solid #1d718b;
-		cursor: pointer;
-		transition: 0.3s;
-	}
 }
 
 .nextButton {
@@ -54,7 +35,6 @@
 	align-items: center;
 	justify-content: space-between;
 	margin-top: 30px;
-	padding-left: 120px;
 }
 
 .pagination__box {
@@ -106,7 +86,7 @@
 	border: 3px solid #1D71B8;
 }
 
-@media(max-width:1708px){
+@media(max-width:1708px) {
 	.slide {
 		max-height: 380px;
 	}
@@ -119,16 +99,11 @@
 		margin-top: 25px;
 		padding-left: 50px;
 	}
-
-	.nextButton,
-	.backButton {
-		padding: 10px 20px;
-	}
 }
 
 
 
-@media(max-width:1400px){
+@media(max-width:1400px) {
 	.slide {
 		max-height: 330px;
 	}
@@ -137,21 +112,16 @@
 		margin-top: 20px;
 		padding-left: 0px;
 	}
-
-	.nextButton,
-	.backButton {
-		padding: 8px 16px;
-	}
 }
 
-@media(max-width:1324px){
+@media(max-width:1324px) {
 	.slide {
 		width: 330px;
 		max-height: 350px;
 	}
 }
 
-@media(max-width:1244px){
+@media(max-width:1244px) {
 	.select_title {
 		font-size: 22px;
 		margin-bottom: 10px;
@@ -170,7 +140,7 @@
 }
 
 
-@media(max-width:1212px){
+@media(max-width:1212px) {
 	.slide {
 		width: 300px;
 		max-height: 380px;
@@ -181,14 +151,9 @@
 		width: 298px;
 		object-fit: initial;
 	}
-
-	.nextButton,
-	.backButton {
-		padding: 8px 16px;
-	}
 }
 
-@media(max-width:1166px){
+@media(max-width:1166px) {
 	.select_title {
 		font-size: 20px;
 		margin-bottom: 8px;
@@ -208,17 +173,13 @@
 		width: 298px;
 		object-fit: initial;
 	}
+
 	.resume__footer {
 		margin-top: 15px;
 	}
-
-	.nextButton,
-	.backButton {
-		font-size: 18px;
-	}
 }
 
-@media(max-width:1080px){
+@media(max-width:1080px) {
 	.slide {
 		max-height: 300px;
 	}
@@ -228,8 +189,8 @@
 		width: 298px;
 		object-fit: initial;
 	}
+
 	.resume__footer {
 		margin-top: 15px;
 	}
 }
-

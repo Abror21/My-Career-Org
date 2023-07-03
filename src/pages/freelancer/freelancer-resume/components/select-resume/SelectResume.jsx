@@ -1,4 +1,3 @@
-import React from "react";
 import classes from "./SelectResume.module.scss";
 import resume1 from "src/assets/images/Resume/resume-img1.png";
 import resume2 from "src/assets/images/Resume/resume-img2.png";
@@ -14,6 +13,8 @@ import { useSelector } from "react-redux";
 import { Freelancerpost, resumeSelect } from "src/store/extraReducers";
 import { useNavigate } from "react-router-dom";
 import { activeDoteAction } from "src/store/resumeControlsSlice/resumeControls";
+import WhiteButton from "src/components/white-button";
+import OutlinedButton from "src/components/outlined-button";
 
 function SelectResume() {
 	const [activeDot, setActiveDot] = useState(1);
@@ -64,24 +65,27 @@ function SelectResume() {
 	};
 
 	const handleSubmit = (e) => {
-		e.preventDefault()
-		const formdata = new FormData();
-		for (const key in freelancer) {
-			if (typeof freelancer[key] === "object" && freelancer[key] !== null) {
-				console.log(freelancer[key]);
-				for (const nestedKey in freelancer[key]) {
-					formdata.append(`${key}.${nestedKey}`, freelancer[key][nestedKey]);
-				}
-			} else {
-				formdata.append(key, freelancer[key]);
-				console.log(freelancer[key]);
-			}
-		}
-		dispatch(Freelancerpost(formdata));
-		navigate(`/${len}/welcome/create-profile/${resumeId}`);
-		const data = new FormData();
-		data.append("resume", resumeId);
-		dispatch(resumeSelect(data));
+		// e.preventDefault()
+
+		// const formdata = new FormData();
+		// console.log(freelancer);
+		// for (const key in freelancer) {
+		// 	if (typeof freelancer[key] === "object" && freelancer[key] !== null) {
+		// 		// console.log(freelancer[key]);
+		// 		for (const nestedKey in freelancer[key]) {
+		// 			formdata.append(`${key}.${nestedKey}`, freelancer[key][nestedKey]);
+		// 		}
+		// 	} else {
+		// 		formdata.append(key, freelancer[key]);
+		// 		// console.log(freelancer[key]);
+		// 	}
+		// }
+		// console.log(formdata);
+		// dispatch(Freelancerpost(formdata));
+		// navigate(`/${len}/welcome/create-profile/${resumeId}`);
+		// const data = new FormData();
+		// data.append("resume", resumeId);
+		// dispatch(resumeSelect(data));
 	};
 
 	const prevPage = () => {
@@ -98,14 +102,16 @@ function SelectResume() {
 			<h2 className={classes.select_title}>Select your resume design</h2>
 			<p className={classes.select_desc}>Your resume is ready! You need to choose one of this templates and all your info will be filled in it already.</p>
 			<div className={classes.eachResume} style={{ transform: `translateX(${translate}px)` }}>
-				{resume.map((eachResume, i) => (
-					<div
-						key={eachResume.id}
-						className={`${classes.slide} ${activeDot === i + 1 ? classes.slide__active : ""}`}
-						onClick={() => handleDotClick(eachResume.id)}>
-						<img className={classes.slide_img} src={eachResume.img} alt="Resume images" />
-					</div>
-				))}
+				{
+					resume.map((eachResume, i) => (
+						<div
+							key={eachResume.id}
+							className={`${classes.slide} ${activeDot === i + 1 ? classes.slide__active : ""}`}
+							onClick={() => handleDotClick(eachResume.id)}>
+							<img className={classes.slide_img} src={eachResume.img} alt="Resume images" />
+						</div>
+					))
+				}
 			</div>
 			<div className={classes.resume__footer}>
 				<div className={classes.pagination__box}>
@@ -114,12 +120,14 @@ function SelectResume() {
 					</button>
 
 					<ul className={classes.pagination_dots}>
-						{resume.map((el, i) => (
-							<li
-								className={`${classes.pagination_dot} ${activeDot === i + 1 ? classes.active : null}`}
-								key={i + 1}
-								onClick={() => handleDotClick(i + 1)}></li>
-						))}
+						{
+							resume.map((el, i) => (
+								<li
+									className={`${classes.pagination_dot} ${activeDot === i + 1 ? classes.active : null}`}
+									key={i + 1}
+									onClick={() => handleDotClick(i + 1)}></li>
+							))
+						}
 					</ul>
 
 					<button className={classes.pagination__arrow} onClick={handleNextClick}>
@@ -128,13 +136,8 @@ function SelectResume() {
 				</div>
 
 				<div className={classes.socialForm}>
-					<button className={classes.backButton} type="button" onClick={prevPage}>
-						Back
-					</button>
-
-					<button className={classes.nextButton} onClick={handleSubmit}>
-						Next
-					</button>
+					<WhiteButton type="button" title="Back" onClick={prevPage} />
+					<OutlinedButton type="button" title="Next" onClick={handleSubmit} />
 				</div>
 			</div>
 		</div>
