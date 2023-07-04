@@ -20,14 +20,6 @@ const initialState = {
     contact: {}
 };
 
-// const test = () => {
-//     const data = new FormData();
-//     data.append()
-//     fetch(url, {
-
-//     })
-// }
-
 const freelancerResume = createSlice({
     name: 'freelancer-resume',
     initialState,
@@ -86,9 +78,6 @@ const freelancerResume = createSlice({
             state.contact = action.payload;
         }
     },
-    // extraReducers: (builder) => {
-
-    // },
 });
 
 export const {

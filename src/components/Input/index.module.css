@@ -1,7 +1,6 @@
 .input input {
     display: block;
     width: 100%;
-    padding: 15px 17px;
     font-weight: 500;
     font-size: 20px;
     line-height: 24px;
@@ -11,9 +10,14 @@
     border-radius: 8px;
 }
 
+.input input::placeholder {
+    font-size: 20px !important;
+}
+
 .label {
     display: inline-block;
     margin-bottom: 5px;
+    font-size: 18px;
 }
 
 .error {
@@ -22,18 +26,4 @@
 
 .error-border {
     border-color: red;
-}
-
-@media (max-width: 1750px) {
-    .input input {
-        margin-bottom: 15px;
-        padding: 10px 15px;
-        font-size: 17px;
-    }
-}
-
-@media (max-width: 1024px) {
-    .input input {
-        font-size: 14px;
-    }
 }

@@ -22,7 +22,8 @@ function SelectResume() {
 	const [resumeId, setResumeId] = useState(1);
 	const len = useSelector(state => state.language.language);
 
-	const freelancer = useSelector(state => state.frilancerCards.freelancer);
+	// const freelancer = useSelector(state => state.frilancerCards.freelancer);
+	const freelancerResume = useSelector(state => state.freelancerResume);
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -65,7 +66,30 @@ function SelectResume() {
 	};
 
 	const handleSubmit = (e) => {
-		// e.preventDefault()
+		console.log(freelancerResume);
+		const formData = new FormData();
+		formData.append('image', freelancerResume.image)
+		formData.append('name', freelancerResume.name)
+		formData.append('surname', freelancerResume.surname)
+		formData.append('email', freelancerResume.email)
+		formData.append('phone', freelancerResume.phone)
+		formData.append('country', freelancerResume.country)
+		formData.append('region', freelancerResume.region)
+		formData.append('street', freelancerResume.street)
+		formData.append('position', freelancerResume.position)
+		formData.append('birthDate', freelancerResume.birthDate)
+		formData.append('skills', freelancerResume.skills)
+		formData.append('hobbies', freelancerResume.hobbies)
+		formData.append('description', freelancerResume.description)
+		formData.append('languages', freelancerResume.languages)
+		formData.append('experience', freelancerResume.experience)
+		formData.append('education', freelancerResume.education)
+		formData.append('contact', freelancerResume.contact)
+
+		console.log(formData);
+		// const data = {
+
+		// }
 
 		// const formdata = new FormData();
 		// console.log(freelancer);

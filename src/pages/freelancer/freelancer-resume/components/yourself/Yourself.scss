@@ -7,6 +7,7 @@
 		font-size: 18px;
 		line-height: 22px;
 		color: #323232;
+		margin-bottom: 5px;
 	}
 
 	&_title {
@@ -64,8 +65,6 @@
 					padding: 15px 20px;
 					font-family: 'Montserrat';
 					font-weight: 500;
-					font-size: 17px;
-					line-height: 24px;
 					color: #808080;
 					background: #FFFFFF;
 					border: 1px solid #CDCDCD;
@@ -107,7 +106,6 @@
 	border-radius: 8px !important;
 	padding: 10px 20px !important;
 	border: 1px solid white !important;
-	// margin-left: 32.123rem;
 	background-color: #fff;
 	cursor: pointer;
 
@@ -118,23 +116,19 @@
 }
 
 .yourself_select {
-	margin-top: 8px;
 	margin-bottom: 10px;
 }
-
 
 .yourselfCard {
 	.mantine-MultiSelect-input {
 		box-sizing: border-box;
-		padding: 10px 15px !important;
+		padding: 9px 15px !important;
 		border-radius: 6px !important;
 	}
 
 	.mantine-MultiSelect-input input::placeholder {
 		color: #808080 !important;
 	}
-
-	;
 
 	.mantine-MultiSelect-searchInput {
 		font-family: 'Montserrat';
@@ -145,8 +139,6 @@
 		color: #FFFFFF;
 	}
 
-
-
 	.mantine-MultiSelect-defaultValue,
 	.mantine-MultiSelect-value,
 	.mantine-fqghar {
@@ -155,7 +147,6 @@
 		color: white !important;
 		background-color: #1D71B8 !important;
 	}
-
 
 	.mantine-rsiguj,
 	.mantine-MultiSelect-defaultValueLabel {
@@ -175,7 +166,6 @@
 			fill: white;
 		}
 	}
-
 }
 
 .css-t3ipsp-control {

@@ -26,7 +26,11 @@ const Input = ({
             <InputMask
                 mask={mask}
                 maskChar={null}
-                style={{ borderColor: `${inputIsError || isExist ? 'red' : ''}`, background: disabled ? '#eee' : '' }}
+                style={{
+                    borderColor: `${inputIsError || isExist ? 'red' : ''}`,
+                    background: disabled ? '#eee' : '',
+                    padding: (type && type === 'date') ? '13px 17px' : '14px 17px'
+                }}
                 type={type}
                 className={`${inputIsError ? classes['error-border'] : ''}`}
                 value={disabled ? '' : value}

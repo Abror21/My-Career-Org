@@ -17,19 +17,17 @@ import SelectInput from "src/components/select-input";
 import { useInput } from "src/hooks";
 import Textarea from "src/components/Textarea";
 import WhiteButton from "src/components/white-button";
+import Input from "src/components/Input";
 
 function Yourself() {
 	const dispatch = useDispatch();
 
-	const [birthDate, setBirthDate] = useState('');
 	const [skills, setSkills] = useState([]);
 	const [hobbies, setHobbies] = useState([]);
-	const [birthDateIsError, setBirthDateIsError] = useState(false);
 	const [skillsIsError, setSkillsIsError] = useState(false);
 	const [hobbiesIsError, setHobbiesIsError] = useState(false);
 
 	const { positionGetLoading, positionList, hobbiesList, loading, skillsData, HobbysGetLoading } = useSelector(state => state.resume);
-
 
 	const {
 		inputChange: positionInputChange,
@@ -38,6 +36,14 @@ function Yourself() {
 		value: position,
 		inputIsValid: positionIsValid,
 		inputIsError: positionIsError,
+	} = useInput(value => value.trim().length > 0);
+	const {
+		inputChange: birthDateInputChange,
+		inputBlur: birthDateInputBlur,
+		inputTouch: birthDateInputTouch,
+		value: birthDate,
+		inputIsValid: birthDateIsValid,
+		inputIsError: birthDateIsError,
 	} = useInput(value => value.trim().length > 0);
 	const {
 		inputChange: descriptionInputChange,
@@ -67,27 +73,35 @@ function Yourself() {
 		label: item.content
 	}));
 
+	const skillsBlur = () => {
+		if (skills.length < 1) {
+			setSkillsIsError(true)
+		}
+	}
+	const hobbiesBlur = () => {
+		if (hobbies.length < 1) {
+			setHobbiesIsError(true)
+		}
+	}
+
 	const handleSubmit = e => {
 		e.preventDefault();
 
 		positionInputTouch();
-		setBirthDateIsError(false);
+		birthDateInputTouch();
 		setSkillsIsError(false);
 		setHobbiesIsError(false);
-		if (!birthDate) {
-			setBirthDateIsError(true);
-		}
+
 		if (!skills.length) {
 			setSkillsIsError(true)
 		}
 		if (!hobbies.length) {
 			setHobbiesIsError(true)
 		}
-		// if (positionIsValid && birthDate && skills.length && hobbies.length) {
-		// const about = { position, birthDate, skills, hobbies, description }
-
-		// toast.success('Success', { position: toast.POSITION.TOP_LEFT })
-		// dispatch(addAboutFreelancer(about))
+		// if (positionIsValid && birthDateIsValid && birthDate && skills.length && hobbies.length) {
+		const about = { position, birthDate, skills, hobbies, description }
+		toast.success('Success', { position: toast.POSITION.TOP_LEFT })
+		dispatch(addAboutFreelancer(about))
 		dispatch(activeDoteAction([
 			{ id: 4, label: "Language" },
 			{ id: 4, type: "lenguage" }
@@ -115,16 +129,14 @@ function Yourself() {
 						/>
 					</div>
 					<div className="yourselfCard_form_wrapper_bottom">
-						<label
-							className="yourselfCard_label"
-							style={{ color: (birthDateIsError && !birthDate) ? 'red' : '' }}
-						>Date of birth*</label>
-						<input
-							className={`${(birthDateIsError && !birthDate) ? 'error' : ''}`}
+						<Input
 							type="date"
+							label="Date of birth*"
 							placeholder="DD/MM/YYYY"
-							data-date-format="YYYY:MMMM:DD "
-							onChange={e => setBirthDate(e.target.value.split("-").join(":"))}
+							inputIsError={birthDateIsError}
+							value={birthDate}
+							inputChange={birthDateInputChange}
+							inputBlur={birthDateInputBlur}
 						/>
 					</div>
 				</div>
@@ -132,7 +144,9 @@ function Yourself() {
 					<label
 						className="yourselfCard_label"
 						style={{ color: (skillsIsError && !skills.length) ? 'red' : '' }}
-					>Write down your skills*</label>
+					>
+						Write down your skills*
+					</label>
 					<MultiSelect
 						className={`${(skillsIsError && !skills.length) ? 'error' : ''}`}
 						data={options}
@@ -145,6 +159,8 @@ function Yourself() {
 							const item = { value: query, label: query };
 							return item;
 						}}
+						onBlur={skillsBlur}
+					// error
 					/>
 					<br />
 					<label
@@ -165,6 +181,7 @@ function Yourself() {
 							return item;
 						}}
 						onChange={hobby => setHobbies(hobby)}
+						onBlur={hobbiesBlur}
 					/>
 					<Textarea
 						placeholder="Describe yourself to buyers"

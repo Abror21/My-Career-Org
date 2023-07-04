@@ -40,7 +40,6 @@ export const useInput = (inputValidation = () => { }) => {
             } else {
               dispatch({ type: 'NOTEXIST' })
             }
-
           })
       }, 800)
       dispatch({ type: 'SETTIMER', value: newTimer })
