@@ -19,7 +19,6 @@ const Input = ({
     return (
         <div className={classes.input}>
             <label
-                htmlFor='input'
                 style={{ display: label ? '' : 'none' }}
                 className={`${classes.label} ${inputIsError || isExist ? classes.error : ''}`}
             >{label}</label>
@@ -40,7 +39,6 @@ const Input = ({
                 placeholder={placeholder}
                 valueIsNumericString={true}
                 autoComplete={autoComplete}
-                id='input'
             />
             {inputIsError && <p style={{ color: 'red' }}>{errorMessage}</p>}
             {isExist && <p style={{ color: 'red' }}>Email already exists.</p>}

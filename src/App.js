@@ -14,7 +14,7 @@ import FreelanceOrCompany from "./pages/freelancer-or-company/FreelancerOrCompan
 import FreelancerResume from "./pages/freelancer/freelancer-resume/FreelancerResume";
 import Round from "./components/Round/Round";
 import { LOGIN_USER } from "./api/URLS";
-import { useEffect } from "react";
+import ProtectedRoute from "./routes/protected-route/ProtectedRoute";
 
 function App() {
 
@@ -51,6 +51,7 @@ function App() {
   // const handleLanguage = (lg) => {
   //   i18n.changeLanguage(lg);
   // };
+
   return (
     <>
       {/* <div style={{ position: 'fixed', zIndex: 999 }}>
@@ -67,9 +68,9 @@ function App() {
         }
       </div> */}
       <Routes>
-        {/* <Route path="/" element={<Navigate to={`/${lang}/home`} />} />
-        <Route path={`${lang}`} element={<Navigate to={`/${lang}/home`} />} />
-        <Route path={`${lang}/`} element={<Navigate to={`/${lang}/home`} />} /> */}
+        <Route path="/" element={<Navigate to={`/${lang}/home`} />} />
+        <Route path={`*`} element={<Navigate to={`/${lang}/home`} />} />
+        <Route path={`${lang}/`} element={<Navigate to={`/${lang}/home`} />} />
         <Route path={`${lang}/`} element={<WelcomeBackground />}>
           <Route path="home" element={<HomeContentSwitcher />} />
           <Route path="talents" element={<Talents />} />
@@ -80,10 +81,10 @@ function App() {
         <Route path={`${lang}`} element={<SignBackground />}>
           <Route path="login" element={<Login />} />
           <Route path="sign-up" element={<Signup />} />
-          {/* <Route path="*" element={<Navigate to={`/${lang}/home`} />} /> */}
+          <Route path="*" element={<Navigate to={`/${lang}/home`} />} />
         </Route>
-        <Route path={`${lang}/freelancer-or-company`} element={<FreelanceOrCompany />} />
-        <Route path={`${lang}/freelancer-resume`} element={<FreelancerResume />} />
+        <Route path={`${lang}/freelancer-or-company`} element={<ProtectedRoute>{<FreelanceOrCompany />}</ProtectedRoute>} />
+        <Route path={`${lang}/freelancer-resume`} element={<ProtectedRoute>{<FreelancerResume />}</ProtectedRoute>} />
       </Routes>
     </>
   );
