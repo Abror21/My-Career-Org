@@ -1,0 +1,122 @@
+@import "src/assets/styles/ui.scss";
+
+.freelancer-or-company {
+    .login {
+        overflow: hidden;
+        width: 100vw;
+        height: 100vh;
+
+        &_container {
+            max-width: 1450px;
+            margin: 0 auto;
+            padding: 0 20px;
+            &_bg_img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: -10001;
+                width: 748px;
+            }
+
+            &_wrapper {
+                &_logo {
+                    margin-top: 70px;
+                    width: 290px;
+                }
+            }
+        }
+    }
+
+    .login_company {
+        width: 1373px;
+
+        &_social {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding-top: 120px;
+
+            & img {
+                width: 40px;
+            }
+        }
+
+        &_wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+
+            &_back {
+                display: flex;
+                align-items: center;
+                font-family: "Montserrat";
+                font-weight: 500;
+                font-size: 20px;
+                line-height: 30px;
+                color: #000;
+                gap: 8px;
+                background-color: transparent;
+                border: 0;
+                cursor: pointer;
+            }
+        }
+
+        &_wrapper1 {
+            margin-top: 80px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+
+            & .computer_img {
+                position: absolute;
+                right: 0px;
+                top: 145px;
+                width: 560px;
+                height: 520px;
+            }
+
+            &_frilanc {
+                padding: 22px;
+                background: #ffffff;
+                box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+                max-width: 500px;
+
+                &:hover {
+                    cursor: pointer;
+                    transform: scale(1.03);
+                    transition: 0.3s;
+                }
+
+                &_title {
+                    display: flex;
+                    align-items: center;
+
+                    font-family: "Montserrat", sans-serif;
+
+                    font-weight: 700;
+                    font-size: 24px;
+                    line-height: 27px;
+                    color: #000;
+                    margin-bottom: 17px;
+
+                    & img {
+                        width: 32px;
+                        height: 32px;
+                        margin-right: 13px;
+                    }
+                }
+
+                &_info {
+                    max-width: 495px;
+                    font-family: "Montserrat", sans-serif;
+                    font-weight: 300;
+                    font-size: 14px;
+                    line-height: 18px;
+                    color: #323232;
+                }
+            }
+        }
+    }
+}

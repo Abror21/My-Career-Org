@@ -1,0 +1,26 @@
+.company-resume{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    background-color: blueviolet;
+}
+.back{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 50px;
+    left: 50px;
+    font-size: 35px;
+    padding: 0 30px;
+    cursor: pointer;
+    background-color: bisque;
+    color: blueviolet;
+    border: none;
+    transition: .3s;
+}
+.back:hover{
+    transform: scale(1.1);
+}

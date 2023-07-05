@@ -17,7 +17,7 @@ import ScaleLoader from "react-spinners/ScaleLoader";
 import CheckEmail from "./CheckEmail";
 
 const Signup = () => {
-	
+
 	const { t } = useTranslation();
 	const lang = useSelector(state => state.language.language);
 
@@ -58,10 +58,10 @@ const Signup = () => {
 		inputIsValid: password2IsValid,
 		inputIsError: password2InputIsError
 	} = useInput(password2 => { if (password2) return password2 === password })
-	
+
 	const handleSubmit = e => {
 		e.preventDefault();
-
+		console.log(REGISTER_USER);
 		emailInputTouch();
 		passwordInputTouch();
 		password2InputTouch();
@@ -82,11 +82,12 @@ const Signup = () => {
 				body: JSON.stringify(newUser)
 			})
 				.then(res => {
+					console.log(res);
 					if (res.ok) {
 						emailInputClear();
 						passwordInputClear();
 						password2InputClear();
-						toast.success('You are successfully registered.', {position: toast.POSITION.TOP_LEFT});
+						toast.success('You are successfully registered.', { position: toast.POSITION.TOP_LEFT });
 						setCheckEmail(true);
 					} else {
 						throw new Error('Something went wrong.')
@@ -95,8 +96,8 @@ const Signup = () => {
 				})
 				.then(data => console.log(data))
 				.catch(err => {
-					toast.error(err.message, {position: toast.POSITION.TOP_LEFT}
-						)
+					toast.error(err.message, { position: toast.POSITION.TOP_LEFT }
+					)
 					console.error(err.message)
 				})
 				.finally(() => setLoading(false))
@@ -108,7 +109,7 @@ const Signup = () => {
 		<>
 			{checkEmail && <CheckEmail email={userEmail} />}
 			{
-				!checkEmail && 
+				!checkEmail &&
 				<div className="login_form">
 					<form onSubmit={handleSubmit}>
 						<h3 className="login_form_title">{t("signup")}</h3>

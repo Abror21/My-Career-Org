@@ -9,8 +9,7 @@ const reducer = (state, action) => {
   }
   else if (action.type === 'RESET') {
     return { ...state, value: '', touched: false }
-  }
-  else if (action.type === 'BLUR') {
+  } else if (action.type === 'BLUR') {
     return { ...state, touched: true }
   } else if (action.type === 'EXIST') {
     return { ...state, isExist: true }

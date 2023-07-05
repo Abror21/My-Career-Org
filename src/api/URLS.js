@@ -1,5 +1,6 @@
 // export const BASE_URL = "http://185.217.131.133:7152";
-export const BASE_URL = "https://localhost:7234";
+// export const BASE_URL = "https://localhost:7234";
+export const BASE_URL = "http://mycareer-dev.csolutions.uz";
 
 export const CONTACT_US = `${BASE_URL}/api/contacts-us`;
 export const REGISTER_USER = `${BASE_URL}/api/auth/register`;

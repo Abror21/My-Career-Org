@@ -15,6 +15,7 @@ import FreelancerResume from "./pages/freelancer/freelancer-resume/FreelancerRes
 import Round from "./components/Round/Round";
 import { LOGIN_USER } from "./api/URLS";
 import ProtectedRoute from "./routes/protected-route/ProtectedRoute";
+import CompanyResume from "./pages/company/company-resume/CompanyResume";
 
 function App() {
 
@@ -85,6 +86,7 @@ function App() {
         </Route>
         <Route path={`${lang}/freelancer-or-company`} element={<ProtectedRoute>{<FreelanceOrCompany />}</ProtectedRoute>} />
         <Route path={`${lang}/freelancer-resume`} element={<ProtectedRoute>{<FreelancerResume />}</ProtectedRoute>} />
+        <Route path={`${lang}/company-resume`} element={<ProtectedRoute>{<CompanyResume />}</ProtectedRoute>} />
       </Routes>
     </>
   );
