@@ -1,31 +1,22 @@
 import classes from './index.module.css';
 import Select from 'react-select';
 
-const colourStyles = {
-    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-        // const color = chroma(data.color);
-        console.log({ data, isDisabled, isFocused, isSelected });
-        return {
-            ...styles,
-            backgroundColor: isFocused ? "#999999" : null,
-            color: "#333333"
-        };
-    }
-};
-
-const SelectInput = ({ placeholder, options, value, selectIsError, errorMessage, selectChange, selectBlur }) => {
+const SelectInput = ({ placeholder, options, value, defaultValue, selectIsError, errorMessage, selectChange, selectBlur, isMulti }) => {
     return (
         <div className={classes['select-input']}>
             <Select
+                // isClearable={false}
                 placeholder={placeholder}
                 classNames={{
                     control: (state) =>
                         state.isFocused ? classes.backgroundRed : classes.backgroundBlur,
                 }}
                 options={options}
-                value={value ? undefined : null}
+                value={value ? value : null}
+                defaultValue={defaultValue}
                 onChange={selectChange}
                 onBlur={selectBlur}
+                isMulti={isMulti}
                 styles={{
                     control: (baseStyles, state) => ({
                         ...baseStyles,

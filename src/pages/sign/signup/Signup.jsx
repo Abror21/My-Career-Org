@@ -18,7 +18,7 @@ import CheckEmail from "./CheckEmail";
 
 const Signup = () => {
 
-	const { t } = useTranslation();
+	// const { t } = useTranslation();
 	const lang = useSelector(state => state.language.language);
 
 	const [passwordEye, setPasswordEye] = useState('password');
@@ -40,6 +40,7 @@ const Signup = () => {
 		inputIsError: emailInputIsError,
 		isExist: emailIsExist
 	} = useInput(email => email.includes('@'))
+
 	const {
 		inputChange: passwordInputChange,
 		inputBlur: passwordInputBlur,
@@ -61,7 +62,6 @@ const Signup = () => {
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		console.log(REGISTER_USER);
 		emailInputTouch();
 		passwordInputTouch();
 		password2InputTouch();
@@ -103,8 +103,6 @@ const Signup = () => {
 				.finally(() => setLoading(false))
 		}
 	}
-
-
 	return (
 		<>
 			{checkEmail && <CheckEmail email={userEmail} />}
@@ -112,7 +110,7 @@ const Signup = () => {
 				!checkEmail &&
 				<div className="login_form">
 					<form onSubmit={handleSubmit}>
-						<h3 className="login_form_title">{t("signup")}</h3>
+						<h3 className="login_form_title">Sign up</h3>
 						<p className="login_form_info">
 							Do you have an account? <Link to={`/${lang}/login`}><b>Log in</b></Link> now!
 						</p>

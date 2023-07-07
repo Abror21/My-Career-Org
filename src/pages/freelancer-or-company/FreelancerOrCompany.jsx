@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./FreelancerOrCompany.scss";
 import login_ellipse from "src/assets/images/Sign/Ellipse-6.png";
 import sign_logo from "src/assets/images/Sign/sign_logo.svg";
@@ -12,7 +12,8 @@ import instagram_icon from "src/assets/images/Sign/white-instagram.svg";
 import facebook_icon from "src/assets/images/Sign/white-facebook.svg";
 
 const FreelanceOrCompany = () => {
-  const lang = useSelector(state => state.language.language)
+  const lang = useSelector(state => state.language.language);
+  const navigate = useNavigate();
   return (
     <div className="freelancer-or-company">
       <div className="login">
@@ -22,7 +23,7 @@ const FreelanceOrCompany = () => {
             <div className="login_company">
               <div className="login_company_wrapper">
                 <img src={sign_logo} className="login_container_wrapper_logo" alt="" />
-                <button className="login_company_wrapper_back" type="button">
+                <button className="login_company_wrapper_back" type="button" onClick={() => navigate(-1)}>
                   <img src={left_arrow} alt="left arrow icon" /> Back
                 </button>
               </div>

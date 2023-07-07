@@ -8,6 +8,7 @@ import OutlinedButton from "src/components/outlined-button";
 import WhiteButton from "src/components/white-button";
 import SelectInput from "src/components/select-input";
 import { addFreelancerEducation } from "src/store/freelancer-resume/freelancerResume";
+import { toast } from "react-toastify";
 
 function AddEducations({ data, removeModal, typeOptions, option }) {
 	const dispatch = useDispatch();
@@ -97,6 +98,7 @@ function AddEducations({ data, removeModal, typeOptions, option }) {
 			}
 			dispatch(addFreelancerEducation(education))
 			removeModal(false)
+			toast.success('Success', { position: toast.POSITION.TOP_LEFT })
 		}
 	};
 

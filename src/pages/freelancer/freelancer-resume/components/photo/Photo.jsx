@@ -1,9 +1,7 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./Photo.scss";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { activeDoteAction } from "src/store/resumeControlsSlice/resumeControls";
-import { getCountryList } from "src/store/extraReducers";
-import { firstStep, socialStep } from "src/store/frilanserCardSlice/frilanserCardSlice";
 import Input from "src/components/Input";
 import { useInput } from "src/hooks";
 import OutlinedButton from "src/components/outlined-button";
@@ -13,6 +11,7 @@ import { addFreelancerInfo } from "src/store/freelancer-resume/freelancerResume"
 import { toast } from "react-toastify";
 
 function Photo() {
+	const { name: fName, surname: fSurname, email: fEmail, phone: fPhone } = useSelector(state => state.freelancerResume);
 	const inputRef = useRef();
 	const [image, setImage] = useState("");
 
@@ -67,6 +66,13 @@ function Photo() {
 		inputIsValid: phoneIsValid,
 		inputIsError: phoneInputIsError,
 	} = useInput(phone => phone.length > 18);
+
+	useEffect(() => {
+		nameInputChange(fName);
+		surnameInputChange(fSurname);
+		emailInputChange(fEmail);
+		phoneInputChange(fPhone);
+	}, [])
 
 	const handleSubmit = event => {
 		event.preventDefault();

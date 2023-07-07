@@ -40,7 +40,7 @@ function WorkExperience() {
 
 	const handleSubmit = e => {
 		e.preventDefault();
-
+		
 		dispatch(activeDoteAction([{ id: 6, label: "Educations" }, { id: 6, type: "education" }]));
 	};
 

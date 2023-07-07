@@ -13,9 +13,10 @@ import SignBackground from "./pages/sign/background/SignBackground";
 import FreelanceOrCompany from "./pages/freelancer-or-company/FreelancerOrCompany.jsx";
 import FreelancerResume from "./pages/freelancer/freelancer-resume/FreelancerResume";
 import Round from "./components/Round/Round";
-import { LOGIN_USER } from "./api/URLS";
+import { FREELANCER_SKILL, LOGIN_USER } from "./api/URLS";
 import ProtectedRoute from "./routes/protected-route/ProtectedRoute";
 import CompanyResume from "./pages/company/company-resume/CompanyResume";
+import { useEffect } from "react";
 
 function App() {
 
@@ -41,7 +42,6 @@ function App() {
   // const { pathname } = useLocation();
   // const freelancer = localStorage.getItem("isResume") ? localStorage.getItem("isResume") : "welcome";
 
-  let freelanceOrCompany;
 
   // if (auth) {
   //   let decode = jwt_decode(auth);

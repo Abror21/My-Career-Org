@@ -8,8 +8,13 @@ export const CHECK_EMAIL = `${BASE_URL}/api/auth/CheckEmail?email`;
 export const LOGIN_USER = `${BASE_URL}/api/auth/login`;
 export const JOBS = `${BASE_URL}/api/job`;
 export const COUNTRIES_LIST = `${BASE_URL}/api/country`;
-export const REGIONS_LIST = `${BASE_URL}/api/region/GetByCountry`;
 export const LANGUAGES = `${BASE_URL}/api/language`;
+export const FREELANCER_SKILL = `${BASE_URL}/api/user-skill`;
+export const FREELANCER_SKILLS = `${BASE_URL}/api/skill?position=WebDesigner`;
+export const FREELANCER_HOBBY = `${BASE_URL}/api/user-hobby`;
+
+// export const REGIONS_LIST = `${BASE_URL}/api/region/GetByCountry`;
+// export const REGIONS_LIST = `${BASE_URL}/api/country`;
 
 
 
@@ -25,7 +30,6 @@ export const HOBBIES = `${BASE_URL}/api/hobby`;
 export const POSITION_POST = `${BASE_URL}/api/Freelancer/Position`;
 export const AVIABLE_PUT = `${BASE_URL}/api/Portfolio/Available`;
 export const EXPERIENCE = `${BASE_URL}/api/experience`;
-// export const EXPERIENCEDELETE = `${BASE_URL}/api/experience`;
 export const EDUCATION = `${BASE_URL}/api/education`;
 export const LANGUAGESUPLOAD = `${BASE_URL}/api/language`;
 export const CONTACTSUPLOAD = `${BASE_URL}/api/Freelancer/Contact`;

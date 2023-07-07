@@ -26,7 +26,6 @@ function SelectResume() {
 	const freelancerResume = useSelector(state => state.freelancerResume);
 
 	const dispatch = useDispatch();
-	const navigate = useNavigate();
 
 	const resume = [
 		{ id: 1, img: resume1 },

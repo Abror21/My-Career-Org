@@ -6,6 +6,7 @@ import { useInput } from "src/hooks";
 import Textarea from "src/components/Textarea";
 import OutlinedButton from "src/components/outlined-button";
 import { addFreelancerExperience } from "src/store/freelancer-resume/freelancerResume";
+import { toast } from "react-toastify";
 
 
 function MyWork({ removeModal, data }) {
@@ -91,6 +92,7 @@ function MyWork({ removeModal, data }) {
             }
             dispatch(addFreelancerExperience(experience));
             removeModal(false);
+            toast.success('Success', { position: toast.POSITION.TOP_LEFT })
         }
     }
     return (

@@ -13,6 +13,7 @@ import { activeDoteAction } from "src/store/resumeControlsSlice/resumeControls";
 import OutlinedButton from "src/components/outlined-button";
 import WhiteButton from "src/components/white-button";
 import { addContact } from "src/store/freelancer-resume/freelancerResume";
+import { toast } from "react-toastify";
 
 function SocialMedia() {
 	const dispatch = useDispatch();
@@ -49,7 +50,7 @@ function SocialMedia() {
 
 	const removeIput = (name, icon) => {
 		let filteredIcons = [];
-		const newData = data;
+		const newData = { ...data };
 		newData[name] = '';
 		setData({ ...newData });
 		for (let i = 0; i < icons.length; i++) {
@@ -63,11 +64,16 @@ function SocialMedia() {
 	const handleChangeInput = ({ value, label }) => {
 		setData(prev => ({ ...prev, [label]: value }));
 	};
-
 	const handleSubmit = event => {
 		event.preventDefault();
-		dispatch(addContact(data))
+		dispatch(addContact(data));
 		dispatch(activeDoteAction([{ id: 8, label: "Resume" }, { id: 8, type: "resume" }]));
+		for (const key in data) {
+			if (data[key].trim().length > 0) {
+				toast.success('Success', { position: toast.POSITION.TOP_LEFT });
+				break;
+			}
+		}
 	};
 
 	const prevPgae = event => {
