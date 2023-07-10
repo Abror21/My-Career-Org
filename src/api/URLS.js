@@ -12,6 +12,7 @@ export const LANGUAGES = `${BASE_URL}/api/language`;
 export const FREELANCER_SKILL = `${BASE_URL}/api/user-skill`;
 export const FREELANCER_SKILLS = `${BASE_URL}/api/skill?position=WebDesigner`;
 export const FREELANCER_HOBBY = `${BASE_URL}/api/user-hobby`;
+export const FREELANCER_LANGUAGE = `${BASE_URL}/api/user-language`;
 
 // export const REGIONS_LIST = `${BASE_URL}/api/region/GetByCountry`;
 // export const REGIONS_LIST = `${BASE_URL}/api/country`;

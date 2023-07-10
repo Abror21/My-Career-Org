@@ -2,21 +2,21 @@ import classes from './index.module.css';
 import Select from 'react-select';
 
 const SelectInput = ({ placeholder, options, value, defaultValue, selectIsError, errorMessage, selectChange, selectBlur, isMulti }) => {
+    const helperValue = defaultValue ? (value ? value : null) : (value ? undefined : null);
     return (
         <div className={classes['select-input']}>
             <Select
-                // isClearable={false}
                 placeholder={placeholder}
                 classNames={{
                     control: (state) =>
                         state.isFocused ? classes.backgroundRed : classes.backgroundBlur,
                 }}
                 options={options}
-                value={value ? value : null}
+                value={helperValue}
                 defaultValue={defaultValue}
                 onChange={selectChange}
                 onBlur={selectBlur}
-                isMulti={isMulti}
+                isMulti={isMulti ? isMulti : false}
                 styles={{
                     control: (baseStyles, state) => ({
                         ...baseStyles,

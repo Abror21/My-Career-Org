@@ -3,7 +3,6 @@ import "./Yourself.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import "../styles.scss";
-import { MultiSelect } from "@mantine/core";
 import { activeDoteAction } from "src/store/resumeControlsSlice/resumeControls";
 import OutlinedButton from "src/components/outlined-button";
 import { addAboutFreelancer } from "src/store/freelancer-resume/freelancerResume";
@@ -13,8 +12,9 @@ import { useInput } from "src/hooks";
 import Textarea from "src/components/Textarea";
 import WhiteButton from "src/components/white-button";
 import Input from "src/components/Input";
-import { FREELANCER_SKILL, FREELANCER_SKILLS } from "src/api/URLS";
+import { FREELANCER_HOBBY, FREELANCER_SKILL, FREELANCER_SKILLS } from "src/api/URLS";
 import axios from "axios";
+import CreatableInput from "src/components/select-input/CreatableInput";
 
 
 function Yourself() {
@@ -60,7 +60,22 @@ function Yourself() {
 		fetch(FREELANCER_SKILLS)
 			.then(res => res.json())
 			.then(data => setSkills(data))
-		descriptionInputChange(fDescription)
+		fetch(FREELANCER_SKILL, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${localStorage.getItem('user-token')}`
+			},
+		})
+			.then(res => res.json())
+			.then(data => setFreelancerSkills(data.map(skill => {
+				return { id: skill.id, value: skill.skill.content, label: skill.skill.content }
+			})))
+			.catch(error => alert(error.message))
+		axios.get(FREELANCER_HOBBY, { headers: { Authorization: `Bearer ${localStorage['user-token']}` } })
+			.then(res => setHobbies(res.data.map(el => ({ id: el.id, value: el.hobby.content, label: el.hobby.content }))))
+			.catch(err => console.log(err.message))
+		descriptionInputChange(fDescription);
 	}, [])
 
 	const prevPage = event => {
@@ -72,15 +87,6 @@ function Yourself() {
 			])
 		);
 	};
-
-	const Xobbys = hobbiesList.map(item => ({
-		value: item.content,
-		label: item.content
-	}))
-	// const options = skillsData.map(item => ({
-	// 	value: item.content,
-	// 	label: item.content
-	// }));
 
 	const skillsBlur = () => {
 		if (freelancerSkills.length < 1) {
@@ -98,28 +104,12 @@ function Yourself() {
 		setPositionDefaultValue({ value: e.label, label: e.label })
 	}
 
-	useEffect(() => {
-		fetch(FREELANCER_SKILL, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${localStorage.getItem('user-token')}`
-			},
-		})
-			.then(res => res.json())
-			.then(data => setFreelancerSkills(data.map(skill => {
-				return { id: skill.id, value: skill.skill.content, label: skill.skill.content }
-			})))
-			.catch(error => alert(error.message))
-	}, []);
-
 	const handleSkillsChange = skill => {
 		if (skill.length < 1) {
 			setSkillsIsError(true);
 		} else {
 			setSkillsIsError(false);
 		}
-
 		setFreelancerSkills(skill);
 		if (skill.length > freelancerSkills.length) {
 			fetch(FREELANCER_SKILL, {
@@ -132,7 +122,7 @@ function Yourself() {
 			})
 				.then(res => {
 					if (!res.ok) {
-						throw new Error('Something wetn wrong')
+						throw new Error('Something went wrong')
 					}
 					return res.json();
 				})
@@ -159,23 +149,53 @@ function Yourself() {
 		}
 	}
 
+	const handleHobbiesChange = hobby => {
+		if (hobby.length < 1) {
+			setHobbiesIsError(true);
+		} else {
+			setHobbiesIsError(false);
+		}
 
-	const handleHobbiesChange = (hobby) => {
-		setHobbies(hobby)
-		// fetch(FREELANCER_SKILL, {
-		// 	method: "POST",
-		// 	headers: {
-		// 		"Content-Type": "application/json",
-		// 	},
-		// 	body: JSON.stringify({ otherSkills: hobby }),
-		// })
-		// 	.then(res => {
-		// 		console.log(res);
-		// 		return res.json();
-		// 	})
-		// 	.then(data => console.log(data))
-		// 	.catch(error => alert(error))
+		if (hobby.length > hobbies.length) {
+			fetch(FREELANCER_HOBBY, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${localStorage.getItem('user-token')}`
+				},
+				body: JSON.stringify({ otherHobby: hobby[hobby.length - 1].value }),
+			})
+				.then(res => {
+					if (!res.ok) {
+						throw new Error('Something went wrong')
+					}
+					return res.json();
+				})
+				.then(data => setHobbies([...hobbies, { id: data.id, value: data.hobby.content, label: data.hobby.content }]))
+				.catch(error => toast.error(error.message))
+		} else {
+			setHobbies(hobby);
+			for (let i = 0; i < hobbies.length; i++) {
+				let test = false;
+				for (let j = 0; j < hobby.length; j++) {
+					if (hobbies[i].id === hobby[j].id) {
+						test = true;
+						break;
+					}
+				}
+				if (!test) {
+					fetch(`${FREELANCER_HOBBY}/${hobbies[i].id}`, {
+						method: 'DELETE',
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${localStorage.getItem('user-token')}`
+						}
+					})
+				}
+			}
+		}
 	}
+
 	const handleSubmit = e => {
 		e.preventDefault();
 
@@ -200,7 +220,6 @@ function Yourself() {
 			]))
 		}
 	}
-
 	if (positionGetLoading && loading) {
 		return <b>Loading...</b>;
 	}
@@ -247,6 +266,7 @@ function Yourself() {
 						placeholder={`Select skill*`}
 						options={skills.map(el => ({ id: el.id, value: el.content, label: el.content }))}
 						value={freelancerSkills}
+						defaultValue={freelancerSkills}
 						selectChange={handleSkillsChange}
 						selectIsError={skillsIsError}
 						isMulti={true}
@@ -255,24 +275,16 @@ function Yourself() {
 					<br />
 					<label
 						className="yourselfCard_label"
-						style={{ color: (hobbiesIsError && !hobbies.length) ? 'red' : '' }}
+						style={{ color: hobbiesIsError ? 'red' : '' }}
 					>Hobbies*</label>
-					<MultiSelect
-						className={`yourself_select ${(hobbiesIsError && !hobbies.length) ? 'error' : ''}`}
-						required
-						data={Xobbys}
-						placeholder="Select hobbie or create a new"
-						nothingFound="Nothing found"
-						searchable
-						creatable
-						getCreateLabel={query => `+ Create ${query}`}
-						onCreate={query => {
-							const item = { value: query, label: query.toLowerCase() };
-							return item;
-						}}
+					<CreatableInput
+						value={hobbies}
+						selectIsError={hobbiesIsError}
 						onChange={handleHobbiesChange}
 						onBlur={hobbiesBlur}
+						defaultValue={hobbies}
 					/>
+					<br />
 					<Textarea
 						placeholder="Describe yourself to buyers"
 						value={description}

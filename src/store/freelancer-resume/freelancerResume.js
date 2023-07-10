@@ -11,10 +11,10 @@ const initialState = {
     street: '',
     position: '',
     birthDate: '',
-    skills: [],
-    hobbies: [],
+    // skills: [],
+    // hobbies: [],
     description: '',
-    languages: [],
+    // languages: [],
     experience: [],
     education: [],
     contact: {}
@@ -39,13 +39,13 @@ const freelancerResume = createSlice({
         addAboutFreelancer: (state, action) => {
             state.position = action.payload.position;
             state.birthDate = action.payload.birthDate;
-            state.skills = action.payload.skills;
-            state.hobbies = action.payload.hobbies;
+            // state.skills = action.payload.skills;
+            // state.hobbies = action.payload.hobbies;
             state.description = action.payload.description;
         },
-        addFreelancerLanguages: (state, action) => {
-            state.languages = action.payload;
-        },
+        // addFreelancerLanguages: (state, action) => {
+        //     state.languages = action.payload;
+        // },
         addFreelancerExperience: (state, action) => {
             const idx = state.experience.findIndex(exp => exp.id === action.payload.id);
             if (idx >= 0) {
@@ -58,7 +58,7 @@ const freelancerResume = createSlice({
             }
         },
         removeFreelancerExperience: (state, action) => {
-            state.experience = state.experience.filter(exp => exp.id !== action.payload)
+            state.experience = state.experience.filter(exp => exp.id !== action.payload);
         },
         addFreelancerEducation: (state, action) => {
             const idx = state.education.findIndex(edu => edu.id === action.payload.id);
@@ -84,7 +84,7 @@ export const {
     addFreelancerInfo,
     addFreelancerAddress,
     addAboutFreelancer,
-    addFreelancerLanguages,
+    // addFreelancerLanguages,
     addFreelancerExperience,
     removeFreelancerExperience,
     addFreelancerEducation,
