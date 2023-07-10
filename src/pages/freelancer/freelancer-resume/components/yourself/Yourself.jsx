@@ -171,7 +171,6 @@ function Yourself() {
 				.then(data => setHobbies([...hobbies, { id: data.data.id, value: data.data.hobby.content, label: data.data.hobby.content }]))
 				.catch(error => toast.error(error.message))
 		} else {
-			setHobbies(hobby);
 			for (let i = 0; i < hobbies.length; i++) {
 				let test = false;
 				for (let j = 0; j < hobby.length; j++) {
@@ -188,6 +187,13 @@ function Yourself() {
 							Authorization: `Bearer ${localStorage.getItem('user-token')}`
 						}
 					})
+						.then(res => {
+							if (!res.ok) {
+								toast.error("Something went wrong");
+							} else {
+								setHobbies(hobby);
+							}
+						})
 				}
 			}
 		}
