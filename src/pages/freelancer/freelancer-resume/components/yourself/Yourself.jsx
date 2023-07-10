@@ -110,7 +110,6 @@ function Yourself() {
 		} else {
 			setSkillsIsError(false);
 		}
-		setFreelancerSkills(skill);
 		if (skill.length > freelancerSkills.length) {
 			fetch(FREELANCER_SKILL, {
 				method: "POST",
@@ -122,10 +121,11 @@ function Yourself() {
 			})
 				.then(res => {
 					if (!res.ok) {
-						throw new Error('Something went wrong')
+						throw new Error('Something went wrong');
 					}
 					return res.json();
 				})
+				.then(data => setFreelancerSkills([...freelancerSkills, { id: data.id, value: skill[skill.length - 1].value, label: skill[skill.length - 1].label }]))
 				.catch(error => toast.error(error.message))
 		} else {
 			for (let i = 0; i < freelancerSkills.length; i++) {
@@ -144,11 +144,17 @@ function Yourself() {
 							Authorization: `Bearer ${localStorage.getItem('user-token')}`
 						}
 					})
+						.then(res => {
+							if (!res.ok) {
+								toast.error("Something went wrong")
+							} else {
+								setFreelancerSkills(skill);
+							}
+						})
 				}
 			}
 		}
 	}
-
 	const handleHobbiesChange = hobby => {
 		if (hobby.length < 1) {
 			setHobbiesIsError(true);
