@@ -157,21 +157,12 @@ function Yourself() {
 		}
 
 		if (hobby.length > hobbies.length) {
-			fetch(FREELANCER_HOBBY, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${localStorage.getItem('user-token')}`
-				},
-				body: JSON.stringify({ otherHobby: hobby[hobby.length - 1].value }),
-			})
-				.then(res => {
-					if (!res.ok) {
-						throw new Error('Something went wrong')
-					}
-					return res.json();
-				})
-				.then(data => setHobbies([...hobbies, { id: data.id, value: data.hobby.content, label: data.hobby.content }]))
+			axios.post(
+				FREELANCER_HOBBY,
+				{ otherHobby: hobby[hobby.length - 1].value },
+				{ headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } }
+			)
+				.then(data => setHobbies([...hobbies, { id: data.data.id, value: data.data.hobby.content, label: data.data.hobby.content }]))
 				.catch(error => toast.error(error.message))
 		} else {
 			setHobbies(hobby);
