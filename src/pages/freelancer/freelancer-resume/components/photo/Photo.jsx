@@ -83,7 +83,7 @@ function Photo() {
 		phoneInputTouch();
 
 		if (nameIsValid && surnameIsValid && emailIsValid && phoneIsValid) {
-			toast.success('Success', { position: toast.POSITION.TOP_LEFT })
+			toast.success('Successful step', { position: toast.POSITION.TOP_LEFT })
 			const data = { image, name, surname, email, phone }
 			dispatch(addFreelancerInfo(data));
 			dispatch(activeDoteAction([{ id: 2, label: "Address" }, { id: 2, type: "country" }]));

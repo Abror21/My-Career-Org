@@ -92,31 +92,23 @@ function Language() {
 		if (userLanguages.length < 1) {
 			toast.error('Please add at least one language.');
 			return;
-		}
-		const newList = [];
-		try {
-			userLanguages.forEach(lang => {
-				if (lang.languageId && lang.level) {
-					newList.push(lang);
-				} else {
-					throw new Error("Field should not be empty")
-				}
-			});
-		} catch (err) {
-			toast.error(err.message);
-			return;
-		}
-		if (newList.length > 0) {
-			toast.success('Success', { position: toast.POSITION.TOP_LEFT });
-			// dispatch(addFreelancerLanguages(newList));
-			dispatch(
-				activeDoteAction([
-					{ id: 5, label: "Experience" },
-					{ id: 5, type: "workexperience" }
-				])
-			);
 		} else {
-			toast.error("Something went wrong.");
+			try {
+				userLanguages.forEach(lang => {
+					if (!(lang.languageId && (lang.levelId || lang.levelId === 0))) {
+						throw new Error("Field should not be empty")
+					}
+				});
+				toast.success('Successful step', { position: toast.POSITION.TOP_LEFT });
+				dispatch(
+					activeDoteAction([
+						{ id: 5, label: "Experience" },
+						{ id: 5, type: "workexperience" }
+					])
+				);
+			} catch (err) {
+				toast.error(err.message);
+			}
 		}
 	}
 	return (

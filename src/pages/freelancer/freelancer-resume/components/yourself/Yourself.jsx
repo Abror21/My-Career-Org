@@ -215,7 +215,7 @@ function Yourself() {
 		}
 		if (positionIsValid && birthDateIsValid && birthDate && freelancerSkills.length && hobbies.length) {
 			const about = { position, birthDate, description }
-			toast.success('Success', { position: toast.POSITION.TOP_LEFT })
+			toast.success('Successful step', { position: toast.POSITION.TOP_LEFT })
 			dispatch(addAboutFreelancer(about))
 			dispatch(activeDoteAction([
 				{ id: 4, label: "Language" },

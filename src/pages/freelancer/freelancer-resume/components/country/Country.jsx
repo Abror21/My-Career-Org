@@ -87,7 +87,7 @@ function Country() {
 		regionInputTouch();
 		if (countryIsValid && regionIsValid) {
 			const freelancerAddress = { country, region, street };
-			toast.success('Success', { position: toast.POSITION.TOP_LEFT })
+			toast.success('Successful step', { position: toast.POSITION.TOP_LEFT })
 			dispatch(addFreelancerAddress(freelancerAddress))
 			dispatch(activeDoteAction([
 				{ id: 3, label: "About yourself and skills" },

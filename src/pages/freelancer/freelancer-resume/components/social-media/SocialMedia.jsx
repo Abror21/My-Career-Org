@@ -70,7 +70,7 @@ function SocialMedia() {
 		dispatch(activeDoteAction([{ id: 8, label: "Resume" }, { id: 8, type: "resume" }]));
 		for (const key in data) {
 			if (data[key].trim().length > 0) {
-				toast.success('Success', { position: toast.POSITION.TOP_LEFT });
+				toast.success('Successful step', { position: toast.POSITION.TOP_LEFT });
 				break;
 			}
 		}

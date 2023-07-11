@@ -92,7 +92,7 @@ function MyWork({ removeModal, data }) {
             }
             dispatch(addFreelancerExperience(experience));
             removeModal(false);
-            toast.success('Success', { position: toast.POSITION.TOP_LEFT })
+            toast.success('Successful step', { position: toast.POSITION.TOP_LEFT })
         }
     }
     return (

@@ -98,7 +98,7 @@ function AddEducations({ data, removeModal, typeOptions, option }) {
 			}
 			dispatch(addFreelancerEducation(education))
 			removeModal(false)
-			toast.success('Success', { position: toast.POSITION.TOP_LEFT })
+			toast.success('Successful step', { position: toast.POSITION.TOP_LEFT })
 		}
 	};
 
