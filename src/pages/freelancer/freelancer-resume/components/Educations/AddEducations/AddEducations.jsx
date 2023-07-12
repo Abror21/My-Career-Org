@@ -15,6 +15,9 @@ import axios from "axios";
 function AddEducations({ data, removeModal, typeOptions, option, getEducationList }) {
 	// const dispatch = useDispatch();
 	const [currentlyWorking, setCurrentlyWorking] = useState(data?.dateTo === null ? true : false);
+	const [defaultDegree, setDefaultDegree] = useState(null);
+	const [defaultType, setDefaultType] = useState(null);
+
 	const {
 		inputChange: nameInputChange,
 		inputBlur: nameInputBlur,
@@ -67,13 +70,24 @@ function AddEducations({ data, removeModal, typeOptions, option, getEducationLis
 	useEffect(() => {
 		if (data) {
 			nameInputChange(data.name);
-			degreeInputChange(data.degree);
-			typeInputChange(data.typeOfStudy);
+			degreeInputChange(option[data.degree].id);
+			setDefaultDegree({ value: option[data.degree].value, label: option[data.degree].value });
+			typeInputChange(typeOptions[data.typeOfStudy].value);
+			setDefaultType({ value: typeOptions[data.typeOfStudy].value, label: typeOptions[data.typeOfStudy].value });
 			locationInputChange(data.location);
-			dateFromInputChange(data.dateFrom);
-			dateToInputChange(data.dateTo);
+			dateFromInputChange(data.dateFrom.substring(0, 10));
+			dateToInputChange(data.dateTo.substring(0, 10));
 		}
 	}, [])
+
+	const handleDegreeChange = e => {
+		degreeInputChange(e.id);
+		setDefaultDegree({ value: option[e.id].value, label: option[e.id].value })
+	}
+	const handleTypeChange = e => {
+		typeInputChange(e.value);
+		setDefaultType({ value: typeOptions[e.id - 1].value, label: typeOptions[e.id - 1].value })
+	}
 
 	const handleSubmit = e => {
 		e.preventDefault();
@@ -97,6 +111,7 @@ function AddEducations({ data, removeModal, typeOptions, option, getEducationLis
 				dateTo
 			}
 			if (data) {
+				console.log(education);
 				axios.put(
 					`${FREELANCER_EDUCATION}/${data.id}`,
 					education,
@@ -145,19 +160,21 @@ function AddEducations({ data, removeModal, typeOptions, option, getEducationLis
 					<SelectInput
 						placeholder="Select degree"
 						options={option}
-						value={degree}
+						value={defaultDegree}
+						defaultValue={defaultDegree}
 						selectIsError={degreeIsError}
 						errorMessage="Please select degree"
-						selectChange={e => degreeInputChange(e.id)}
+						selectChange={handleDegreeChange}
 						selectBlur={degreeInputBlur}
 					/>
 					<SelectInput
 						placeholder="Type of study"
 						options={typeOptions}
-						value={typeOfStudy}
+						value={defaultType}
+						defaultValue={defaultType}
 						selectIsError={typeIsError}
 						errorMessage="Please select type"
-						selectChange={e => typeInputChange(e.value)}
+						selectChange={handleTypeChange}
 						selectBlur={typeInputBlur}
 					/>
 					<Input
