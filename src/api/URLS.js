@@ -14,6 +14,8 @@ export const FREELANCER_SKILLS = `${BASE_URL}/api/skill?position=WebDesigner`;
 export const FREELANCER_HOBBY = `${BASE_URL}/api/user-hobby`;
 export const FREELANCER_LANGUAGE = `${BASE_URL}/api/user-language`;
 export const FREELANCER_EXPERIENCE = `${BASE_URL}/api/experience`;
+export const FREELANCER_EDUCATION = `${BASE_URL}/api/education`;
+
 
 // export const REGIONS_LIST = `${BASE_URL}/api/region/GetByCountry`;
 // export const REGIONS_LIST = `${BASE_URL}/api/country`;

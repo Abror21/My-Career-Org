@@ -16,7 +16,7 @@ const initialState = {
     description: '',
     // languages: [],
     // experience: [],
-    education: [],
+    // education: [],
     contact: {}
 };
 
@@ -60,20 +60,20 @@ const freelancerResume = createSlice({
         // removeFreelancerExperience: (state, action) => {
         //     state.experience = state.experience.filter(exp => exp.id !== action.payload);
         // },
-        addFreelancerEducation: (state, action) => {
-            const idx = state.education.findIndex(edu => edu.id === action.payload.id);
-            if (idx >= 0) {
-                let currentEl = state.education[idx];
-                currentEl = { ...action.payload }
-                state.education[idx] = currentEl;
-                state.education = [...state.education];
-            } else {
-                state.education = [...state.education, action.payload];
-            }
-        },
-        removeFreelancerEducation: (state, action) => {
-            state.education = state.education.filter(edu => edu.id !== action.payload)
-        },
+        // addFreelancerEducation: (state, action) => {
+        //     const idx = state.education.findIndex(edu => edu.id === action.payload.id);
+        //     if (idx >= 0) {
+        //         let currentEl = state.education[idx];
+        //         currentEl = { ...action.payload }
+        //         state.education[idx] = currentEl;
+        //         state.education = [...state.education];
+        //     } else {
+        //         state.education = [...state.education, action.payload];
+        //     }
+        // },
+        // removeFreelancerEducation: (state, action) => {
+        //     state.education = state.education.filter(edu => edu.id !== action.payload)
+        // },
         addContact: (state, action) => {
             state.contact = action.payload;
         }
@@ -87,8 +87,8 @@ export const {
     // addFreelancerLanguages,
     // addFreelancerExperience,
     // removeFreelancerExperience,
-    addFreelancerEducation,
-    removeFreelancerEducation,
+    // addFreelancerEducation,
+    // removeFreelancerEducation,
     addContact
 } = freelancerResume.actions;
 

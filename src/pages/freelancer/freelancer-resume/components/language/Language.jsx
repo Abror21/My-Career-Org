@@ -50,34 +50,58 @@ function Language() {
 	}
 
 	const changeValue = (tempId, id, levelId) => {
+		console.log(tempId, id, levelId);
 		const idx = userLanguages.findIndex(el => el.tempId === tempId);
 
-		const newElement = { ...userLanguages[idx] }
-
+		const newElement = { ...userLanguages[idx] };
+		if (newElement.languageId && newElement.levelId) {
+			if (id) {
+				newElement.languageId = id;
+			}
+			if (levelId || levelId === 0) {
+				newElement.levelId = levelId;
+			}
+			axios.put(
+				axios.post(
+					`${FREELANCER_LANGUAGE}/${tempId}`,
+					{ languageId: newElement.languageId, level: newElement.levelId },
+					{ headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } }
+				)
+					.then(res => {
+						if (res.status === 200) {
+							getLanguageList();
+						} else {
+							toast.error('Something went wrong')
+						}
+					})
+					.catch(err => toast.error(err.message))
+			)
+		}
+		console.log('test ', newElement);
 		if (id) {
 			newElement.languageId = id;
 		}
 		if (levelId || levelId === 0) {
 			newElement.levelId = levelId;
 		}
-		if (newElement.languageId && (newElement.levelId || newElement.levelId == 0)) {
-			axios.post(
-				FREELANCER_LANGUAGE,
-				{ languageId: newElement.languageId, level: newElement.levelId },
-				{ headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } }
-			)
-				.then(res => {
-					if (res.status === 200) {
-						getLanguageList();
-					} else {
-						toast.error('Something went wrong')
-					}
-				})
-				.catch(err => toast.error(err.message))
-		} else {
-			userLanguages[idx] = newElement;
-			setUserLanguages([...userLanguages]);
-		}
+		// if (newElement.languageId && (newElement.levelId || newElement.levelId == 0)) {
+		// 	axios.post(
+		// 		FREELANCER_LANGUAGE,
+		// 		{ languageId: newElement.languageId, level: newElement.levelId },
+		// 		{ headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } }
+		// 	)
+		// 		.then(res => {
+		// 			if (res.status === 200) {
+		// 				getLanguageList();
+		// 			} else {
+		// 				toast.error('Something went wrong')
+		// 			}
+		// 		})
+		// 		.catch(err => toast.error(err.message))
+		// }
+		// userLanguages[idx] = newElement;
+		// setUserLanguages([...userLanguages]);
+		// console.log('test ', newElement);
 	}
 
 	const changeLanguage = (e) => {

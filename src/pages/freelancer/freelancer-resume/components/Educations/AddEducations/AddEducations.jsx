@@ -7,13 +7,14 @@ import { useInput } from "src/hooks";
 import OutlinedButton from "src/components/outlined-button";
 import WhiteButton from "src/components/white-button";
 import SelectInput from "src/components/select-input";
-import { addFreelancerEducation } from "src/store/freelancer-resume/freelancerResume";
+// import { addFreelancerEducation } from "src/store/freelancer-resume/freelancerResume";
 import { toast } from "react-toastify";
+import { FREELANCER_EDUCATION } from "src/api/URLS";
+import axios from "axios";
 
-function AddEducations({ data, removeModal, typeOptions, option }) {
-	const dispatch = useDispatch();
+function AddEducations({ data, removeModal, typeOptions, option, getEducationList }) {
+	// const dispatch = useDispatch();
 	const [currentlyWorking, setCurrentlyWorking] = useState(data?.dateTo === null ? true : false);
-
 	const {
 		inputChange: nameInputChange,
 		inputBlur: nameInputBlur,
@@ -37,7 +38,7 @@ function AddEducations({ data, removeModal, typeOptions, option }) {
 		value: degree,
 		inputIsValid: degreeIsValid,
 		inputIsError: degreeIsError,
-	} = useInput(value => value.trim().length > 0);
+	} = useInput(value => value >= 0);
 	const {
 		inputChange: typeInputChange,
 		inputBlur: typeInputBlur,
@@ -86,19 +87,42 @@ function AddEducations({ data, removeModal, typeOptions, option }) {
 
 		const checkWorking = currentlyWorking || dateToIsValid;
 		if (nameIsValid && degreeIsValid && typeIsValid && locationIsValid && dateFromIsValid && checkWorking) {
-			let dateTo = currentlyWorking ? null : dateToValue;
+			let dateTo = currentlyWorking ? null : new Date(dateToValue).toISOString();
 			const education = {
-				id: data ? data.id : Date.now(),
 				name,
 				degree,
 				typeOfStudy,
 				location,
-				dateFrom,
+				dateFrom: new Date(dateFrom).toISOString(),
 				dateTo
 			}
-			dispatch(addFreelancerEducation(education))
-			removeModal(false)
-			toast.success('Successful step', { position: toast.POSITION.TOP_LEFT })
+			if (data) {
+				axios.put(
+					`${FREELANCER_EDUCATION}/${data.id}`,
+					education,
+					{ headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } },
+				)
+					.then(res => {
+						if (res.status === 200) {
+							getEducationList();
+							removeModal(false);
+						}
+					})
+					.catch(err => toast.error(err.message));
+			} else {
+				axios.post(
+					FREELANCER_EDUCATION,
+					education,
+					{ headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } },
+				)
+					.then(res => {
+						if (res.status === 200) {
+							getEducationList();
+							removeModal(false);
+						}
+					})
+					.catch(err => toast.error(err.message))
+			}
 		}
 	};
 
@@ -124,7 +148,7 @@ function AddEducations({ data, removeModal, typeOptions, option }) {
 						value={degree}
 						selectIsError={degreeIsError}
 						errorMessage="Please select degree"
-						selectChange={e => degreeInputChange(e.value)}
+						selectChange={e => degreeInputChange(e.id)}
 						selectBlur={degreeInputBlur}
 					/>
 					<SelectInput

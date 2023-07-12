@@ -61,6 +61,7 @@ function WorkExperience() {
 					getExperienceList();
 				}
 			})
+			.catch(err => toast.error(err.message))
 	}
 	const handleSubmit = e => {
 		e.preventDefault();

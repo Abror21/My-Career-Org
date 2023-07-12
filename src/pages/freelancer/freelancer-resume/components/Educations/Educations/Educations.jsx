@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./style.scss";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -9,14 +9,32 @@ import { ReactComponent as Edit } from "src/assets/icons/edit.svg";
 import AddEducations from "../AddEducations/AddEducations";
 import OutlinedButton from "src/components/outlined-button";
 import WhiteButton from "src/components/white-button";
-import { removeFreelancerEducation } from "src/store/freelancer-resume/freelancerResume";
+// import { removeFreelancerEducation } from "src/store/freelancer-resume/freelancerResume";
+import axios from "axios";
+import { FREELANCER_EDUCATION } from "src/api/URLS";
+import { toast } from "react-toastify";
 
 function Educations() {
 	const [showModal, setShowModal] = useState(false);
 	const [dataToEdit, setDataToEdit] = useState(null);
+	const [educations, setEducations] = useState([]);
+
 	const dispatch = useDispatch();
 	const { loading } = useSelector(state => state.resume);
-	const educations = useSelector(state => state.freelancerResume.education);
+	// const educations = useSelector(state => state.freelancerResume.education);
+
+	useEffect(() => {
+		getEducationList();
+	}, [])
+
+	const getEducationList = () => {
+		axios.get(FREELANCER_EDUCATION, { headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } })
+			.then(res => {
+				if (res.status === 200) {
+					setEducations(res.data);
+				}
+			})
+	}
 
 	const handleEditEducation = el => {
 		setDataToEdit(el)
@@ -31,6 +49,19 @@ function Educations() {
 		dispatch(activeDoteAction([{ id: 5, label: "Experience" }, { id: 5, type: "workexperience" }]));
 	};
 
+	const handleDelete = (id) => {
+		axios.delete(
+			`${FREELANCER_EDUCATION}/${id}`,
+			{ headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } }
+		)
+			.then(res => {
+				if (res.status === 200) {
+					getEducationList();
+				}
+			})
+			.catch(err => toast.error(err.message))
+	}
+
 	const handleSubmit = e => {
 		e.preventDefault();
 		dispatch(activeDoteAction([{ id: 7, label: "Contacts" }, { id: 7, type: "media" }]));
@@ -42,12 +73,12 @@ function Educations() {
 
 	const typeOptions = [{ value: "online", label: "online", id: 1 }, { value: "offline", label: "offline", id: 2 }];
 	const option = [
-		{ value: "Primary", label: "Primary", id: 1 },
-		{ value: "Lower", label: "Lower", id: 2 },
-		{ value: "Upper", label: "Upper", id: 3 },
-		{ value: "Bachelor", label: "Bachelor", id: 4 },
-		{ value: "Master", label: "Master", id: 5 },
-		{ value: "Dortorate", label: "Dortorate", id: 6 },
+		{ value: "Primary", label: "Primary", id: 0 },
+		{ value: "Lower", label: "Lower", id: 1 },
+		{ value: "Upper", label: "Upper", id: 2 },
+		{ value: "Bachelor", label: "Bachelor", id: 3 },
+		{ value: "Master", label: "Master", id: 4 },
+		{ value: "Doctorate", label: "Doctorate", id: 5 },
 	];
 
 	return (
@@ -68,7 +99,7 @@ function Educations() {
 										<div className="educations__texts">
 											<span className="educations__subtitle">{el.name}</span>
 											<div className="educations__study">
-												<span className="educations__telecommunication">{el.degree}</span>
+												<span className="educations__telecommunication">{option[el.degree].value}</span>
 											</div>
 										</div>
 
@@ -84,7 +115,7 @@ function Educations() {
 											</span>
 											<span
 												className="experience__icon--delete"
-												onClick={() => dispatch(removeFreelancerEducation(el.id))}
+												onClick={() => handleDelete(el.id)}
 											>
 												<Trash
 													name="trash-outline"
@@ -115,7 +146,13 @@ function Educations() {
 				</div>
 			</div>
 			{
-				showModal && <AddEducations typeOptions={typeOptions} option={option} removeModal={setShowModal} data={dataToEdit} />
+				showModal && <AddEducations
+					typeOptions={typeOptions}
+					option={option}
+					removeModal={setShowModal}
+					data={dataToEdit}
+					getEducationList={getEducationList}
+				/>
 			}
 		</>
 	);
