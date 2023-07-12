@@ -15,7 +15,7 @@ const initialState = {
     // hobbies: [],
     description: '',
     // languages: [],
-    experience: [],
+    // experience: [],
     education: [],
     contact: {}
 };
@@ -46,20 +46,20 @@ const freelancerResume = createSlice({
         // addFreelancerLanguages: (state, action) => {
         //     state.languages = action.payload;
         // },
-        addFreelancerExperience: (state, action) => {
-            const idx = state.experience.findIndex(exp => exp.id === action.payload.id);
-            if (idx >= 0) {
-                let currentEl = state.experience[idx];
-                currentEl = { ...action.payload }
-                state.experience[idx] = currentEl;
-                state.experience = [...state.experience];
-            } else {
-                state.experience = [...state.experience, action.payload];
-            }
-        },
-        removeFreelancerExperience: (state, action) => {
-            state.experience = state.experience.filter(exp => exp.id !== action.payload);
-        },
+        // addFreelancerExperience: (state, action) => {
+        //     const idx = state.experience.findIndex(exp => exp.id === action.payload.id);
+        //     if (idx >= 0) {
+        //         let currentEl = state.experience[idx];
+        //         currentEl = { ...action.payload }
+        //         state.experience[idx] = currentEl;
+        //         state.experience = [...state.experience];
+        //     } else {
+        //         state.experience = [...state.experience, action.payload];
+        //     }
+        // },
+        // removeFreelancerExperience: (state, action) => {
+        //     state.experience = state.experience.filter(exp => exp.id !== action.payload);
+        // },
         addFreelancerEducation: (state, action) => {
             const idx = state.education.findIndex(edu => edu.id === action.payload.id);
             if (idx >= 0) {
@@ -85,8 +85,8 @@ export const {
     addFreelancerAddress,
     addAboutFreelancer,
     // addFreelancerLanguages,
-    addFreelancerExperience,
-    removeFreelancerExperience,
+    // addFreelancerExperience,
+    // removeFreelancerExperience,
     addFreelancerEducation,
     removeFreelancerEducation,
     addContact

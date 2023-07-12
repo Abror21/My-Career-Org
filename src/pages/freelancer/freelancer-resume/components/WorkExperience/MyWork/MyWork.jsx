@@ -5,20 +5,19 @@ import Input from "src/components/Input";
 import { useInput } from "src/hooks";
 import Textarea from "src/components/Textarea";
 import OutlinedButton from "src/components/outlined-button";
-import { addFreelancerExperience } from "src/store/freelancer-resume/freelancerResume";
+// import { addFreelancerExperience } from "src/store/freelancer-resume/freelancerResume";
 import { toast } from "react-toastify";
+import axios from "axios";
+import { FREELANCER_EXPERIENCE } from "src/api/URLS";
 
 
-function MyWork({ removeModal, data }) {
-
-    const dispatch = useDispatch();
+function MyWork({ removeModal, data, getExperienceList }) {
 
     const [currentlyWorking, setCurrentlyWorking] = useState(data?.dateTo === null ? true : false);
 
     const changePage = () => {
         removeModal(false);
     };
-
     const {
         inputChange: nameInputChange,
         inputBlur: nameInputBlur,
@@ -63,13 +62,12 @@ function MyWork({ removeModal, data }) {
     useEffect(() => {
         if (data) {
             nameInputChange(data.companyName);
-            jobInputChange(data.jobName);
-            dateFromInputChange(data.dateFrom)
-            dateToInputChange(data.dateTo)
+            jobInputChange(data.job);
+            dateFromInputChange(data.dateFrom.substring(0, 10))
+            dateToInputChange(data.dateTo.substring(0, 10));
             textareaInputChange(data.description)
         }
     }, [])
-
     const handleSubmit = e => {
         e.preventDefault();
         nameInputTouch();
@@ -81,18 +79,41 @@ function MyWork({ removeModal, data }) {
         const checkWorking = currentlyWorking || dateToIsValid;
 
         if (nameIsValid && jobIsValid && dateFromIsValid && checkWorking && textareaIsValid) {
-            let isStillWorking = currentlyWorking ? null : dateToValue;
+            let isStillWorking = currentlyWorking ? null : new Date(dateToValue).toISOString();
             const experience = {
-                id: data ? data.id : Date.now(),
                 companyName,
-                jobName,
-                dateFrom: dateFromValue,
+                job: jobName,
+                dateFrom: new Date(dateFromValue).toISOString(),
                 dateTo: isStillWorking,
                 description: textareaValue
             }
-            dispatch(addFreelancerExperience(experience));
-            removeModal(false);
-            toast.success('Successful step', { position: toast.POSITION.TOP_LEFT })
+            if (data) {
+                axios.put(
+                    `${FREELANCER_EXPERIENCE}/${data.id}`,
+                    experience,
+                    { headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } },
+                )
+                    .then(res => {
+                        if (res.status === 200) {
+                            getExperienceList();
+                            removeModal(false);
+                        }
+                    })
+                    .catch(err => toast.error(err.message));
+            } else {
+                axios.post(
+                    FREELANCER_EXPERIENCE,
+                    experience,
+                    { headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } },
+                )
+                    .then(res => {
+                        if (res.status === 200) {
+                            getExperienceList();
+                            removeModal(false);
+                        }
+                    })
+                    .catch(err => toast.error(err.message))
+            }
         }
     }
     return (

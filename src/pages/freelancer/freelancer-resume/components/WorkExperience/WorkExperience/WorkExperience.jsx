@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./style.scss";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -7,14 +7,31 @@ import { activeDoteAction } from "src/store/resumeControlsSlice/resumeControls";
 import { ReactComponent as Trash } from "src/assets/icons/trash.svg";
 import { ReactComponent as Edit } from "src/assets/icons/edit.svg";
 import MyWork from "../MyWork/MyWork";
-import { removeFreelancerExperience } from "src/store/freelancer-resume/freelancerResume";
+// import { removeFreelancerExperience } from "src/store/freelancer-resume/freelancerResume";
 import WhiteButton from "src/components/white-button";
 import OutlinedButton from "src/components/outlined-button";
+import axios from "axios";
+import { FREELANCER_EXPERIENCE } from "src/api/URLS";
+import { toast } from "react-toastify";
 
 function WorkExperience() {
 	const [isModalActive, setModalActive] = useState(false);
 	const [dataToEdit, setDataToEdit] = useState(null);
-	const experienceList = useSelector(state => state.freelancerResume.experience);
+	const [experienceList, setExperienceList] = useState([]);
+	// const experienceList = useSelector(state => state.freelancerResume.experience);
+
+	useEffect(() => {
+		getExperienceList();
+	}, [])
+
+	const getExperienceList = () => {
+		axios.get(FREELANCER_EXPERIENCE, { headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } })
+			.then(res => {
+				if (res.status === 200) {
+					setExperienceList(res.data)
+				}
+			})
+	}
 
 	const { userID, experiencePostIsSuccess, loading } = useSelector(state => state.resume);
 	const dispatch = useDispatch();
@@ -34,16 +51,28 @@ function WorkExperience() {
 		dispatch(activeDoteAction([{ id: 4, label: "Language" }, { id: 4, type: "lenguage" }]));
 	};
 
+	const handleDelete = (id) => {
+		axios.delete(
+			`${FREELANCER_EXPERIENCE}/${id}`,
+			{ headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } }
+		)
+			.then(res => {
+				if (res.status === 200) {
+					getExperienceList();
+				}
+			})
+	}
+	const handleSubmit = e => {
+		e.preventDefault();
+		dispatch(activeDoteAction([{ id: 6, label: "Educations" }, { id: 6, type: "education" }]));
+		if (experienceList.length > 0) {
+			toast.success('Successful step', { position: toast.POSITION.TOP_LEFT });
+		}
+	};
+
 	if (loading) {
 		return <b>Loading...</b>;
 	}
-
-	const handleSubmit = e => {
-		e.preventDefault();
-		
-		dispatch(activeDoteAction([{ id: 6, label: "Educations" }, { id: 6, type: "education" }]));
-	};
-
 	return (
 		<>
 			<div className="experience">
@@ -76,7 +105,7 @@ function WorkExperience() {
 											</span>
 											<span
 												className="experience__icon--delete"
-												onClick={() => dispatch(removeFreelancerExperience(el.id))}
+												onClick={() => handleDelete(el.id)}
 											>
 												<Trash
 													name="trash-outline"
@@ -105,7 +134,7 @@ function WorkExperience() {
 					</div>
 				</div>
 			</div>
-			{isModalActive && <MyWork removeModal={setModalActive} data={dataToEdit} />}
+			{isModalActive && <MyWork removeModal={setModalActive} data={dataToEdit} getExperienceList={getExperienceList} />}
 		</>
 	);
 }
