@@ -4,7 +4,7 @@ import career from "src/assets/images/career.png";
 import searchIcon from "src/assets/images/searchIcon.png";
 import googlePlay from "src/assets/images/googlePlay.png";
 import apple from "src/assets/images/apple.png";
-import { JOBS } from "src/api/URLS";
+import { JOBS } from "src/services/URLS";
 // import { useTranslation } from "react-i18next";
 
 function MyCareer() {

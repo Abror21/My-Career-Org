@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "../photo/Photo.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { activeDoteAction } from "src/store/resumeControlsSlice/resumeControls";
-import { COUNTRIES_LIST } from "src/api/URLS";
+import { COUNTRIES_LIST } from "src/services/URLS";
 import { addFreelancerAddress } from "src/store/freelancer-resume/freelancerResume";
 import './Country.css';
 import { toast } from "react-toastify";
@@ -12,13 +12,17 @@ import Input from "src/components/Input";
 import WhiteButton from "src/components/white-button";
 import OutlinedButton from "src/components/outlined-button";
 
+const findRegion = (arr, id) => {
+	return arr.find(el => el.id === id).name;
+}
+
 function Country() {
 	const [countriesList, setCountriesList] = useState([]);
 	const [regionsList, setRegionsList] = useState([]);
 	const [countryId, setCountryId] = useState(null);
 	const [countryDefaultValue, setCountryDefaultValue] = useState(null);
 	const [regionDefaultValue, setRegionDefaultValue] = useState(null);
-
+	const [regionValueIsAvailable, setRegionValueIsAvailable] = useState(false);
 	const dispatch = useDispatch();
 	const { name: fName, country: fCountry, region: fRegion, street: fStreet } = useSelector(state => state.freelancerResume);
 
@@ -27,14 +31,36 @@ function Country() {
 			.then(res => res.json())
 			.then(data => setCountriesList(data))
 	}, [])
+
 	useEffect(() => {
 		if (countryId) {
 			fetch(`${COUNTRIES_LIST}/${countryId}`)
 				.then(res => res.json())
-				.then(data => setRegionsList(data.regions))
+				.then(data => {
+					setRegionsList(data.regions)
+					if (regionDefaultValue === null && fRegion && regionValueIsAvailable) {
+						setRegionDefaultValue({ value: findRegion(data.regions, fRegion), label: findRegion(data.regions, fRegion) })
+						setRegionValueIsAvailable(false)
+					}
+				})
 		}
-		regionInputReset()
-	}, [countryId]);
+		regionInputReset();
+	}, [countryId, countriesList]);
+	useEffect(() => {
+		if (countriesList.length > 0 && fCountry) {
+			setCountryDefaultValue({ value: countriesList[fCountry - 1]?.name, label: countriesList[fCountry - 1]?.name })
+			setRegionValueIsAvailable(true);
+			setCountryId(countriesList[fCountry - 1]?.id);
+			countryInputChange(fCountry);
+		}
+		streetInputChange(fStreet);
+	}, [countriesList]);
+
+	useEffect(() => {
+		if (regionsList.length > 0) {
+			regionInputChange(fRegion);
+		}
+	}, [regionsList])
 
 	let options = [];
 
@@ -45,16 +71,14 @@ function Country() {
 	for (let i = 0; i < regionsList?.length; i++) {
 		optionsRegion.push({ value: [regionsList[i].id, regionsList.indexOf(regionsList[i])], label: regionsList[i].name });
 	}
-
 	const {
 		inputChange: countryInputChange,
 		inputBlur: countryInputBlur,
 		inputTouch: countryInputTouch,
-		inputReset: countryInputReset,
 		value: country,
 		inputIsValid: countryIsValid,
 		inputIsError: countryIsError,
-	} = useInput(value => value.trim().length > 0);
+	} = useInput(value => (value > 0 || value === 0));
 	const {
 		inputChange: regionInputChange,
 		inputBlur: regionInputBlur,
@@ -63,38 +87,16 @@ function Country() {
 		value: region,
 		inputIsValid: regionIsValid,
 		inputIsError: regionIsError,
-	} = useInput(value => value.trim().length > 0);
+	} = useInput(value => (value > 0 || value === 0));
 	const {
 		inputChange: streetInputChange,
+		inputBlur: streetInputBlur,
+		inputTouch: streetInputTouch,
 		value: street,
-	} = useInput();
+		inputIsValid: streetIsValid,
+		inputIsError: streetIsError
+	} = useInput(value => value.trim().length > 0);
 
-	useEffect(() => {
-		if (fCountry && fCountry.trim().length > 0) {
-			setCountryDefaultValue({ value: fCountry, label: fCountry })
-			countryInputChange(fCountry)
-		}
-		if (fRegion && fRegion.trim().length > 0) {
-			setRegionDefaultValue({ value: fRegion, label: fRegion })
-			regionInputChange(fRegion)
-		}
-		streetInputChange(fStreet)
-	}, [])
-
-	const handleSubmit = e => {
-		e.preventDefault();
-		countryInputTouch();
-		regionInputTouch();
-		if (countryIsValid && regionIsValid) {
-			const freelancerAddress = { country, region, street };
-			toast.success('Successful step', { position: toast.POSITION.TOP_LEFT })
-			dispatch(addFreelancerAddress(freelancerAddress))
-			dispatch(activeDoteAction([
-				{ id: 3, label: "About yourself and skills" },
-				{ id: 3, type: "yourself" }
-			]));
-		}
-	};
 	const removePage = event => {
 		event.preventDefault();
 		dispatch(
@@ -106,15 +108,32 @@ function Country() {
 	};
 
 	const countryHandleChange = (e) => {
-		countryInputChange(e.label);
+		countryInputChange(e.value[0]);
 		setCountryId(e.value[0]);
 		setCountryDefaultValue({ value: e.label, label: e.label })
 		setRegionDefaultValue(null);
 	}
 	const regionHandleChange = (e) => {
-		regionInputChange(e.label);
+		regionInputChange(e.value[0]);
 		setRegionDefaultValue({ value: e.label, label: e.label })
 	}
+
+	const handleSubmit = e => {
+		e.preventDefault();
+		countryInputTouch();
+		regionInputTouch();
+		streetInputTouch();
+		if (countryIsValid && regionIsValid && streetIsValid) {
+			const freelancerAddress = { country, region, street };
+			toast.success('Successful step', { position: toast.POSITION.TOP_LEFT })
+			dispatch(addFreelancerAddress(freelancerAddress))
+			dispatch(activeDoteAction([
+				{ id: 3, label: "About yourself and skills" },
+				{ id: 3, type: "yourself" }
+			]));
+		}
+	};
+
 	return (
 		<div className="countryCard">
 			<div className="country">
@@ -156,6 +175,9 @@ function Country() {
 							placeholder="Street, apartment"
 							value={street}
 							inputChange={streetInputChange}
+							inputBlur={streetInputBlur}
+							inputIsError={streetIsError}
+							errorMessage="Field should not be empty"
 						/>
 					</div>
 					<div className="country__button">

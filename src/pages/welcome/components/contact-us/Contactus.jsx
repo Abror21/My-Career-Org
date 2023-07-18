@@ -4,7 +4,7 @@ import logosWhatsapp from "src/assets/icons/logos_whatsapp.png";
 import Input from "src/components/Input";
 import { useInput } from "src/hooks";
 import Textarea from "src/components/Textarea";
-import { CONTACT_US } from "src/api/URLS";
+import { CONTACT_US } from "src/services/URLS";
 import { toast } from 'react-toastify';
 
 function Contactus() {

@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import store, { persistor } from './store/store';
 import { ToastContainer } from 'react-toastify';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./assets/styles/ui.scss";
 import "./assets/styles/header.scss";
 import "./assets/styles/fonts.css";

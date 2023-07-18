@@ -8,7 +8,7 @@ import OutlinedButton from "src/components/outlined-button";
 // import { addFreelancerExperience } from "src/store/freelancer-resume/freelancerResume";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { FREELANCER_EXPERIENCE } from "src/api/URLS";
+import { FREELANCER_EXPERIENCE } from "src/services/URLS";
 
 
 function MyWork({ removeModal, data, getExperienceList }) {

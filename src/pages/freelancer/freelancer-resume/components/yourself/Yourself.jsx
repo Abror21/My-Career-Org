@@ -12,7 +12,7 @@ import { useInput } from "src/hooks";
 import Textarea from "src/components/Textarea";
 import WhiteButton from "src/components/white-button";
 import Input from "src/components/Input";
-import { FREELANCER_HOBBY, FREELANCER_SKILL, FREELANCER_SKILLS } from "src/api/URLS";
+import { FREELANCER_HOBBY, FREELANCER_SKILL, FREELANCER_SKILLS } from "src/services/URLS";
 import axios from "axios";
 import CreatableInput from "src/components/select-input/CreatableInput";
 
@@ -47,15 +47,19 @@ function Yourself() {
 	} = useInput(value => value.trim().length > 0);
 	const {
 		inputChange: descriptionInputChange,
+		inputBlur: descriptionInputBlur,
+		inputTouch: descriptionInputTouch,
 		value: description,
-	} = useInput();
+		inputIsValid: descriptionIsValid,
+		inputIsError: descriptionIsError,
+	} = useInput(value => value.trim().length > 0);
 
 	useEffect(() => {
 		if (fPosition && fPosition.trim().length > 0) {
 			setPositionDefaultValue({ value: fPosition, label: fPosition })
 			positionInputChange(fPosition)
 		}
-		birthDateInputChange(fBirthDate);
+		birthDateInputChange(fBirthDate.replaceAll(':', '-'));
 
 		fetch(FREELANCER_SKILLS)
 			.then(res => res.json())
@@ -204,6 +208,7 @@ function Yourself() {
 
 		positionInputTouch();
 		birthDateInputTouch();
+		descriptionInputTouch();
 		setSkillsIsError(false);
 		setHobbiesIsError(false);
 
@@ -213,8 +218,8 @@ function Yourself() {
 		if (!hobbies.length) {
 			setHobbiesIsError(true);
 		}
-		if (positionIsValid && birthDateIsValid && birthDate && freelancerSkills.length && hobbies.length) {
-			const about = { position, birthDate, description }
+		if (positionIsValid && birthDateIsValid && birthDate && freelancerSkills.length && hobbies.length && descriptionIsValid) {
+			const about = { position, birthDate: birthDate.replaceAll('-', ':'), description }
 			toast.success('Successful step', { position: toast.POSITION.TOP_LEFT })
 			dispatch(addAboutFreelancer(about))
 			dispatch(activeDoteAction([
@@ -289,9 +294,13 @@ function Yourself() {
 					/>
 					<br />
 					<Textarea
-						placeholder="Describe yourself to buyers"
+						placeholder="Describe yourself"
 						value={description}
 						inputChange={descriptionInputChange}
+						inputBlur={descriptionInputBlur}
+						inputIsError={descriptionIsError}
+						errorMessage="Field should not be empty"
+
 					/>
 				</div>
 				<div className="yourselfCard_btn">

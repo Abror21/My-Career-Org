@@ -3,15 +3,15 @@ import classes from "./Language.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import "../styles.scss";
-import { languageUpload, languages } from "src/store/extraReducers";
+import { languages } from "src/store/extraReducers";
 import { activeDoteAction } from "src/store/resumeControlsSlice/resumeControls";
 import { toast } from "react-toastify";
-import { Lego } from "tabler-icons-react";
 import WhiteButton from "src/components/white-button";
 import OutlinedButton from "src/components/outlined-button";
 import axios from "axios";
-import { FREELANCER_LANGUAGE } from "src/api/URLS";
+import { FREELANCER_LANGUAGE } from "src/services/URLS";
 import LanguageWrapper from "./components/LanguageWrapper";
+import { API } from "src/services/api";
 
 
 function Language() {
@@ -19,18 +19,13 @@ function Language() {
 	const languageList = useSelector(state => state.resume.languageList);
 	const [userLanguages, setUserLanguages] = useState([]);
 
-	useEffect(() => {
-		dispatch(languages());
-		getLanguageList()
-	}, [])
-
 	const getLanguageList = () => {
-		axios.get(FREELANCER_LANGUAGE, { headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } })
+		setUserLanguages([]);
+		API.getFreelancerLanguages()
 			.then(res => setUserLanguages([...res.data.map(lang => {
-				return { tempId: lang.id, languageId: lang.languageId, levelId: lang.level }
+				return { id: lang.id, languageId: lang.languageId, levelId: lang.level }
 			})]))
 	}
-
 	let singleLang = true;
 	if (userLanguages.length > 1) {
 		singleLang = false;
@@ -45,28 +40,48 @@ function Language() {
 		);
 	};
 
-	const removeEmptyLang = (tempId) => {
-		setUserLanguages(userLanguages.filter(lang => lang.tempId !== tempId))
+	const removeEmptyLang = (index) => {
+		userLanguages.splice(index, 1)
+		setUserLanguages([...userLanguages])
 	}
-
-	const changeValue = (tempId, id, levelId) => {
-		console.log(tempId, id, levelId);
-		const idx = userLanguages.findIndex(el => el.tempId === tempId);
-
-		const newElement = { ...userLanguages[idx] };
-		if (newElement.languageId && newElement.levelId) {
-			if (id) {
-				newElement.languageId = id;
+	const changeValue = (index, id, levelId) => {
+		const item = { ...userLanguages[index] };
+		if (item.id || item.id == 0) {
+			if (id || id == 0) {
+				item.languageId = id;
 			}
-			if (levelId || levelId === 0) {
-				newElement.levelId = levelId;
+			if (levelId || levelId == 0) {
+				item.levelId = levelId;
 			}
 			axios.put(
-				axios.post(
-					`${FREELANCER_LANGUAGE}/${tempId}`,
-					{ languageId: newElement.languageId, level: newElement.levelId },
-					{ headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } }
-				)
+				`${FREELANCER_LANGUAGE}/${item.id}`,
+				{ languageId: item.languageId, level: item.levelId },
+				{ headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } }
+			)
+				.then(res => {
+					if (res.status === 200) {
+						getLanguageList();
+					} else {
+						toast.error('Something went wrong');
+					}
+				})
+				.catch(err => {
+					getLanguageList();
+					toast.error(err.message)
+				})
+		} else {
+			if (id || id == 0) {
+				item.languageId = id;
+				userLanguages[index] = item;
+				setUserLanguages([...userLanguages]);
+			}
+			if (levelId || levelId == 0) {
+				item.levelId = levelId
+				userLanguages[index] = item;
+				setUserLanguages([...userLanguages]);
+			}
+			if ((item.languageId || item.item.languageId == 0) && (item.levelId || item.levelId == 0)) {
+				API.postFreelancerLanguages({ languageId: item.languageId, level: item.levelId })
 					.then(res => {
 						if (res.status === 200) {
 							getLanguageList();
@@ -74,41 +89,18 @@ function Language() {
 							toast.error('Something went wrong')
 						}
 					})
-					.catch(err => toast.error(err.message))
-			)
+					.catch(err => {
+						toast.error(err.message)
+						getLanguageList();
+					})
+			}
 		}
-		console.log('test ', newElement);
-		if (id) {
-			newElement.languageId = id;
-		}
-		if (levelId || levelId === 0) {
-			newElement.levelId = levelId;
-		}
-		// if (newElement.languageId && (newElement.levelId || newElement.levelId == 0)) {
-		// 	axios.post(
-		// 		FREELANCER_LANGUAGE,
-		// 		{ languageId: newElement.languageId, level: newElement.levelId },
-		// 		{ headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } }
-		// 	)
-		// 		.then(res => {
-		// 			if (res.status === 200) {
-		// 				getLanguageList();
-		// 			} else {
-		// 				toast.error('Something went wrong')
-		// 			}
-		// 		})
-		// 		.catch(err => toast.error(err.message))
-		// }
-		// userLanguages[idx] = newElement;
-		// setUserLanguages([...userLanguages]);
-		// console.log('test ', newElement);
 	}
-
-	const changeLanguage = (e) => {
-		changeValue(e.tempId, e.id, null);
+	const changeLanguage = (e, index) => {
+		changeValue(index, e.id, null);
 	}
-	const changeLevel = (e) => {
-		changeValue(e.tempId, null, e.levelId);
+	const changeLevel = (e, index) => {
+		changeValue(index, null, e.levelId);
 	}
 
 	const handleSubmit = event => {
@@ -120,7 +112,7 @@ function Language() {
 			try {
 				userLanguages.forEach(lang => {
 					if (!(lang.languageId && (lang.levelId || lang.levelId === 0))) {
-						throw new Error("Field should not be empty")
+						throw new Error("Field should not be empty");
 					}
 				});
 				toast.success('Successful step', { position: toast.POSITION.TOP_LEFT });
@@ -135,9 +127,15 @@ function Language() {
 			}
 		}
 	}
+
+	useEffect(() => {
+		dispatch(languages());
+		getLanguageList()
+	}, [])
+
 	return (
 		<div className={classes.languageCard}>
-			<h2>Write what languages you speak</h2>
+			<h2 className={classes.language__title}>Write what languages you speak</h2>
 			<p>
 				The more languages you know, <br /> the more foreign employers will contact you.
 			</p>
@@ -145,17 +143,18 @@ function Language() {
 				<p className={classes.languageForm__label}>Language*</p>
 				<div className={classes.select_box}>
 					{
-						userLanguages.map(lang => {
+						userLanguages.map((lang, index) => {
 							return (
 								<LanguageWrapper
-									key={lang.tempId}
+									key={lang.id}
+									index={index}
 									languageList={languageList}
 									userLanguages={userLanguages}
 									lang={lang}
 									singleLang={singleLang}
 									changeLanguage={changeLanguage}
 									changeLevel={changeLevel}
-									deleteLanguage={getLanguageList}
+									getLanguageList={getLanguageList}
 									removeEmptyLang={removeEmptyLang}
 								/>
 							)
@@ -165,7 +164,7 @@ function Language() {
 
 				<div
 					className={classes.addLanguage}
-					onClick={() => setUserLanguages(prev => [...prev, { tempId: Date.now() }])}>
+					onClick={() => setUserLanguages(prev => [...prev, {}])}>
 					+ Add Language
 				</div>
 				<div className={classes.languageCard_btn}>

@@ -11,7 +11,7 @@ import OutlinedButton from "src/components/outlined-button";
 import WhiteButton from "src/components/white-button";
 // import { removeFreelancerEducation } from "src/store/freelancer-resume/freelancerResume";
 import axios from "axios";
-import { FREELANCER_EDUCATION } from "src/api/URLS";
+import { FREELANCER_EDUCATION } from "src/services/URLS";
 import { toast } from "react-toastify";
 
 function Educations() {

@@ -1,0 +1,138 @@
+* {
+    box-sizing: border-box !important;
+}
+
+.white-resume {
+    padding: 40px;
+}
+
+.header__inner {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.header__img {
+    width: 180px;
+}
+
+.header__img img {
+    width: 100%;
+    height: 180px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.header__line {
+    padding-bottom: 40px;
+    border-bottom: 1px solid black;
+}
+
+.header__name {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.header__job {
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 22px;
+}
+
+.header__list {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.header__list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.body {
+    padding-top: 40px;
+    display: flex;
+    gap: 30px;
+}
+
+.body__left {
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    border-right: 1px solid black;
+}
+
+.default-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.skills__list,
+.languages__list,
+.hobbies__list,
+.contacts__list {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.hobbies__list {
+    padding-left: 20px;
+}
+
+.default-text {
+    font-size: 12px;
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+.hobbies__list li {
+    list-style: disc;
+}
+
+.contacts__list li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.body__right {
+    flex: 1;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.body__right .default-text {
+    font-size: 10px;
+}
+
+.education__content {
+    display: flex;
+    gap: 60px;
+}
+
+.education__period {
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.education__name span {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.education__name p {
+    margin: 0;
+}

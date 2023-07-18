@@ -12,8 +12,15 @@ import { toast } from "react-toastify";
 
 function Photo() {
 	const { name: fName, surname: fSurname, email: fEmail, phone: fPhone } = useSelector(state => state.freelancerResume);
+	const { image: fImage } = useSelector(state => state.freelancerResume);
 	const inputRef = useRef();
 	const [image, setImage] = useState("");
+
+	useEffect(() => {
+		if (fImage) {
+			setImage(fImage);
+		}
+	}, [])
 
 	const dispatch = useDispatch();
 
@@ -22,7 +29,7 @@ function Photo() {
 			const reader = new FileReader();
 
 			reader.onload = e => {
-				setImage(e.target.result)
+				setImage(e.target.result);
 			}
 			reader.readAsDataURL(input.files[0]);
 		}

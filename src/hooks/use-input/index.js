@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { CHECK_EMAIL } from "src/api/URLS";
+import { CHECK_EMAIL } from "src/services/URLS";
 
 const initialState = { value: '', touched: false, isExist: false, timer: null };
 

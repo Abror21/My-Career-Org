@@ -13,10 +13,12 @@ import SignBackground from "./pages/sign/background/SignBackground";
 import FreelanceOrCompany from "./pages/freelancer-or-company/FreelancerOrCompany.jsx";
 import FreelancerResume from "./pages/freelancer/freelancer-resume/FreelancerResume";
 import Round from "./components/Round/Round";
-import { FREELANCER_SKILL, LOGIN_USER } from "./api/URLS";
+import { FREELANCER_SKILL, LOGIN_USER } from "./services/URLS";
 import ProtectedRoute from "./routes/protected-route/ProtectedRoute";
 import CompanyResume from "./pages/company/company-resume/CompanyResume";
 import { useEffect } from "react";
+import WhiteResume from "./pages/freelancer/resume-examples/second-resume/SecondResume";
+import BlackResume from "./pages/freelancer/resume-examples/first-resume/FirstResume";
 
 function App() {
 

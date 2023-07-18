@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 import Input from "src/components/Input";
 import { useInput } from "src/hooks";
 import BlueButton from "src/components/blue-button";
-import { LOGIN_USER } from "src/api/URLS";
+import { LOGIN_USER } from "src/services/URLS";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {

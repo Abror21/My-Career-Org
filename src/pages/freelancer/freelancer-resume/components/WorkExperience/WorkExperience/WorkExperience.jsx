@@ -11,7 +11,7 @@ import MyWork from "../MyWork/MyWork";
 import WhiteButton from "src/components/white-button";
 import OutlinedButton from "src/components/outlined-button";
 import axios from "axios";
-import { FREELANCER_EXPERIENCE } from "src/api/URLS";
+import { FREELANCER_EXPERIENCE } from "src/services/URLS";
 import { toast } from "react-toastify";
 
 function WorkExperience() {

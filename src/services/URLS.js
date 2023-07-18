@@ -1,4 +1,6 @@
 // export const BASE_URL = "http://185.217.131.133:7152";
+
+
 // export const BASE_URL = "https://localhost:7234";
 export const BASE_URL = "http://mycareer-dev.csolutions.uz";
 
@@ -15,6 +17,7 @@ export const FREELANCER_HOBBY = `${BASE_URL}/api/user-hobby`;
 export const FREELANCER_LANGUAGE = `${BASE_URL}/api/user-language`;
 export const FREELANCER_EXPERIENCE = `${BASE_URL}/api/experience`;
 export const FREELANCER_EDUCATION = `${BASE_URL}/api/education`;
+export const FREELANCER = `${BASE_URL}/api/freelancer`;
 
 
 // export const REGIONS_LIST = `${BASE_URL}/api/region/GetByCountry`;
@@ -52,5 +55,4 @@ export const EDUCATIONDELETE = `${BASE_URL}/api/education/`;
 export const USERROLES = `${BASE_URL}/UserRoles`;
 export const ADDTOFREELANCER = `${BASE_URL}/addtofreelancer`;
 export const ADDTOCOMPANY = `${BASE_URL}/addtocompany`;
-export const FREELANCER = `${BASE_URL}/api/freelancer`;
 export const CLAIMS = `${BASE_URL}/CLAIMS`;

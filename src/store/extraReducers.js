@@ -32,7 +32,7 @@ import {
 	ADD_CONTACTS_COMPANY,
 	REGISTER_USER,
 	REGIONS_LIST
-} from "../api/URLS";
+} from "../services/URLS";
 
 
 

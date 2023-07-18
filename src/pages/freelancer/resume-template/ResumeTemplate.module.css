@@ -1,0 +1,8 @@
+.template {
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 595px;
+    width: 100%;
+    box-shadow: 0 0 65px 5px black;
+    margin: 30px auto 0;
+}

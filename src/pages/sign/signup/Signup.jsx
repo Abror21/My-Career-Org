@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 import Input from "src/components/Input";
 import BlueButton from "src/components/blue-button";
 import { useInput } from "src/hooks";
-import { REGISTER_USER } from "src/api/URLS";
+import { REGISTER_USER } from "src/services/URLS";
 import { toast } from "react-toastify";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import CheckEmail from "./CheckEmail";
