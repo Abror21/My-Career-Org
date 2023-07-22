@@ -10,8 +10,8 @@ import facebook from 'src/assets/images/Freelancer/facebook-icon.png'
 const SecondResume = () => {
     return (
         <ResumeTemplate>
-            <div className={classes['white-resume']}>
-
+            <div className={classes['black-resume']}>
+                <div className={classes['bg-decoration']}></div>
                 <div className={classes.header}>
                     <div className={classes.header__inner}>
                         <div className={classes.header__img}>
@@ -20,11 +20,17 @@ const SecondResume = () => {
                         <div className={classes.header__info}>
                             <h2 className={classes.header__name}>John Smith</h2>
                             <h6 className={classes.header__job}>Marketing Specialist</h6>
-                            <ul className={classes.header__list}>
-                                <li><img src={phone} alt="" /> +99890 000 00 00</li>
-                                <li><img src={email} alt="" /> user@name.com</li>
-                                <li><img src={location} alt="" /> Tashkent Uchtepa Kokcha-oqtepa pr3  344</li>
-                            </ul>
+                            <div className={classes.header__contact}>
+                                <div className={classes.header__phone}>
+                                    Phone:<br /> <span>+99890 000 00 00</span>
+                                </div>
+                                <div className={classes.header__email}>
+                                    E-mail:<br /> <span>user@name.com</span>
+                                </div>
+                            </div>
+                            <div className={classes.header__address}>
+                                Address:<br /> <span>Tashkent, Uchtepa Kokcha-oqtepa, pr3, 344</span>
+                            </div>
                         </div>
                     </div>
                     <div className={classes.header__line} />

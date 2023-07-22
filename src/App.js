@@ -17,8 +17,13 @@ import { FREELANCER_SKILL, LOGIN_USER } from "./services/URLS";
 import ProtectedRoute from "./routes/protected-route/ProtectedRoute";
 import CompanyResume from "./pages/company/company-resume/CompanyResume";
 import { useEffect } from "react";
-import WhiteResume from "./pages/freelancer/resume-examples/second-resume/SecondResume";
-import BlackResume from "./pages/freelancer/resume-examples/first-resume/FirstResume";
+import WhiteResume from "./pages/freelancer/resume-examples/first-resume/FirstResume";
+import BlackResume from "./pages/freelancer/resume-examples/second-resume/SecondResume";
+import ThirdResume from "./pages/freelancer/resume-examples/third-resume/ThirdResume";
+import FourthResume from "./pages/freelancer/resume-examples/fourth-resume/FourthResume";
+import FreelancerResumeFinish from "./pages/freelancer/freelancer-resume/components/freelancer-resume-finish/FreelancerResumeFinish";
+import ErrorHandler from "./components/error-handler/ErrorHandler";
+import { ErrorBoundary } from "react-error-boundary";
 
 function App() {
 
@@ -75,19 +80,20 @@ function App() {
         <Route path={`*`} element={<Navigate to={`/${lang}/home`} />} />
         <Route path={`${lang}/`} element={<Navigate to={`/${lang}/home`} />} />
         <Route path={`${lang}/`} element={<WelcomeBackground />}>
-          <Route path="home" element={<HomeContentSwitcher />} />
-          <Route path="talents" element={<Talents />} />
-          <Route path="jobs" element={<Jobs />} />
-          <Route path="about-us" element={<Aboutus />} />
-          <Route path="contact-us" element={<Contactus />} />
+          <Route path="home" element={<ErrorBoundary FallbackComponent={ErrorHandler}><HomeContentSwitcher /></ErrorBoundary>} />
+          <Route path="talents" element={<ErrorBoundary FallbackComponent={ErrorHandler}><Talents /></ErrorBoundary>} />
+          <Route path="jobs" element={<ErrorBoundary FallbackComponent={ErrorHandler}><Jobs /></ErrorBoundary>} />
+          <Route path="about-us" element={<ErrorBoundary FallbackComponent={ErrorHandler}><Aboutus /></ErrorBoundary>} />
+          <Route path="contact-us" element={<ErrorBoundary FallbackComponent={ErrorHandler}><Contactus /></ErrorBoundary>} />
         </Route>
         <Route path={`${lang}`} element={<SignBackground />}>
-          <Route path="login" element={<Login />} />
-          <Route path="sign-up" element={<Signup />} />
+          <Route path="login" element={<ErrorBoundary FallbackComponent={ErrorHandler}><Login /></ErrorBoundary>} />
+          <Route path="sign-up" element={<ErrorBoundary FallbackComponent={ErrorHandler}><Signup /></ErrorBoundary>} />
           <Route path="*" element={<Navigate to={`/${lang}/home`} />} />
         </Route>
         <Route path={`${lang}/freelancer-or-company`} element={<ProtectedRoute>{<FreelanceOrCompany />}</ProtectedRoute>} />
         <Route path={`${lang}/freelancer-resume`} element={<ProtectedRoute>{<FreelancerResume />}</ProtectedRoute>} />
+        <Route path={`${lang}/freelancer-resume/:resumeId`} element={<ProtectedRoute>{<FreelancerResumeFinish />}</ProtectedRoute>} />
         <Route path={`${lang}/company-resume`} element={<ProtectedRoute>{<CompanyResume />}</ProtectedRoute>} />
       </Routes>
     </>

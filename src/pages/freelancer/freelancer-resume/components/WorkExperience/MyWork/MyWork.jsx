@@ -63,8 +63,8 @@ function MyWork({ removeModal, data, getExperienceList }) {
         if (data) {
             nameInputChange(data.companyName);
             jobInputChange(data.job);
-            dateFromInputChange(data.dateFrom.substring(0, 10))
-            dateToInputChange(data.dateTo.substring(0, 10));
+            dateFromInputChange(data.dateFrom?.substring(0, 10))
+            dateToInputChange(data.dateTo?.substring(0, 10));
             textareaInputChange(data.description)
         }
     }, [])

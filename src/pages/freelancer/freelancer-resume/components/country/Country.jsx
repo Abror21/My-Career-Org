@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import "../photo/Photo.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { activeDoteAction } from "src/store/resumeControlsSlice/resumeControls";
-import { COUNTRIES_LIST } from "src/services/URLS";
 import { addFreelancerAddress } from "src/store/freelancer-resume/freelancerResume";
 import './Country.css';
 import { toast } from "react-toastify";
@@ -11,13 +10,14 @@ import { useInput } from "src/hooks";
 import Input from "src/components/Input";
 import WhiteButton from "src/components/white-button";
 import OutlinedButton from "src/components/outlined-button";
+import { API } from "src/services/api";
+import { getCountiesList } from "src/store/freelancer-back-data/freelancerBackData";
 
 const findRegion = (arr, id) => {
 	return arr.find(el => el.id === id).name;
 }
 
 function Country() {
-	const [countriesList, setCountriesList] = useState([]);
 	const [regionsList, setRegionsList] = useState([]);
 	const [countryId, setCountryId] = useState(null);
 	const [countryDefaultValue, setCountryDefaultValue] = useState(null);
@@ -25,42 +25,7 @@ function Country() {
 	const [regionValueIsAvailable, setRegionValueIsAvailable] = useState(false);
 	const dispatch = useDispatch();
 	const { name: fName, country: fCountry, region: fRegion, street: fStreet } = useSelector(state => state.freelancerResume);
-
-	useEffect(() => {
-		fetch(COUNTRIES_LIST)
-			.then(res => res.json())
-			.then(data => setCountriesList(data))
-	}, [])
-
-	useEffect(() => {
-		if (countryId) {
-			fetch(`${COUNTRIES_LIST}/${countryId}`)
-				.then(res => res.json())
-				.then(data => {
-					setRegionsList(data.regions)
-					if (regionDefaultValue === null && fRegion && regionValueIsAvailable) {
-						setRegionDefaultValue({ value: findRegion(data.regions, fRegion), label: findRegion(data.regions, fRegion) })
-						setRegionValueIsAvailable(false)
-					}
-				})
-		}
-		regionInputReset();
-	}, [countryId, countriesList]);
-	useEffect(() => {
-		if (countriesList.length > 0 && fCountry) {
-			setCountryDefaultValue({ value: countriesList[fCountry - 1]?.name, label: countriesList[fCountry - 1]?.name })
-			setRegionValueIsAvailable(true);
-			setCountryId(countriesList[fCountry - 1]?.id);
-			countryInputChange(fCountry);
-		}
-		streetInputChange(fStreet);
-	}, [countriesList]);
-
-	useEffect(() => {
-		if (regionsList.length > 0) {
-			regionInputChange(fRegion);
-		}
-	}, [regionsList])
+	const { countriesList } = useSelector(state => state.freelancerBackData);
 
 	let options = [];
 
@@ -95,7 +60,7 @@ function Country() {
 		value: street,
 		inputIsValid: streetIsValid,
 		inputIsError: streetIsError
-	} = useInput(value => value.trim().length > 0);
+	} = useInput(value => value?.trim().length > 0);
 
 	const removePage = event => {
 		event.preventDefault();
@@ -133,6 +98,38 @@ function Country() {
 			]));
 		}
 	};
+
+	useEffect(() => {
+		dispatch(getCountiesList())
+	}, [])
+	useEffect(() => {
+		if (countryId) {
+			API.getRegonsList(countryId)
+				.then(res => {
+					setRegionsList(res.data.regions)
+					if (regionDefaultValue === null && fRegion && regionValueIsAvailable) {
+						setRegionDefaultValue({ value: findRegion(res.data.regions, fRegion), label: findRegion(res.data.regions, fRegion) })
+						setRegionValueIsAvailable(false)
+					}
+				})
+		}
+		regionInputReset();
+	}, [countryId, countriesList]);
+	useEffect(() => {
+		if (countriesList.length > 0 && fCountry) {
+			setCountryDefaultValue({ value: countriesList[fCountry - 1]?.name, label: countriesList[fCountry - 1]?.name })
+			setRegionValueIsAvailable(true);
+			setCountryId(countriesList[fCountry - 1]?.id);
+			countryInputChange(fCountry);
+		}
+		streetInputChange(fStreet);
+	}, [countriesList]);
+
+	useEffect(() => {
+		if (regionsList.length > 0) {
+			regionInputChange(fRegion);
+		}
+	}, [regionsList])
 
 	return (
 		<div className="countryCard">

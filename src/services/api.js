@@ -40,5 +40,27 @@ axiosInstance.interceptors.request.use(
 export const API = {
     // language
     getFreelancerLanguages: () => axiosInstance.get('/api/user-language'),
-    postFreelancerLanguages: (payload) => axiosInstance.post('/api/user-language', payload)
+    postFreelancerLanguages: (payload) => axiosInstance.post('/api/user-language', payload),
+
+    // freelancer
+    postFreelancer: (payload) => axiosInstance.post('/api/freelancer', payload),
+    getFreelancer: () => axiosInstance.get('/api/freelancer'),
+
+    // skill
+    getFreelanerSkills: () => axiosInstance.get('/api/user-skill'),
+
+    // hobbies
+    getFreelancerHobbies: () => axiosInstance.get('/api/user-hobby'),
+
+    // countries
+    getCountriesList: () => axiosInstance.get('/api/country'),
+
+    // regions
+    getRegonsList: (id) => axiosInstance.get(`/api/country/${id}`),
+
+    // educations
+    getFreelancerEducations: () => axiosInstance.get('/api/education'),
+
+    // experience
+    getFreelancerExperiences: () => axiosInstance.get('/api/experience')
 }

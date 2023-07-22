@@ -17,7 +17,7 @@ import BlueButton from "src/components/blue-button";
 import { LOGIN_USER } from "src/services/URLS";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ style }) => {
 	const lang = useSelector(state => state.language.language)
 	const [passwordEye, setPasswordEye] = useState('password');
 	const [loading, setLoading] = useState(false);
@@ -26,7 +26,6 @@ const Login = () => {
 	const passwordFunc = () => {
 		setPasswordEye(prev => prev === 'password' ? 'text' : 'password')
 	}
-
 	const {
 		inputChange: emailInputChange,
 		inputBlur: emailInputBlur,
@@ -87,7 +86,7 @@ const Login = () => {
 	};
 
 	return (
-		<div className="login_form">
+		<div className="login_form" style={style}>
 			<form onSubmit={handleSubmit}>
 				<h3 className="login_form_title">Log in</h3>
 				<p className="login_form_info">
@@ -113,7 +112,7 @@ const Login = () => {
 							inputChange={passwordInputChange}
 							inputBlur={passwordInputBlur}
 							errorMessage="Password should not be empty."
-							autoComplete="off"
+							autoComplete="on"
 						/>
 						<span className="password_span" onClick={passwordFunc} >
 							{passwordEye === 'password' ? <EyeOff /> : <Eye />}

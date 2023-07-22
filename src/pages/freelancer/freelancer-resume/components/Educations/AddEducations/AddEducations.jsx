@@ -75,8 +75,8 @@ function AddEducations({ data, removeModal, typeOptions, option, getEducationLis
 			typeInputChange(typeOptions[data.typeOfStudy].value);
 			setDefaultType({ value: typeOptions[data.typeOfStudy].value, label: typeOptions[data.typeOfStudy].value });
 			locationInputChange(data.location);
-			dateFromInputChange(data.dateFrom.substring(0, 10));
-			dateToInputChange(data.dateTo.substring(0, 10));
+			dateFromInputChange(data.dateFrom?.substring(0, 10));
+			dateToInputChange(data.dateTo?.substring(0, 10));
 		}
 	}, [])
 

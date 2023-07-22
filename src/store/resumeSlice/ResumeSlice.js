@@ -24,7 +24,7 @@ const initialState = {
 	loading: false,
 	error: "",
 	data: [],
-	positionList: [{ name: "Web Designer", id: 0 }, { name: "FrontEnd", id: 1 }, { name: "Backend", id: 2 }],
+	positionList: [{ name: "Web Designer", id: 0 }, { name: "Frontend", id: 1 }, { name: "Backend", id: 2 }],
 	hobbiesList: [],
 	HobbysGetLoading: null,
 	languageList: [],

@@ -28,7 +28,6 @@ function Yourself() {
 
 	const { positionGetLoading, positionList, hobbiesList, loading, skillsData, HobbysGetLoading } = useSelector(state => state.resume);
 	const { position: fPosition, birthDate: fBirthDate, description: fDescription } = useSelector(state => state.freelancerResume);
-
 	const {
 		inputChange: positionInputChange,
 		inputBlur: positionInputBlur,
@@ -36,7 +35,7 @@ function Yourself() {
 		value: position,
 		inputIsValid: positionIsValid,
 		inputIsError: positionIsError,
-	} = useInput(value => value.trim().length > 0);
+	} = useInput(value => value?.trim().length > 0);
 	const {
 		inputChange: birthDateInputChange,
 		inputBlur: birthDateInputBlur,
@@ -44,7 +43,7 @@ function Yourself() {
 		value: birthDate,
 		inputIsValid: birthDateIsValid,
 		inputIsError: birthDateIsError,
-	} = useInput(value => value.trim().length > 0);
+	} = useInput(value => value?.trim().length > 0);
 	const {
 		inputChange: descriptionInputChange,
 		inputBlur: descriptionInputBlur,
@@ -52,14 +51,14 @@ function Yourself() {
 		value: description,
 		inputIsValid: descriptionIsValid,
 		inputIsError: descriptionIsError,
-	} = useInput(value => value.trim().length > 0);
+	} = useInput(value => value?.trim().length > 0);
 
 	useEffect(() => {
-		if (fPosition && fPosition.trim().length > 0) {
+		if (fPosition && fPosition?.trim().length > 0) {
 			setPositionDefaultValue({ value: fPosition, label: fPosition })
 			positionInputChange(fPosition)
 		}
-		birthDateInputChange(fBirthDate.replaceAll(':', '-'));
+		birthDateInputChange(fBirthDate?.replaceAll(':', '-'));
 
 		fetch(FREELANCER_SKILLS)
 			.then(res => res.json())
@@ -104,7 +103,7 @@ function Yourself() {
 	}
 
 	const positionHandleChange = (e) => {
-		positionInputChange(e.label)
+		positionInputChange(e.label.replace(" ", ""))
 		setPositionDefaultValue({ value: e.label, label: e.label })
 	}
 

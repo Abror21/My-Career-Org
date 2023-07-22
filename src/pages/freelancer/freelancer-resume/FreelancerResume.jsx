@@ -8,24 +8,13 @@ import { cards, dot } from "./information";
 import { activeDoteAction } from "src/store/resumeControlsSlice/resumeControls";
 import Round from "src/components/Round/Round";
 import { useNavigate } from "react-router-dom";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorHandler from "src/components/error-handler/ErrorHandler";
 
 function FreelancerResume() {
 	const navigate = useNavigate();
 	const { activeCard } = useSelector(state => state.resumeControle);
 	const { activeDote } = useSelector(state => state.resumeControle);
-
-	const dispatch = useDispatch();
-
-	const handleClick = () => {
-		dispatch(
-			activeDoteAction([
-				{ id: 1, label: "Personal information" },
-				{ id: 1, label: "photo" }
-			])
-		);
-		// dispatch(removeToken())
-		// localStorage.clear()
-	}
 
 	return (
 		<>
@@ -44,7 +33,7 @@ function FreelancerResume() {
 									className={`${classes.card_box} ${el.type === activeCard.type ? classes.active : ""}`}
 									key={el.id}
 									style={{ top: el.id < activeCard.id ? "-200%" : el.id === activeCard.id ? "12%" : "200%" }}>
-									{el.label}
+									{<ErrorBoundary FallbackComponent={ErrorHandler}>{el.label}</ErrorBoundary>}
 								</div>
 							))
 						}

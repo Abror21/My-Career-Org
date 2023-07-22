@@ -54,8 +54,8 @@ function Language() {
 				item.levelId = levelId;
 			}
 			axios.put(
-				`${FREELANCER_LANGUAGE}/${item.id}`,
-				{ languageId: item.languageId, level: item.levelId },
+				`${FREELANCER_LANGUAGE}`,
+				{ id: item.id, languageId: item.languageId, level: item.levelId },
 				{ headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } }
 			)
 				.then(res => {

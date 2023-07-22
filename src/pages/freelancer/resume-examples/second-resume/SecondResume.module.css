@@ -2,8 +2,23 @@
     box-sizing: border-box !important;
 }
 
-.white-resume {
-    padding: 40px;
+.black-resume {
+    position: relative;
+}
+
+.bg-decoration {
+    width: 220px;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: -1;
+    top: 0;
+    left: 40px;
+}
+
+.header {
+    background-color: #171B26;
+    padding: 40px 40px 0;
 }
 
 .header__inner {
@@ -13,14 +28,17 @@
 }
 
 .header__img {
-    width: 180px;
+    width: 220px;
 }
 
 .header__img img {
     width: 100%;
-    height: 180px;
-    border-radius: 8px;
+    height: 225px;
     object-fit: cover;
+}
+
+.header__info {
+    flex: 1;
 }
 
 .header__line {
@@ -29,44 +47,61 @@
 }
 
 .header__name {
-    font-size: 32px;
+    font-size: 35px;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    color: white;
 }
 
 .header__job {
     font-size: 15px;
-    font-weight: 400;
-    margin-bottom: 22px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    background-color: #42454e;
+    width: fit-content;
+    padding: 5px 20px;
+    color: white;
+    font-size: 20px;
 }
 
-.header__list {
-    padding: 0;
+.header__contact {
     display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.header__list li {
-    display: flex;
-    align-items: center;
+    justify-content: space-between;
     gap: 10px;
+    color: white;
     font-size: 12px;
-    font-weight: 400;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.header__address {
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.header__address span {
+    font-size: 10px;
+    font-weight: 100;
+}
+
+.header__contact span,
+.header__address span {
+    font-weight: 100;
 }
 
 .body {
-    padding-top: 40px;
     display: flex;
     gap: 30px;
+    padding: 40px;
 }
 
 .body__left {
-    width: 180px;
+    width: 220px;
     display: flex;
     flex-direction: column;
     gap: 30px;
-    border-right: 1px solid black;
+    padding-left: 30px;
 }
 
 .default-title {
@@ -120,7 +155,7 @@
 
 .education__content {
     display: flex;
-    gap: 60px;
+    gap: 40px;
 }
 
 .education__period {

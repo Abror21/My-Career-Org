@@ -22,9 +22,11 @@ import jobs from "./jobsSlice/JobsSlice";
 import project from "./resumeSlice/projectSlice";
 import frilancerCards from "./frilanserCardSlice/frilanserCardSlice";
 import freelancerResume from "./freelancer-resume/freelancerResume";
+import freelancerBackData from "./freelancer-back-data/freelancerBackData";
 
 const rootReducer = combineReducers({
     freelancerResume,
+    freelancerBackData,
 
     login,
     resume,

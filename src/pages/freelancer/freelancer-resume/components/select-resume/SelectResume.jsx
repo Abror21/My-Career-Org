@@ -11,18 +11,21 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { Freelancerpost, resumeSelect } from "src/store/extraReducers";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { activeDoteAction } from "src/store/resumeControlsSlice/resumeControls";
 import WhiteButton from "src/components/white-button";
 import OutlinedButton from "src/components/outlined-button";
 import axios from "axios";
 import { FREELANCER } from "src/services/URLS";
+import { API } from "src/services/api";
+import { toast } from "react-toastify";
 
 function SelectResume() {
+	const navigate = useNavigate();
 	const [activeDot, setActiveDot] = useState(1);
 	const [translate, setTranslate] = useState(0);
 	const [resumeId, setResumeId] = useState(1);
-	const len = useSelector(state => state.language.language);
+	const lang = useSelector(state => state.language.language);
 
 	// const freelancer = useSelector(state => state.frilancerCards.freelancer);
 	const freelancerResume = useSelector(state => state.freelancerResume);
@@ -66,65 +69,8 @@ function SelectResume() {
 		}
 	};
 
-	const handleSubmit = (e) => {
-		console.log(freelancerResume);
-		const formData = new FormData();
-		formData.append('FirstName', freelancerResume.name);
-		formData.append('LastName', freelancerResume.surname);
-		formData.append('PhoneNumber', freelancerResume.phone);
-		formData.append('Email', freelancerResume.email);
-		formData.append('Address.CountryId', freelancerResume.country);
-		formData.append('Address.RegionId', freelancerResume.region);
-		formData.append('Address.Street', freelancerResume.street);
-		formData.append('Position', freelancerResume.position);
-		formData.append('DateOfBirthString', freelancerResume.birthDate);
-		formData.append('Bio', freelancerResume.description);
-		formData.append('Contact.WhatsApp', freelancerResume.contact.WatsApp);
-		formData.append('Contact.Facebook', freelancerResume.contact.Facebook);
-		formData.append('Contact.Twitter', freelancerResume.contact.Twitter);
-		formData.append('Contact.Instagram', freelancerResume.contact.Instagram);
-		formData.append('Contact.Telegram', freelancerResume.contact.Telegram);
-		formData.append('Contact.Github', freelancerResume.contact.GitHub);
-		formData.append('Contact.WebSite', freelancerResume.contact.website);
-		formData.append('FormFile', freelancerResume.image);
-
-		axios.post(
-			FREELANCER,
-			formData,
-			{
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem('user-token')}`
-				}
-			},
-		)
-			.then(res => console.log('res ', res))
-
-		// const test = formData.append('name', freelancerResume.name)
-		// console.log(formData.append('name', freelancerResume.name));
-		// console.log(formData);
-		// const data = {
-
-		// }
-
-		// const formdata = new FormData();
-		// console.log(freelancer);
-		// for (const key in freelancer) {
-		// 	if (typeof freelancer[key] === "object" && freelancer[key] !== null) {
-		// 		// console.log(freelancer[key]);
-		// 		for (const nestedKey in freelancer[key]) {
-		// 			formdata.append(`${key}.${nestedKey}`, freelancer[key][nestedKey]);
-		// 		}
-		// 	} else {
-		// 		formdata.append(key, freelancer[key]);
-		// 		// console.log(freelancer[key]);
-		// 	}
-		// }
-		// console.log(formdata);
-		// dispatch(Freelancerpost(formdata));
-		// navigate(`/${len}/welcome/create-profile/${resumeId}`);
-		// const data = new FormData();
-		// data.append("resume", resumeId);
-		// dispatch(resumeSelect(data));
+	const handleSubmit = () => {
+		navigate(`/${lang}/freelancer-resume/${activeDot}`);
 	};
 
 	const prevPage = () => {

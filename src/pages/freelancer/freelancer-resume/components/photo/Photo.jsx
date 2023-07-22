@@ -48,7 +48,7 @@ function Photo() {
 		value: name,
 		inputIsValid: nameIsValid,
 		inputIsError: nameInputIsError,
-	} = useInput(name => name.length > 0);
+	} = useInput(name => name?.length > 0);
 	const {
 		inputChange: surnameInputChange,
 		inputBlur: surnameInputBlur,
@@ -56,7 +56,7 @@ function Photo() {
 		value: surname,
 		inputIsValid: surnameIsValid,
 		inputIsError: surnameInputIsError,
-	} = useInput(surname => surname.length > 0);
+	} = useInput(surname => surname?.length > 0);
 	const {
 		inputChange: emailInputChange,
 		inputBlur: emailInputBlur,
@@ -64,7 +64,7 @@ function Photo() {
 		value: email,
 		inputIsValid: emailIsValid,
 		inputIsError: emailInputIsError,
-	} = useInput(email => email.includes('@'));
+	} = useInput(email => email?.includes('@'));
 	const {
 		inputChange: phoneInputChange,
 		inputBlur: phoneInputBlur,
@@ -72,7 +72,7 @@ function Photo() {
 		value: phone,
 		inputIsValid: phoneIsValid,
 		inputIsError: phoneInputIsError,
-	} = useInput(phone => phone.length > 18);
+	} = useInput(phone => phone?.length > 18);
 
 	useEffect(() => {
 		nameInputChange(fName);

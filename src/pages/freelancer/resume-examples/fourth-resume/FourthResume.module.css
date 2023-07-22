@@ -1,0 +1,23 @@
+.fourth-resume {
+    position: relative;
+    height: 600px;
+}
+
+.fourth-resume__left {
+    width: 250px;
+    height: 700px;
+    background-color: #776CE2;
+}
+
+.fourth-resume__img {
+    position: absolute;
+    top: 20px;
+    left: 40px;
+    width: 138px;
+    height: 158px;
+    object-fit: cover;
+    -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.img-decor {}
