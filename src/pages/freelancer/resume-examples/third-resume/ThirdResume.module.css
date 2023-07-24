@@ -9,6 +9,14 @@
 .third-resume__left {
     width: 220px;
     background-color: #212026;
+    padding-bottom: 30px;
+}
+
+.third-resume__left>img {
+    width: 220px;
+    min-height: 220px;
+    height: auto;
+    object-fit: cover;
 }
 
 .third-resume__right {
@@ -42,7 +50,7 @@
 .info-list {
     display: flex;
     flex-direction: column;
-    gap: 1px;
+    gap: 3px;
     margin: 0;
     padding: 0;
 }
@@ -99,6 +107,11 @@
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.contacts__list-item img {
+    width: 14px;
+    height: auto;
 }
 
 .third-resume__right {

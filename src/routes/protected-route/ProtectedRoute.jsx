@@ -5,13 +5,6 @@ import { toast } from "react-toastify";
 
 
 const ProtectedRoute = ({ children }) => {
-    console.log('ProtectedRoute');
-    // const test = () => {
-    //     // let token = JSON.parse(localStorage.getItem("user-token"));
-    //     // return jwt_decode(token.access_token);
-    //     console.log(jwt_decode(localStorage.getItem("user-token")));
-    // }
-    // test();
 
     const lang = useSelector(state => state.language.language);
     const userToken = localStorage.getItem('user-token');

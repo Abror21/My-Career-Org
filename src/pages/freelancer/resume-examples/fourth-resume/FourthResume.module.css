@@ -1,11 +1,12 @@
 .fourth-resume {
-    position: relative;
-    height: 600px;
+    display: flex;
 }
 
 .fourth-resume__left {
+    position: relative;
+    padding-top: 300px;
+    padding-right: 30px;
     width: 250px;
-    height: 700px;
     background-color: #776CE2;
 }
 
@@ -20,4 +21,251 @@
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 }
 
-.img-decor {}
+.img-decor {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.contact-list li {
+    font-family: "Montserrat";
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: white;
+}
+
+.fourth-resume__left {
+    padding-bottom: 30px;
+}
+
+.fourth__left-content {
+    padding-left: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.default-white-title {
+    font-size: 15px;
+    color: #776CE2;
+    position: relative;
+    z-index: 0;
+    font-family: "Montserrat";
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.default-white-title::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -30px;
+    width: 210px;
+    height: 30px;
+    background-color: #fff;
+    border-top-right-radius: 30px;
+    z-index: -1;
+}
+
+.fourth__left-content ul {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.fourth__left-content ul li {
+    display: flex;
+    align-items: center;
+    font-size: 10px;
+    color: white;
+}
+
+.fourth__left-content ul li img {
+    margin-right: 8px;
+    width: 12px;
+    height: auto;
+}
+
+.right {
+    padding: 75px 30px 0;
+    flex: 1;
+    position: relative;
+}
+
+.decor1 {
+    position: absolute;
+    z-index: 5;
+    top: 0;
+    right: 38%;
+}
+
+.right-title {
+    font-size: 35px;
+    font-weight: 500;
+    text-align: right;
+    margin-bottom: 0;
+    padding-right: 10px;
+}
+
+.right-subtitle {
+    font-size: 10px;
+    font-weight: 500;
+    display: block;
+    width: max-content;
+    margin-left: auto;
+    letter-spacing: 4px;
+    position: relative;
+    margin-bottom: 5px;
+    padding-right: 10px;
+}
+
+.right-subtitle::after {
+    content: '';
+    top: 100%;
+    left: 0;
+    width: 85px;
+    height: 10px;
+    position: absolute;
+    background-color: #776CE2;
+    border-bottom-left-radius: 40px;
+    border-top-right-radius: 40px;
+}
+
+.decor2 {
+    display: block;
+    margin-left: auto;
+}
+
+.right {
+    padding-bottom: 30px;
+}
+
+.right__about {
+    padding-left: 10px;
+    margin-bottom: 30px;
+}
+
+.right__about h6 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #776CE2;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+}
+
+.right__about p {
+    font-size: 10px;
+    font-weight: normal;
+    letter-spacing: 1px;
+}
+
+.right-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.default-blue-title {
+    font-size: 15px;
+    color: #fff;
+    position: relative;
+    z-index: 0;
+    font-family: "Montserrat";
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.default-blue-title::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -30px;
+    width: 210px;
+    height: 30px;
+    background-color: #776CE2;
+    border-top-right-radius: 30px;
+    z-index: -1;
+}
+
+.right-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.right-section__item {
+    position: relative;
+    padding-left: 20px;
+}
+
+.right-section__item::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 6px;
+    bottom: 0;
+    width: 1px;
+    background-color: #776CE2;
+}
+
+.blue-dot {
+    position: absolute;
+    top: 3px;
+    left: 0;
+}
+
+.right-section__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 8px;
+}
+
+.right-section__item>div>span:nth-child(1) {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.right-section__item>div>span:nth-child(2) {
+    color: #776CE2;
+    font-size: 9px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.right-section__item h6 {
+    font-size: 10px;
+    margin-bottom: 3px;
+    font-weight: 600;
+}
+
+.right-section__item p {
+    font-size: 10px;
+    margin-bottom: 5px;
+    font-weight: 300;
+    line-height: 1.3;
+}
+
+.decor3 {
+    position: absolute;
+    right: 0;
+    bottom: 20px;
+}

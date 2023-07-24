@@ -17,13 +17,27 @@ import { getCountiesList, getFreelancerEducations, getFreelancerExperiences, get
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorHandler from "src/components/error-handler/ErrorHandler";
 
+const levelList = [
+    { levelId: 0, value: "A1 - Beginner", label: "A1 - Beginner" },
+    { levelId: 1, value: "A2 - Elementary", label: "A2 - Elementary" },
+    { levelId: 2, value: "B1 - Intermediate", label: "B1 - Intermediate" },
+    { levelId: 3, value: "B2 - Upper-Intermediate", label: "B2 - Upper-Intermediate" }
+];
+const degreeList = [
+    { value: "Primary", label: "Primary", id: 0 },
+    { value: "Lower", label: "Lower", id: 1 },
+    { value: "Upper", label: "Upper", id: 2 },
+    { value: "Bachelor", label: "Bachelor", id: 3 },
+    { value: "Master", label: "Master", id: 4 },
+    { value: "Doctorate", label: "Doctorate", id: 5 },
+];
+
 const FreelancerResumeFinish = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { resumeId } = useParams();
 
     const [region, setRegion] = useState(null);
-    const [loading, setLoading] = useState(false);
 
     const { freelancerSkills, freelancerHobbies, freelancerLanguages, countriesList, freelancerEducation, freelancerExperience } = useSelector(state => state.freelancerBackData);
     const freelancerResume = useSelector(state => state.freelancerResume);
@@ -39,6 +53,8 @@ const FreelancerResumeFinish = () => {
         switch (resumeId) {
             case "1":
                 activeResume = <FirstResume
+                    levelList={levelList}
+                    degreeList={degreeList}
                     data={data}
                     country={country}
                     region={region}
@@ -51,6 +67,8 @@ const FreelancerResumeFinish = () => {
                 break;
             case "2":
                 activeResume = <SecondResume
+                    levelList={levelList}
+                    degreeList={degreeList}
                     data={data}
                     country={country}
                     region={region}
@@ -63,6 +81,8 @@ const FreelancerResumeFinish = () => {
                 break;
             case "3":
                 activeResume = <ThirdResume
+                    levelList={levelList}
+                    degreeList={degreeList}
                     data={data}
                     country={country}
                     region={region}
@@ -75,6 +95,8 @@ const FreelancerResumeFinish = () => {
                 break;
             case "4":
                 activeResume = <FourthResume
+                    levelList={levelList}
+                    degreeList={degreeList}
                     data={data}
                     country={country}
                     region={region}
@@ -87,6 +109,8 @@ const FreelancerResumeFinish = () => {
                 break;
             default:
                 activeResume = <FirstResume
+                    levelList={levelList}
+                    degreeList={degreeList}
                     data={data}
                     country={country}
                     region={region}
@@ -173,9 +197,8 @@ const FreelancerResumeFinish = () => {
                     <div className={classes.resume__finish_main}>
                         <h3 className={classes.resume__finish_title}>Your Resume is Done!</h3>
                         <div className={classes.resume__finish_box}>
-                            {loading && <h2>Loading...</h2>}
-                            {(!freelancerResume && !loading) && <h1 style={{ color: 'tomato' }}>Data not found</h1>}
-                            {(!loading && freelancerResume) && chooseActiveResume(
+                            {(!freelancerResume) && <h1 style={{ color: 'tomato' }}>Data not found</h1>}
+                            {freelancerResume && chooseActiveResume(
                                 freelancerResume, freelancerSkills, freelancerLanguages, freelancerHobbies, freelancerEducation, freelancerExperience
                             )}
                             <div className={classes.finish__box}>
@@ -185,7 +208,7 @@ const FreelancerResumeFinish = () => {
                             </div>
                         </div>
                     </div>
-                    <Round position={{ top: '25%', right: '-14%', left: 'unset' }} zIndex={1} />
+                    <Round position={{ top: '25%', right: '-14%', left: 'unset' }} zIndex={0} />
                 </div>
             </div>
         </div>

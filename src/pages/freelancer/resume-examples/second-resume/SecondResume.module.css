@@ -4,6 +4,7 @@
 
 .black-resume {
     position: relative;
+    z-index: 2;
 }
 
 .bg-decoration {
@@ -29,6 +30,8 @@
 
 .header__img {
     width: 220px;
+    min-height: 220px;
+    object-fit: cover;
 }
 
 .header__img img {
@@ -141,6 +144,11 @@
     gap: 8px;
 }
 
+.contacts__list li img {
+    width: 14px;
+    height: auto;
+}
+
 .body__right {
     flex: 1;
     width: fit-content;
@@ -156,18 +164,26 @@
 .education__content {
     display: flex;
     gap: 40px;
+    margin-bottom: 10px;
 }
 
 .education__period {
     font-size: 12px;
-    white-space: nowrap;
 }
 
-.education__name span {
+.education__period span {
+    white-space: nowrap;
+    display: inline-block;
+    margin-bottom: 4px;
+}
+
+.education__name-title {
     font-size: 12px;
     font-weight: bold;
+    margin-bottom: 10px;
+    line-height: 1.3;
 }
 
-.education__name p {
+.education__name p:nth-child(2) {
     margin: 0;
 }

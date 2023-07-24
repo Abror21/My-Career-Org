@@ -15,10 +15,6 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { activeDoteAction } from "src/store/resumeControlsSlice/resumeControls";
 import WhiteButton from "src/components/white-button";
 import OutlinedButton from "src/components/outlined-button";
-import axios from "axios";
-import { FREELANCER } from "src/services/URLS";
-import { API } from "src/services/api";
-import { toast } from "react-toastify";
 
 function SelectResume() {
 	const navigate = useNavigate();
@@ -28,17 +24,16 @@ function SelectResume() {
 	const lang = useSelector(state => state.language.language);
 
 	// const freelancer = useSelector(state => state.frilancerCards.freelancer);
-	const freelancerResume = useSelector(state => state.freelancerResume);
 
 	const dispatch = useDispatch();
 
 	const resume = [
 		{ id: 1, img: resume1 },
 		{ id: 2, img: resume2 },
-		{ id: 3, img: resume3 },
-		{ id: 4, img: resume4 },
-		{ id: 5, img: resume5 },
-		{ id: 6, img: resume6 }
+		{ id: 3, img: resume4 },
+		{ id: 4, img: resume3 },
+		// { id: 5, img: resume5 },
+		// { id: 6, img: resume6 }
 	];
 
 	const handleNextClick = () => {
