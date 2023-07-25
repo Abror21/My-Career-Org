@@ -24,6 +24,7 @@ import FourthResume from "./pages/freelancer/resume-examples/fourth-resume/Fourt
 import FreelancerResumeFinish from "./pages/freelancer/freelancer-resume/components/freelancer-resume-finish/FreelancerResumeFinish";
 import ErrorHandler from "./components/error-handler/ErrorHandler";
 import { ErrorBoundary } from "react-error-boundary";
+import FreelancerProfile from "./pages/freelancer/freelancer-profile/FreelancerProfile";
 
 function App() {
 
@@ -95,6 +96,7 @@ function App() {
         <Route path={`${lang}/freelancer-resume`} element={<ProtectedRoute>{<FreelancerResume />}</ProtectedRoute>} />
         <Route path={`${lang}/freelancer-resume/:resumeId`} element={<ProtectedRoute>{<FreelancerResumeFinish />}</ProtectedRoute>} />
         <Route path={`${lang}/company-resume`} element={<ProtectedRoute>{<CompanyResume />}</ProtectedRoute>} />
+        <Route path={`${lang}/freelancer-profile`} element={<ProtectedRoute>{<FreelancerProfile />}</ProtectedRoute>} />
       </Routes>
     </>
   );

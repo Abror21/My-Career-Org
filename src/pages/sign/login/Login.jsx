@@ -8,14 +8,13 @@ import facebook from "src/assets/images/Sign/facebook.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { logInRequest } from "src/store/extraReducers";
 import { Eye, EyeOff } from 'tabler-icons-react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import { toast } from "react-toastify";
 import Input from "src/components/Input";
 import { useInput } from "src/hooks";
 import BlueButton from "src/components/blue-button";
 import { LOGIN_USER } from "src/services/URLS";
-import { useNavigate } from "react-router-dom";
 
 const Login = ({ style }) => {
 	const lang = useSelector(state => state.language.language)

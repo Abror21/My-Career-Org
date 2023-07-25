@@ -41,6 +41,7 @@ const FreelancerResumeFinish = () => {
 
     const { freelancerSkills, freelancerHobbies, freelancerLanguages, countriesList, freelancerEducation, freelancerExperience } = useSelector(state => state.freelancerBackData);
     const freelancerResume = useSelector(state => state.freelancerResume);
+    const lang = useSelector(state => state.language.language);
 
     const handleClick = () => {
         navigate(-1);
@@ -155,12 +156,13 @@ const FreelancerResumeFinish = () => {
             .then(res => {
                 if (res.status === 200) {
                     toast.success("Successfully submitted", { position: toast.POSITION.TOP_LEFT })
-
+                    navigate(`/${lang}/freelancer-profile`)
                 }
             })
             .catch(err => {
                 if (err.response.data.message && err.response.data.message == "This user already registered as Freelancer") {
                     toast.warning(err.response.data.message);
+                    navigate(`/${lang}/freelancer-profile`)
                     return
                 }
                 toast.error(err.message)
