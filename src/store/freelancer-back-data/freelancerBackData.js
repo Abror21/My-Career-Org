@@ -14,7 +14,7 @@ const initialState = {
 export const getFreelancerSkills = createAsyncThunk(
     'freelancer/getFreelancerSkills',
     async () => {
-        const response = await API.getFreelanerSkills()
+        const response = await API.getFreelancerSkills()
         return response.data;
     }
 )

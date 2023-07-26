@@ -1,5 +1,4 @@
 import { useReducer } from "react";
-import { CHECK_EMAIL } from "src/services/URLS";
 
 const initialState = { value: '', touched: false, isExist: false, timer: null };
 
@@ -15,8 +14,6 @@ const reducer = (state, action) => {
     return { ...state, isExist: true }
   } else if (action.type === 'NOTEXIST') {
     return { ...state, isExist: false }
-  } else if (action.type === 'SETTIMER') {
-    return { ...state, timer: action.value }
   }
   return state;
 }
@@ -24,25 +21,8 @@ const reducer = (state, action) => {
 export const useInput = (inputValidation = () => { }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const inputChange = (value, getRequest = false) => {
+  const inputChange = (value) => {
     dispatch({ type: "VALUE", value });
-
-    if (getRequest) {
-      clearTimeout(state.timer);
-      const newTimer = setTimeout(() => {
-        fetch(`${CHECK_EMAIL}=${value}`)
-          .then(res => {
-            console.log(res);
-            if (res.ok) {
-              dispatch({ type: 'EXIST' })
-              return;
-            } else {
-              dispatch({ type: 'NOTEXIST' })
-            }
-          })
-      }, 800)
-      dispatch({ type: 'SETTIMER', value: newTimer })
-    }
   }
   const inputBlur = () => {
     dispatch({ type: "BLUR" });

@@ -27,7 +27,6 @@ axiosInstance.interceptors.request.use(
     async config => {
         if (!config.headers.Authorization) {
             const token = localStorage.getItem('user-token');
-
             if (token) {
                 config.headers.Authorization = "Bearer " + token;
             }
@@ -47,10 +46,15 @@ export const API = {
     getFreelancer: () => axiosInstance.get('/api/freelancer'),
 
     // skill
-    getFreelanerSkills: () => axiosInstance.get('/api/user-skill'),
+    getFreelancerSkills: () => axiosInstance.get('/api/user-skill'),
+    postFreelancerSkills: (payload) => axiosInstance.post('/api/user-skill', payload),
+    deleteFreelancerSkill: (payload) => axiosInstance.delete(`/api/user-skill/${payload}`),
+    getSkillsList: () => axiosInstance.get('api/skill?position=WebDesigner'),
 
     // hobbies
     getFreelancerHobbies: () => axiosInstance.get('/api/user-hobby'),
+    postFreelancerHobbie: (payload) => axiosInstance.post('/api/user-hobby', payload),
+    deleteFreelancerHobbie: (payload) => axiosInstance.delete(`/api/user-hobby/${payload}`),
 
     // countries
     getCountriesList: () => axiosInstance.get('/api/country'),
@@ -60,7 +64,18 @@ export const API = {
 
     // educations
     getFreelancerEducations: () => axiosInstance.get('/api/education'),
+    putFreelancerEducation: (id, payload) => axiosInstance.put(`/api/education/${id}`, payload),
 
     // experience
-    getFreelancerExperiences: () => axiosInstance.get('/api/experience')
+    getFreelancerExperiences: () => axiosInstance.get('/api/experience'),
+
+    // check email
+    // getEmail: () => axiosInstance.get('/api/auth/CheckEmail?email'),
+
+    // auth
+    registerUser: (payload) => axiosInstance.post('/api/auth/register', payload),
+    loginUser: (payload) => axiosInstance.post('/api/auth/login', payload),
+
+    // contact us
+    postContactUs: (payload) => axiosInstance.post('/api/contacts-us', payload),
 }

@@ -4,8 +4,8 @@ import logosWhatsapp from "src/assets/icons/logos_whatsapp.png";
 import Input from "src/components/Input";
 import { useInput } from "src/hooks";
 import Textarea from "src/components/Textarea";
-import { CONTACT_US } from "src/services/URLS";
 import { toast } from 'react-toastify';
+import { API } from "src/services/api";
 
 function Contactus() {
 
@@ -54,30 +54,17 @@ function Contactus() {
 		textInputTouch();
 
 		if (nameIsValid && emailIsValid && phoneIsValid && textIsValid) {
-			fetch(CONTACT_US, {
-				method: 'POST',
-				headers: {
-					"content-type": "application/json"
-				},
-				body: JSON.stringify({
-					name,
-					email,
-					phone,
-					textMessage: text
-				})
-			})
+			API.postContactUs({ name, email, phone, textMessage: text })
 				.then(res => {
-					if (res.ok) {
+					if (res.status === 200) {
 						nameInputReset();
 						emailInputReset();
 						phoneInputReset();
 						textInputReset();
 						toast.success('Your message has been sent successfully.')
-					} else {
-						throw Error('Something went wrong')
 					}
 				})
-				.catch(err => alert(err.message))
+				.catch(err => toast.error(err.message))
 		}
 	}
 

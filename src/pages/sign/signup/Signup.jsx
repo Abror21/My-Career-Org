@@ -15,6 +15,7 @@ import { REGISTER_USER } from "src/services/URLS";
 import { toast } from "react-toastify";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import CheckEmail from "./CheckEmail";
+import { API } from "src/services/api";
 
 const Signup = () => {
 
@@ -74,31 +75,18 @@ const Signup = () => {
 			}
 			setUserEmail(email)
 			setLoading(true)
-			fetch(REGISTER_USER, {
-				method: 'POST',
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(newUser)
-			})
+			API.registerUser(newUser)
 				.then(res => {
-					console.log(res);
-					if (res.ok) {
+					if (res.status === 200) {
 						emailInputClear();
 						passwordInputClear();
 						password2InputClear();
 						toast.success('You are successfully registered.', { position: toast.POSITION.TOP_LEFT });
 						setCheckEmail(true);
-					} else {
-						throw new Error('Something went wrong.')
 					}
-					return res.json()
 				})
-				.then(data => console.log(data))
 				.catch(err => {
-					toast.error(err.message, { position: toast.POSITION.TOP_LEFT }
-					)
-					console.error(err.message)
+					toast.warning(err.response.data.message, { position: toast.POSITION.TOP_LEFT })
 				})
 				.finally(() => setLoading(false))
 		}
@@ -120,7 +108,7 @@ const Signup = () => {
 								placeholder="Email"
 								inputIsError={emailInputIsError}
 								value={email}
-								inputChange={(v) => emailInputChange(v, true)}
+								inputChange={emailInputChange}
 								inputBlur={emailInputBlur}
 								errorMessage="Invalid email."
 								autoComplete='off'

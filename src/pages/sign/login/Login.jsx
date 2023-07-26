@@ -15,6 +15,7 @@ import Input from "src/components/Input";
 import { useInput } from "src/hooks";
 import BlueButton from "src/components/blue-button";
 import { LOGIN_USER } from "src/services/URLS";
+import { API } from "src/services/api";
 
 const Login = ({ style }) => {
 	const lang = useSelector(state => state.language.language)
@@ -49,36 +50,19 @@ const Login = ({ style }) => {
 		emailInputTouch();
 		passwordInputTouch();
 		if (emailIsValid && passwordIsValid) {
-			const user = {
-				email,
-				password
-			}
+			const user = { email, password }
 			setLoading(true)
-			fetch(LOGIN_USER, {
-				method: 'POST',
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(user)
-			})
+			API.loginUser(user)
 				.then(res => {
-					if (res.ok) {
+					if (res.status === 200) {
+						localStorage.setItem('user-token', res.data.token);
 						emailInputClear();
 						passwordInputClear();
-					}
-					return res.json()
-				})
-				.then(data => {
-					if (data.message) {
-						toast.error(data.message, { position: toast.POSITION.TOP_LEFT })
-					}
-					localStorage.setItem('user-token', data.token);
-					if (data?.token) {
 						navigate(`/${lang}/freelancer-or-company`);
 					}
 				})
 				.catch(err => {
-					toast.error(err.message, { position: toast.POSITION.TOP_LEFT })
+					toast.error(err.response?.data?.message, { position: toast.POSITION.TOP_LEFT })
 				})
 				.finally(() => setLoading(false))
 		}

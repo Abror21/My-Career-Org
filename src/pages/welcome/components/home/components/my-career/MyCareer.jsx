@@ -10,19 +10,6 @@ import { JOBS } from "src/services/URLS";
 function MyCareer() {
 	// const { t } = useTranslation();
 
-	useEffect(() => {
-		// fetch(JOBS, {
-		// method: "POST",
-		// headers: {
-		// 	"content-type": "application-json"
-		// }
-		// })
-		// 	.then(res => res.json())
-		// 	.then(data => console.log(data))
-		// 	.catch(err => console.error('Errooor ', err.message))
-		// 	.finally(() => console.log('Experiment completed'))
-	}, [])
-
 	return (
 		<div className={classes.careerBox}>
 			<div className="container">

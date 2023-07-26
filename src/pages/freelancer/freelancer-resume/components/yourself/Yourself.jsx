@@ -13,8 +13,8 @@ import Textarea from "src/components/Textarea";
 import WhiteButton from "src/components/white-button";
 import Input from "src/components/Input";
 import { FREELANCER_HOBBY, FREELANCER_SKILL, FREELANCER_SKILLS } from "src/services/URLS";
-import axios from "axios";
 import CreatableInput from "src/components/select-input/CreatableInput";
+import { API } from "src/services/api";
 
 
 function Yourself() {
@@ -60,23 +60,18 @@ function Yourself() {
 		}
 		birthDateInputChange(fBirthDate?.replaceAll(':', '-'));
 
-		fetch(FREELANCER_SKILLS)
-			.then(res => res.json())
-			.then(data => setSkills(data))
-		fetch(FREELANCER_SKILL, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${localStorage.getItem('user-token')}`
-			},
-		})
-			.then(res => res.json())
-			.then(data => setFreelancerSkills(data.map(skill => {
-				return { id: skill.id, value: skill.skill.content, label: skill.skill.content }
-			})))
-			.catch(error => alert(error.message))
-		axios.get(FREELANCER_HOBBY, { headers: { Authorization: `Bearer ${localStorage['user-token']}` } })
-			.then(res => setHobbies(res.data.map(el => ({ id: el.id, value: el.hobby.content, label: el.hobby.content }))))
+		API.getSkillsList().then(res => setSkills(res.data))
+		API.getFreelancerSkills()
+			.then(res => {
+				setFreelancerSkills(res.data.map(skill => {
+					return { id: skill.id, value: skill.skill.content, label: skill.skill.content }
+				}))
+			})
+			.catch(err => console.log(err.message))
+		API.getFreelancerHobbies()
+			.then(res => {
+				setHobbies(res.data.map(el => ({ id: el.id, value: el.hobby.content, label: el.hobby.content })))
+			})
 			.catch(err => console.log(err.message))
 		descriptionInputChange(fDescription);
 	}, [])
@@ -114,22 +109,10 @@ function Yourself() {
 			setSkillsIsError(false);
 		}
 		if (skill.length > freelancerSkills.length) {
-			fetch(FREELANCER_SKILL, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${localStorage.getItem('user-token')}`
-				},
-				body: JSON.stringify({ skillId: skill[skill.length - 1].id }),
-			})
-				.then(res => {
-					if (!res.ok) {
-						throw new Error('Something went wrong');
-					}
-					return res.json();
-				})
-				.then(data => setFreelancerSkills([...freelancerSkills, { id: data.id, value: skill[skill.length - 1].value, label: skill[skill.length - 1].label }]))
+			API.postFreelancerSkills({ skillId: skill[skill.length - 1].id })
+				.then(res => setFreelancerSkills([...freelancerSkills, { id: res.data.id, value: skill[skill.length - 1].value, label: skill[skill.length - 1].label }]))
 				.catch(error => toast.error(error.message))
+
 		} else {
 			for (let i = 0; i < freelancerSkills.length; i++) {
 				let test = false;
@@ -140,20 +123,13 @@ function Yourself() {
 					}
 				}
 				if (!test) {
-					fetch(`${FREELANCER_SKILL}/${freelancerSkills[i].id}`, {
-						method: 'DELETE',
-						headers: {
-							"Content-Type": "application/json",
-							Authorization: `Bearer ${localStorage.getItem('user-token')}`
-						}
-					})
+					API.deleteFreelancerSkill(freelancerSkills[i].id)
 						.then(res => {
-							if (!res.ok) {
-								toast.error("Something went wrong")
-							} else {
+							if (res.status === 200) {
 								setFreelancerSkills(skill);
 							}
 						})
+						.catch(err => toast.error(err.message))
 				}
 			}
 		}
@@ -166,12 +142,10 @@ function Yourself() {
 		}
 
 		if (hobby.length > hobbies.length) {
-			axios.post(
-				FREELANCER_HOBBY,
-				{ otherHobby: hobby[hobby.length - 1].value },
-				{ headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } }
-			)
-				.then(data => setHobbies([...hobbies, { id: data.data.id, value: data.data.hobby.content, label: data.data.hobby.content }]))
+			API.postFreelancerHobbie({ otherHobby: hobby[hobby.length - 1].value })
+				.then(res => {
+					setHobbies([...hobbies, { id: res.data.id, value: res.data.hobby.content, label: res.data.hobby.content }])
+				})
 				.catch(error => toast.error(error.message))
 		} else {
 			for (let i = 0; i < hobbies.length; i++) {
@@ -183,20 +157,13 @@ function Yourself() {
 					}
 				}
 				if (!test) {
-					fetch(`${FREELANCER_HOBBY}/${hobbies[i].id}`, {
-						method: 'DELETE',
-						headers: {
-							"Content-Type": "application/json",
-							Authorization: `Bearer ${localStorage.getItem('user-token')}`
-						}
-					})
+					API.deleteFreelancerHobbie(hobbies[i].id)
 						.then(res => {
-							if (!res.ok) {
-								toast.error("Something went wrong");
-							} else {
-								setHobbies(hobby);
+							if (res.status === 200) {
+								setHobbies(hobby)
 							}
 						})
+						.catch(err => toast.error(err.message))
 				}
 			}
 		}

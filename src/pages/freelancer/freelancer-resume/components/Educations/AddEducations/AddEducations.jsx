@@ -11,6 +11,7 @@ import SelectInput from "src/components/select-input";
 import { toast } from "react-toastify";
 import { FREELANCER_EDUCATION } from "src/services/URLS";
 import axios from "axios";
+import { API } from "src/services/api";
 
 function AddEducations({ data, removeModal, typeOptions, option, getEducationList }) {
 	// const dispatch = useDispatch();
@@ -111,12 +112,9 @@ function AddEducations({ data, removeModal, typeOptions, option, getEducationLis
 				dateTo
 			}
 			if (data) {
-				axios.put(
-					`${FREELANCER_EDUCATION}/${data.id}`,
-					education,
-					{ headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } },
-				)
+				API.putFreelancerEducation(data.id, education)
 					.then(res => {
+						console.log('edu', res);
 						if (res.status === 200) {
 							getEducationList();
 							removeModal(false);
@@ -138,7 +136,7 @@ function AddEducations({ data, removeModal, typeOptions, option, getEducationLis
 					.catch(err => toast.error(err.message))
 			}
 		}
-	};
+	}
 
 	return (
 		<div className="addEducations">
