@@ -53,21 +53,13 @@ function Language() {
 			if (levelId || levelId == 0) {
 				item.levelId = levelId;
 			}
-			axios.put(
-				`${FREELANCER_LANGUAGE}`,
-				{ id: item.id, languageId: item.languageId, level: item.levelId },
-				{ headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } }
-			)
+			API.putFreelancerLanguage({ id: item.id, languageId: item.languageId, level: item.levelId })
 				.then(res => {
-					if (res.status === 200) {
-						getLanguageList();
-					} else {
-						toast.error('Something went wrong');
-					}
+					getLanguageList();
 				})
 				.catch(err => {
-					getLanguageList();
 					toast.error(err.message)
+					getLanguageList();
 				})
 		} else {
 			if (id || id == 0) {

@@ -9,10 +9,8 @@ import { ReactComponent as Edit } from "src/assets/icons/edit.svg";
 import AddEducations from "../AddEducations/AddEducations";
 import OutlinedButton from "src/components/outlined-button";
 import WhiteButton from "src/components/white-button";
-// import { removeFreelancerEducation } from "src/store/freelancer-resume/freelancerResume";
-import axios from "axios";
-import { FREELANCER_EDUCATION } from "src/services/URLS";
 import { toast } from "react-toastify";
+import { API } from "src/services/api";
 
 function Educations() {
 	const [showModal, setShowModal] = useState(false);
@@ -21,19 +19,19 @@ function Educations() {
 
 	const dispatch = useDispatch();
 	const { loading } = useSelector(state => state.resume);
-	// const educations = useSelector(state => state.freelancerResume.education);
 
 	useEffect(() => {
 		getEducationList();
 	}, [])
 
 	const getEducationList = () => {
-		axios.get(FREELANCER_EDUCATION, { headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } })
+		API.getFreelancerEducations()
 			.then(res => {
 				if (res.status === 200) {
 					setEducations(res.data);
 				}
 			})
+			.catch(err => toast.error(err.message))
 	}
 
 	const handleEditEducation = el => {
@@ -50,10 +48,7 @@ function Educations() {
 	};
 
 	const handleDelete = (id) => {
-		axios.delete(
-			`${FREELANCER_EDUCATION}/${id}`,
-			{ headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } }
-		)
+		API.deleteFreelancerEducation(id)
 			.then(res => {
 				if (res.status === 200) {
 					getEducationList();

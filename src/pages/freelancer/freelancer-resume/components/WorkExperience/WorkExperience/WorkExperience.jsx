@@ -18,7 +18,6 @@ function WorkExperience() {
 	const [isModalActive, setModalActive] = useState(false);
 	const [dataToEdit, setDataToEdit] = useState(null);
 	const [experienceList, setExperienceList] = useState([]);
-	// const experienceList = useSelector(state => state.freelancerResume.experience);
 
 	useEffect(() => {
 		getExperienceList();

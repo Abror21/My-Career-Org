@@ -40,6 +40,7 @@ export const API = {
     // language
     getFreelancerLanguages: () => axiosInstance.get('/api/user-language'),
     postFreelancerLanguages: (payload) => axiosInstance.post('/api/user-language', payload),
+    putFreelancerLanguage: (payload) => axiosInstance.put('/api/user-language', payload),
 
     // freelancer
     postFreelancer: (payload) => axiosInstance.post('/api/freelancer', payload),
@@ -65,6 +66,8 @@ export const API = {
     // educations
     getFreelancerEducations: () => axiosInstance.get('/api/education'),
     putFreelancerEducation: (id, payload) => axiosInstance.put(`/api/education/${id}`, payload),
+    postFreelancerEducation: (payload) => axiosInstance.post('/api/education/', payload),
+    deleteFreelancerEducation: (id) => axiosInstance.delete(`/api/education/${id}`),
 
     // experience
     getFreelancerExperiences: () => axiosInstance.get('/api/experience'),

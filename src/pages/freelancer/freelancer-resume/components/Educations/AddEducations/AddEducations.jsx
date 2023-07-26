@@ -9,8 +9,6 @@ import WhiteButton from "src/components/white-button";
 import SelectInput from "src/components/select-input";
 // import { addFreelancerEducation } from "src/store/freelancer-resume/freelancerResume";
 import { toast } from "react-toastify";
-import { FREELANCER_EDUCATION } from "src/services/URLS";
-import axios from "axios";
 import { API } from "src/services/api";
 
 function AddEducations({ data, removeModal, typeOptions, option, getEducationList }) {
@@ -122,11 +120,7 @@ function AddEducations({ data, removeModal, typeOptions, option, getEducationLis
 					})
 					.catch(err => toast.error(err.message));
 			} else {
-				axios.post(
-					FREELANCER_EDUCATION,
-					education,
-					{ headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } },
-				)
+				API.postFreelancerEducation(education)
 					.then(res => {
 						if (res.status === 200) {
 							getEducationList();
