@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./style.scss";
-import { useDispatch } from "react-redux";
 import Input from "src/components/Input";
 import { useInput } from "src/hooks";
 import Textarea from "src/components/Textarea";
 import OutlinedButton from "src/components/outlined-button";
-// import { addFreelancerExperience } from "src/store/freelancer-resume/freelancerResume";
 import { toast } from "react-toastify";
-import axios from "axios";
-import { FREELANCER_EXPERIENCE } from "src/services/URLS";
+import { API } from "src/services/api";
 
 
 function MyWork({ removeModal, data, getExperienceList }) {
@@ -88,29 +85,17 @@ function MyWork({ removeModal, data, getExperienceList }) {
                 description: textareaValue
             }
             if (data) {
-                axios.put(
-                    `${FREELANCER_EXPERIENCE}/${data.id}`,
-                    experience,
-                    { headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } },
-                )
-                    .then(res => {
-                        if (res.status === 200) {
-                            getExperienceList();
-                            removeModal(false);
-                        }
+                API.putFreelancerExperience(data.id, experience)
+                    .then(() => {
+                        getExperienceList();
+                        removeModal(false);
                     })
                     .catch(err => toast.error(err.message));
             } else {
-                axios.post(
-                    FREELANCER_EXPERIENCE,
-                    experience,
-                    { headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } },
-                )
-                    .then(res => {
-                        if (res.status === 200) {
-                            getExperienceList();
-                            removeModal(false);
-                        }
+                API.postFreelancerExperience(experience)
+                    .then(() => {
+                        getExperienceList();
+                        removeModal(false);
                     })
                     .catch(err => toast.error(err.message))
             }

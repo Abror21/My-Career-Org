@@ -21,32 +21,9 @@ import FreelancerProfile from "./pages/freelancer/freelancer-profile/FreelancerP
 
 function App() {
 
-  // const auth = useSelector(state => state.login.loggedIn);
   const lang = useSelector(state => state.language.language);
-  const image = useSelector(state => state.freelancerResume.image);
-  const name = useSelector(state => state.freelancerResume.name);
-  const surname = useSelector(state => state.freelancerResume.surname);
-  const email = useSelector(state => state.freelancerResume.email);
-  const phone = useSelector(state => state.freelancerResume.phone);
 
   // const { i18n } = useTranslation();
-  // const freelancerOrCompony = useSelector(state => state.login.freelancerOrCompony);
-  // const loginOnSuccess = useSelector(state => state.login.loginOnSuccess);
-  // const contactsIsSuccess = useSelector(state => state.companyRegister.contactsIsSuccess);
-
-  // const { pathname } = useLocation();
-  // const freelancer = localStorage.getItem("isResume") ? localStorage.getItem("isResume") : "welcome";
-
-
-  // if (auth) {
-  //   let decode = jwt_decode(auth);
-  //   freelanceOrCompany = Object.values(decode).includes("Company")
-  //     ? "Company"
-  //     : (freelanceOrCompany = Object.values(decode).includes("Freelancer") ? "Freelancer" : "None");
-  // }
-  // const handleLanguage = (lg) => {
-  //   i18n.changeLanguage(lg);
-  // };
 
   return (
     <>

@@ -10,9 +10,8 @@ import MyWork from "../MyWork/MyWork";
 // import { removeFreelancerExperience } from "src/store/freelancer-resume/freelancerResume";
 import WhiteButton from "src/components/white-button";
 import OutlinedButton from "src/components/outlined-button";
-import axios from "axios";
-import { FREELANCER_EXPERIENCE } from "src/services/URLS";
 import { toast } from "react-toastify";
+import { API } from "src/services/api";
 
 function WorkExperience() {
 	const [isModalActive, setModalActive] = useState(false);
@@ -24,7 +23,7 @@ function WorkExperience() {
 	}, [])
 
 	const getExperienceList = () => {
-		axios.get(FREELANCER_EXPERIENCE, { headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } })
+		API.getFreelancerExperiences()
 			.then(res => {
 				if (res.status === 200) {
 					setExperienceList(res.data)
@@ -51,15 +50,8 @@ function WorkExperience() {
 	};
 
 	const handleDelete = (id) => {
-		axios.delete(
-			`${FREELANCER_EXPERIENCE}/${id}`,
-			{ headers: { Authorization: `Bearer ${localStorage.getItem('user-token')}` } }
-		)
-			.then(res => {
-				if (res.status === 200) {
-					getExperienceList();
-				}
-			})
+		API.deleteFreelancerExperience(id)
+			.then(() => getExperienceList())
 			.catch(err => toast.error(err.message))
 	}
 	const handleSubmit = e => {

@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 import SelectInput from 'src/components/select-input';
 import classes from './LanguageWrapper.module.css';
 import cancel from "src/assets/images/Resume/cancel.png";
-import axios from 'axios';
-import { FREELANCER_LANGUAGE } from 'src/services/URLS';
 import { toast } from 'react-toastify';
+import { API } from 'src/services/api';
 
 let levelList = [
     { levelId: 0, value: "A1 - Beginner", label: "A1 - Beginner" },
@@ -19,12 +18,9 @@ const LanguageWrapper = ({ index, languageList, userLanguages, lang, singleLang,
 
     const removeLang = lang => {
         if (lang.id || lang.id == 0) {
-            axios.delete(`${FREELANCER_LANGUAGE}/${lang.id}`)
-                .then(res => {
-                    if (res.status === 200) {
-                        getLanguageList();
-                    }
-                })
+            API.deleteFreelancerLanguage(lang.id)
+                .then(() => getLanguageList())
+                .catch(err => toast.error(err.message))
         } else {
             removeEmptyLang(index)
         }

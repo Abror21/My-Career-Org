@@ -14,13 +14,7 @@ function Photo() {
 	const { name: fName, surname: fSurname, email: fEmail, phone: fPhone } = useSelector(state => state.freelancerResume);
 	const { image: fImage } = useSelector(state => state.freelancerResume);
 	const inputRef = useRef();
-	const [image, setImage] = useState("");
-
-	useEffect(() => {
-		if (fImage) {
-			setImage(fImage);
-		}
-	}, [])
+	const [image, setImage] = useState(fImage || "");
 
 	const dispatch = useDispatch();
 
