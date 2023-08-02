@@ -11,14 +11,14 @@ import { useTranslation } from "react-i18next";
 import Input from "src/components/Input";
 import BlueButton from "src/components/blue-button";
 import { useInput } from "src/hooks";
-import { REGISTER_USER } from "src/services/URLS";
 import { toast } from "react-toastify";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import CheckEmail from "./CheckEmail";
 import { API } from "src/services/api";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import jwt_decode from 'jwt-decode'
 
 const Signup = () => {
-
 	// const { t } = useTranslation();
 	const lang = useSelector(state => state.language.language);
 
@@ -166,12 +166,20 @@ const Signup = () => {
 							<a href="/facebook.com">
 								<img className="login_form_wrapper_socials_icon" src={github} alt="social media icon github" />
 							</a>
-							<a href="/facebook.com">
-								<img className="login_form_wrapper_socials_icon" src={google} alt="social media google" />
-							</a>
-							<a href="/facebook.com">
-								<img className="login_form_wrapper_socials_icon" src={apple} alt="social media apple" />
-							</a>
+							<GoogleOAuthProvider clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`}>
+								<GoogleLogin
+									onSuccess={credentialResponse => {
+										const details = jwt_decode(credentialResponse.credential)
+										console.log(details);
+										console.log(credentialResponse);
+									}}
+									type="icon"
+									shape="circle"
+									onError={() => {
+										console.log('Login Failed');
+									}}
+								/>
+							</GoogleOAuthProvider>
 						</div>
 					</div>
 				</div>

@@ -1,21 +1,23 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import "./Login.scss";
-import login_ellipse from "src/assets/images/Sign/Ellipse-6.png";
 import apple from "src/assets/images/Sign/apple.svg";
 import google from "src/assets/images/Sign/google.svg";
 import github from "src/assets/images/Sign/github.svg";
 import facebook from "src/assets/images/Sign/facebook.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { logInRequest } from "src/store/extraReducers";
+import { useSelector } from "react-redux";
 import { Eye, EyeOff } from 'tabler-icons-react';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import { toast } from "react-toastify";
 import Input from "src/components/Input";
 import { useInput } from "src/hooks";
 import BlueButton from "src/components/blue-button";
-import { LOGIN_USER } from "src/services/URLS";
 import { API } from "src/services/api";
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
+import jwt_decode from 'jwt-decode';
+import GitHubLogin from "react-github-login";
+
 
 const Login = ({ style }) => {
 	const lang = useSelector(state => state.language.language)
@@ -62,11 +64,43 @@ const Login = ({ style }) => {
 					}
 				})
 				.catch(err => {
-					toast.error(err.response?.data?.message, { position: toast.POSITION.TOP_LEFT })
+					toast.error(err.message);
+					toast.error(err.response?.data?.message, { position: toast.POSITION.TOP_LEFT });
 				})
 				.finally(() => setLoading(false))
 		}
 	};
+
+	// githubId = c6f2234c775eade1e332
+	// const loginWithGitHub = (git) => {
+	// 	window.location.assign(`http://localhost:3000/en/login/oauth/authorize?client_id=c6f2234c775eade1e332`);
+	// }
+
+	// const location = useLocation();
+	// console.log(process.env.REACT_APP_CLIENT_ID);
+	// navigate(process.env.REACT_APP_CLIENT_ID);
+	// let from = ((location.state)?.from?.pathname) || '/';
+
+	// function getGitHubUrl() {
+	// 	console.log('process ', process.env);
+	// 	const rootURl = 'https://github.com/login/oauth/authorize';
+
+	// 	const options = {
+	// 		client_id: process.env.REACT_APP_CLIENT_ID,
+	// 		redirect_uri: process.env.REACT_APP_REDIRECT_URI,
+	// 		scope: 'user:email',
+	// 		state: from,
+	// 	};
+
+	// 	const qs = new URLSearchParams(options);
+	// 	// navigate(`${rootURl}?${qs.toString()}`)
+
+	// 	// return `${rootURl}?${qs.toString()}`;
+	// }
+	// const loginWithGithub = (e) => {
+	// 	console.log('e', e);
+	// 	window.location.assign('https://github.com/login/oauth/authorize?client_id=c6f2234c775eade1e332')
+	// }
 
 	return (
 		<div className="login_form" style={style}>
@@ -114,15 +148,45 @@ const Login = ({ style }) => {
 					<a href="facebook.com">
 						<img className="login_form_wrapper_socials_icon" src={facebook} alt="social media icon facebook" />
 					</a>
-					<a href="facebook.com">
+					{/* <button>
 						<img className="login_form_wrapper_socials_icon" src={github} alt="social media icon github" />
-					</a>
-					<a href="facebook.com">
+					</button> */}
+
+					{/* <GitHubLogin
+						scope="user"
+						clientId={`c6f2234c775eade1e332`}
+						// clientId={`187f5e840d2aac457b6f`}
+						// clientId={`96e75f31486ad01087e4`}
+						// redirectUri={`https://localhost:3000`}
+						onSuccess={success => console.log('success', success)}
+						onFailure={failure => console.log('error', failure)}
+					>
+					</GitHubLogin> */}
+
+
+					{/* <a href={`https://github.com/login/oauth/authorize?scope=user&client_id=${'c6f2234c775eade1e332'}`}>
+						Login with github
+					</a> */}
+					{/* <a href="facebook.com">
 						<img className="login_form_wrapper_socials_icon" src={google} alt="social media google" />
-					</a>
+					</a> */}
 					<a href="facebook.com">
-						<img className="login_form_wrapper_socials_icon" src={apple} alt="social media apple" />
+						<img className="login_form_wrapper_socials_icon" src={github} alt="social media google" />
 					</a>
+					<GoogleOAuthProvider clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`}>
+						<GoogleLogin
+							onSuccess={credentialResponse => {
+								const details = jwt_decode(credentialResponse.credential)
+								console.log(details);
+								console.log(credentialResponse);
+							}}
+							type="icon"
+							shape="circle"
+							onError={() => {
+								console.log('Login Failed');
+							}}
+						/>
+					</GoogleOAuthProvider>
 				</div>
 			</div>
 		</div>

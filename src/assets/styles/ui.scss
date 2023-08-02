@@ -19,9 +19,9 @@ $font-family-montosserat: "Montserrat", sans-serif;
 	box-sizing: border-box;
 }
 
-iframe {
-	display: none !important;
-}
+// iframe {
+// 	display: none !important;
+// }
 
 html::-webkit-scrollbar {
 	width: 8px;
@@ -44,6 +44,7 @@ html::-webit-scrollbar-track {
 	-webkit-box-shadow: inset 0px 0px 0px rgba(245, 245, 245, 0.88);
 	box-shadow: inset 0px 0px 0px rgba(245, 245, 245, 0.88);
 }
+
 body {
 	font-family: "Proxima Nova";
 	margin: 0;
@@ -123,6 +124,7 @@ input:focus {
 	svg {
 		transition: 0.2s;
 	}
+
 	&:hover {
 		svg {
 			transform: scale(1.1);
@@ -191,6 +193,7 @@ body {
 	}
 
 	&.fs-20 {
+
 		div,
 		input,
 		textarea,
@@ -206,6 +209,7 @@ body {
 	}
 
 	&.fs-40 {
+
 		div,
 		input,
 		textarea,
@@ -221,6 +225,7 @@ body {
 	}
 
 	&.fs-80 {
+
 		div,
 		input,
 		textarea,
@@ -236,6 +241,7 @@ body {
 	}
 
 	&.fs-100 {
+
 		div,
 		input,
 		textarea,

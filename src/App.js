@@ -18,6 +18,8 @@ import FreelancerResumeFinish from "./pages/freelancer/freelancer-resume/compone
 import ErrorHandler from "./components/error-handler/ErrorHandler";
 import { ErrorBoundary } from "react-error-boundary";
 import FreelancerProfile from "./pages/freelancer/freelancer-profile/FreelancerProfile";
+import { API } from "./services/api";
+import Iframe from 'react-iframe'
 
 function App() {
 
@@ -27,6 +29,14 @@ function App() {
 
   return (
     <>
+      {/* <h1>falskjdflkj</h1>
+      <Iframe url={`https://youtu.be/v2u8EDGFVpo`}
+        width="640px"
+        height="320px"
+        id=""
+        className=""
+        display="block"
+        position="relative" /> */}
       {/* <div style={{ position: 'fixed', zIndex: 999 }}>
         {
           ["uz", "en", "ru"].map((lg, index) => (

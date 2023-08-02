@@ -34,7 +34,6 @@ function Photo() {
 	const inputChange = (e) => {
 		readURL(e.target);
 	}
-
 	const {
 		inputChange: nameInputChange,
 		inputBlur: nameInputBlur,
